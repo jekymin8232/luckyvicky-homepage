@@ -1,0 +1,63 @@
+{
+  "name": "LuckyVicky Diet Calculator",
+  "short_name": "LuckyVicky",
+  "description": "Personal diet and nutrition tracking application with voice memo support",
+  "start_url": "./VitalGuard_v0.3.html",
+  "display": "standalone",
+  "background_color": "#e8f5e9",
+  "theme_color": "#4CAF50",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%234CAF50'/%3E%3Ctext x='50' y='70' font-size='60' text-anchor='middle' fill='white'%3E🌟%3C/text%3E%3C/svg%3E",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%234CAF50'/%3E%3Ctext x='50' y='70' font-size='60' text-anchor='middle' fill='white'%3E🌟%3C/text%3E%3C/svg%3E",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": [
+    "health",
+    "lifestyle",
+    "productivity"
+  ],
+  "screenshots": [
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1080 1920'%3E%3Crect width='1080' height='1920' fill='%23e8f5e9'/%3E%3Ctext x='540' y='960' font-size='120' text-anchor='middle' fill='%234CAF50'%3ELuckyVicky Diet%3C/text%3E%3C/svg%3E",
+      "sizes": "1080x1920",
+      "type": "image/svg+xml",
+      "form_factor": "narrow"
+    }
+  ],
+  "permissions": [
+    "microphone"
+  ],
+  "features": [
+    "Voice memo recording",
+    "Calorie tracking",
+    "BMI calculation",
+    "Offline support"
+  ],
+  "prefer_related_applications": false,
+  "scope": "./",
+  "lang": "en-US",
+  "dir": "ltr",
+  "share_target": {
+    "action": "./share",
+    "method": "POST",
+    "enctype": "multipart/form-data",
+    "params": {
+      "files": [
+        {
+          "name": "food_photo",
+          "accept": ["image/*"]
+        }
+      ]
+    }
+  }
+}

@@ -4,11 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
 <meta name="theme-color" content="#c0392b">
-<title>Santa Claus AI v3.9 — Offline Pet Safety</title>
+<title>Santa Claus AI v4.0 — Offline Pet Safety</title>
 <link rel="manifest" id="pwa-manifest">
 <style>
 /* ============================================================
-   SANTA CLAUS AI v3.9 — MASTER STYLESHEET
+   SANTA CLAUS AI v4.0 — MASTER STYLESHEET
    © 2026 Morgan J. (Gyu-min Jeon) | M-Corp Ethical AI
    https://mcorpai.org | contact@mcorpai.org
    Managed by: https://mediatorsfoundation.org
@@ -127,7 +127,7 @@ body{font-family:var(--font-body);background:var(--bg-primary);color:var(--text-
 
 
 /* ============================================================
-   V3.9 UI & FEATURE ADDITIONS
+   V4.0 UI & FEATURE ADDITIONS
    (Merged from V20 feature set + V35 engine hardening + V38 layout ideas)
    ============================================================ */
 .header-links{margin-top:6px;font-size:.62rem;color:var(--text-muted);display:flex;justify-content:center;gap:8px;flex-wrap:wrap}
@@ -193,11 +193,11 @@ body{font-family:var(--font-body);background:var(--bg-primary);color:var(--text-
   <header class="header">
     <div class="header-logo">🎅</div>
     <div class="header-title">Santa Claus AI</div>
-    <div class="header-sub">v3.9 — Offline Pet Safety | M-Corp Ethical AI</div>
+    <div class="header-sub">v4.0 — Offline Pet Safety | M-Corp Ethical AI</div>
     <div class="header-mission">"The more people know about this AI, the more homeless people can become independent."</div>
     <div class="header-disclaimer">Bluetooth Invisible Leash — NOT GPS. All data stays on your device.</div>
     <div class="header-links">
-      <a class="header-link" href="https://github.com/mcorpai/santa-claus-ai" target="_blank" rel="noopener">GitHub Source</a>
+      <a class="header-link" href="https://github.com/jekymin8232/luckyvicky-homepage" target="_blank" rel="noopener">GitHub Source</a>
       <span class="header-link-sep">·</span>
       <a class="header-link" href="#" onclick="Help.open();return false;">Help</a>
       <span class="header-link-sep">·</span>
@@ -617,7 +617,7 @@ body{font-family:var(--font-body);background:var(--bg-primary);color:var(--text-
 <script>
 
 /* ============================================================
-   Santa Claus AI v3.9 (V3.9)
+   Santa Claus AI v4.0 (V4.0)
    - Merged: V20 feature richness + V35 engine hardening + V38 UI ideas
    - Vanilla HTML/CSS/JS, single-file, offline-first.
    - Ethical AI License: Hippocratic 3.0 Derivative (Humanitarian use only)
@@ -626,12 +626,12 @@ body{font-family:var(--font-body);background:var(--bg-primary);color:var(--text-
 'use strict';
 
 /* ----------------------------- CONFIG ----------------------------- */
-const APP_VERSION = '3.9';
+const APP_VERSION = '4.0';
 const SCHEMA_VERSION = 2;
 
 // Backward compatibility (do not change)
 const DB_NAME = 'SantaAI_V35';
-const DB_VERSION = 2; // v3.9 adds optional blob store
+const DB_VERSION = 2; // v3.9+ adds optional blob store
 const LS_PREFIX = 'santa35_';
 
 const MAX_RSSI_SAMPLES = 60;
@@ -1703,7 +1703,7 @@ function routeAdvertisement(event, pets, now){
   top1.pet.processRssi(rssi, now);
 }
 
-/* ----------------------------- BLE ENGINE (V35 hardened + V39 fixes) ----------------------------- */
+/* ----------------------------- BLE ENGINE (V35 hardened + V40 fixes) ----------------------------- */
 const BLE = {
   scanning:false,
   scanReq:null,
@@ -1891,7 +1891,7 @@ const BLE = {
   }
 };
 
-/* ----------------------------- WIZARD (V35 + V39 signature hardening) ----------------------------- */
+/* ----------------------------- WIZARD (V35 + V40 signature hardening) ----------------------------- */
 const Wizard = {
   mode:'add', // 'add' | 'reverify'
   targetPetId:null,
@@ -3156,7 +3156,7 @@ const DataManager = {
     const url=URL.createObjectURL(blob);
     const a=document.createElement('a');
     a.href=url;
-    a.download='santa-ai-v39-backup-'+Date.now()+'.json';
+    a.download='santa-ai-v40-backup-'+Date.now()+'.json';
     a.click();
     URL.revokeObjectURL(url);
     Toast.show('Backup exported!');
@@ -3362,7 +3362,7 @@ const Help = {
             <li>Disable battery optimization for your browser/app (Android).</li>
             <li>Keep screen on (some devices pause BLE in background).</li>
           </ul>
-          V3.9 includes a scan stall watchdog and auto-restart to reduce freezes.
+          V4.0 includes a scan stall watchdog and auto-restart to reduce freezes.
         </div>
       </div>
 
@@ -3583,7 +3583,7 @@ const Diag = {
     const url=URL.createObjectURL(blob);
     const a=document.createElement('a');
     a.href=url;
-    a.download='santa-ai-v39-diagnostics-'+Date.now()+'.json';
+    a.download='santa-ai-v40-diagnostics-'+Date.now()+'.json';
     a.click();
     URL.revokeObjectURL(url);
     Toast.show('Downloaded');
@@ -3970,7 +3970,7 @@ const App = {
       this.setTrackMode('focus');
     }
     this.focusPetId=id;
-    Toast.show('Focus: '+(this.pets.find(p=>p.id===id)?.name||'Pet'));
+    Toast.show('Focus: '+(((this.pets.find(p=>p.id===id)||{}).name||'Pet')));
     this.renderPetChips();
     if(BLE.scanning && BLE.lastScanMode==='track') BLE.restartScan('focus_change');
     if(SOS.targetPet && SOS.targetPet.id===id) $('sos-focus-banner').classList.remove('hidden');
@@ -4136,7 +4136,7 @@ const App = {
     if(link) link.setAttribute('href', url);
 
     const swCode = `
-      const CACHE='santa-ai-v39-cache';
+      const CACHE='santa-ai-v40-cache';
       self.addEventListener('install', e=>{
         e.waitUntil(caches.open(CACHE).then(c=>c.addAll(['./'])));
       });
@@ -4180,6 +4180,1691 @@ const App = {
     }
   }
 };
+
+
+/* ============================================================
+   V4.0 Upgrade Pack (SantaAI)
+   - Adds: Reset/Initialize center, ErrorShield, Conductor AI,
+           AI Pack v4 (kNN + IsolationForestLite + RLS calibration),
+           Encrypted backup (AES-GCM), Wake Lock for monitoring,
+           Accessibility toggles, richer About & Social Impact deck.
+   ============================================================ */
+
+(function(){
+  /* ----------------------------- SAFE TEXT / SANITIZER ----------------------------- */
+  const Sanitizer = {
+    // Remove risky characters while keeping names readable (prevents HTML injection from user input/import).
+    name(s){
+      s = String((s===undefined||s===null)?'':s).replace(/[\u0000-\u001F\u007F]/g,'').trim();
+      s = s.replace(/[<>`]/g,'');
+      if(!s) return 'My Pet';
+      return s.slice(0, 28);
+    },
+    phone(s){
+      s = String((s===undefined||s===null)?'':s).replace(/[\u0000-\u001F\u007F]/g,'').trim();
+      // allow digits + + - space
+      s = s.replace(/[^0-9+\-\s]/g,'');
+      return s.slice(0, 24);
+    },
+    text(s, max=220){
+      s = String((s===undefined||s===null)?'':s).replace(/[\u0000-\u001F\u007F]/g,'').trim();
+      s = s.replace(/[<>`]/g,'');
+      return s.slice(0, max);
+    },
+    icon(s){
+      s = String((s===undefined||s===null)?'🐶':s);
+      // allow only known icons (prevents weird glyphs breaking UI)
+      return ICONS.includes(s) ? s : '🐶';
+    }
+  };
+
+  function sleep(ms){ return new Promise(r=>setTimeout(r, ms)); }
+  function downloadText(filename, text, mime='text/plain'){
+    const blob=new Blob([text], {type:mime});
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement('a');
+    a.href=url; a.download=filename;
+    a.click();
+    setTimeout(()=>URL.revokeObjectURL(url), 2500);
+  }
+
+  /* ----------------------------- ERROR SHIELD (Crash-safe logging) ----------------------------- */
+  const ErrorShield = {
+    ring: new RingBuffer(36),
+    loaded:false,
+    persistTimer:null,
+    lastCaptureAt:0,
+
+    async load(){
+      try{
+        const saved = await Store.getAI('errors');
+        if(saved && Array.isArray(saved.items)){
+          saved.items.slice(-36).forEach(it=>this.ring.push(it));
+        }
+      }catch(e){}
+      this.loaded=true;
+    },
+
+    _schedulePersist(){
+      clearTimeout(this.persistTimer);
+      this.persistTimer = setTimeout(async ()=>{
+        try{
+          await Store.saveAI('errors', {key:'errors', items:this.ring.data});
+        }catch(e){}
+      }, 1200);
+    },
+
+    capture(kind, info){
+      const now = nowMs();
+      // avoid loops
+      if(now - this.lastCaptureAt < 60) return;
+      this.lastCaptureAt = now;
+
+      const entry = {
+        t: new Date(now).toISOString(),
+        kind,
+        msg: Sanitizer.text((info && info.msg!=null)?info.msg:'unknown', 260),
+        where: Sanitizer.text((info && info.where!=null)?info.where:'', 120),
+        stack: Sanitizer.text((info && info.stack!=null)?info.stack:'', 700)
+      };
+      try{ this.ring.push(entry); }catch(e){}
+      this._schedulePersist();
+    },
+
+    hook(){
+      window.addEventListener('error', (e)=>{
+        this.capture('error', {
+          msg: e.message || 'window.error',
+          where: (e.filename||'') + ':' + (e.lineno||0) + ':' + (e.colno||0),
+          stack: e.error && e.error.stack ? e.error.stack : ''
+        });
+      });
+      window.addEventListener('unhandledrejection', (e)=>{
+        const r=e.reason;
+        this.capture('promise', {
+          msg: (r && (r.message||r.name)) ? (r.name? (r.name+': '+(r.message||'')) : r.message) : String(r),
+          where: 'unhandledrejection',
+          stack: (r && r.stack) ? r.stack : ''
+        });
+      });
+    },
+
+    clear(){
+      this.ring.clear();
+      Store.saveAI('errors', {key:'errors', items:[]}).catch(()=>{});
+      Toast.show('Error log cleared');
+      var d=$('diag-overlay'); if(d && d.classList.contains('active')) Diag.render();
+    }
+  };
+
+  /* ----------------------------- CAPABILITY MATRIX ----------------------------- */
+  const Capabilities = {
+    async battery(){
+      try{
+        if(navigator.getBattery) return await navigator.getBattery();
+      }catch(e){}
+      return null;
+    },
+    computeSync(){
+      const caps = {
+        secureContext: !!window.isSecureContext,
+        protocol: location.protocol,
+        webBluetooth: !!navigator.bluetooth,
+        leScan: !!(navigator.bluetooth && navigator.bluetooth.requestLEScan),
+        advEvents: !!(navigator.bluetooth && navigator.bluetooth.addEventListener),
+        serviceWorker: 'serviceWorker' in navigator,
+        caches: 'caches' in window,
+        wakeLock: !!(navigator.wakeLock && navigator.wakeLock.request),
+        notification: 'Notification' in window,
+        vibration: !!navigator.vibrate,
+        share: !!navigator.share,
+        clipboard: !!(navigator.clipboard && navigator.clipboard.writeText),
+        geolocation: 'geolocation' in navigator,
+        mediaDevices: !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia),
+        mediaRecorder: 'MediaRecorder' in window,
+        tts: ('speechSynthesis' in window) && ('SpeechSynthesisUtterance' in window)
+      };
+      return caps;
+    },
+    badgeHTML(ok){
+      return ok ? '<span class="kbd" style="background:rgba(46,204,113,.14);border-color:rgba(46,204,113,.22);color:var(--accent-green)">OK</span>'
+                : '<span class="kbd" style="background:rgba(231,76,60,.12);border-color:rgba(231,76,60,.22);color:var(--accent-red)">NO</span>';
+    },
+    renderHTML(extra={}){
+      const c = {...this.computeSync(), ...extra};
+      const rows = [
+        ['Secure context', c.secureContext],
+        ['Web Bluetooth', c.webBluetooth],
+        ['LE Scan API', c.leScan],
+        ['Wake Lock', c.wakeLock],
+        ['Service Worker', c.serviceWorker],
+        ['Notifications', c.notification],
+        ['Vibration', c.vibration],
+        ['Share', c.share],
+        ['Clipboard', c.clipboard],
+        ['Geolocation', c.geolocation],
+        ['Voice/TTS', c.tts],
+        ['MediaRecorder', c.mediaRecorder],
+      ];
+      return `
+        <div class="card" style="margin-top:10px">
+          <div class="section-title" style="font-size:.8rem;margin:0 0 8px">Device Capability Matrix</div>
+          ${rows.map(r=>`
+            <div class="setting-row" style="padding:10px 0">
+              <span style="font-size:.78rem;color:var(--text-secondary)">${r[0]}</span>
+              ${this.badgeHTML(!!r[1])}
+            </div>
+          `).join('')}
+          <div style="margin-top:8px;font-size:.72rem;color:var(--text-muted)">
+            Protocol: <span class="kbd">${Sanitizer.text(c.protocol, 18)}</span>
+          </div>
+        </div>
+      `;
+    }
+  };
+
+  /* ----------------------------- ACCESSIBILITY (UX) ----------------------------- */
+  const Accessibility = {
+    apply(){
+      const root=document.documentElement;
+      root.classList.toggle('a11y-large', !!Settings.prefs.largeText);
+      root.classList.toggle('a11y-contrast', !!Settings.prefs.highContrast);
+      root.classList.toggle('a11y-reduceMotion', !!Settings.prefs.reduceMotion);
+    },
+    injectCSS(){
+      if(document.getElementById('v40-a11y-style')) return;
+      const css = document.createElement('style');
+      css.id='v40-a11y-style';
+      css.textContent = `
+        :root.a11y-large{ font-size: 18px; }
+        :root.a11y-contrast{
+          --bg-primary:#000;
+          --bg-secondary:#060606;
+          --bg-elevated:#0c0c0c;
+          --text-primary:#fff;
+          --text-secondary:#dcdcdc;
+          --text-muted:#b5b5b5;
+          --border-color: rgba(255,255,255,.18);
+        }
+        :root.a11y-reduceMotion *{ transition:none !important; animation:none !important; scroll-behavior:auto !important; }
+      `;
+      document.head.appendChild(css);
+    }
+  };
+
+  /* ----------------------------- WAKE LOCK (Monitoring keep-awake) ----------------------------- */
+  const WakeLockManager = {
+    lock:null,
+    async request(){
+      try{
+        if(!Settings.prefs.screenAwake) return false;
+        if(!(navigator.wakeLock && navigator.wakeLock.request)) return false;
+        this.lock = await navigator.wakeLock.request('screen');
+        this.lock.addEventListener('release', ()=>{ this.lock=null; });
+        return true;
+      }catch(e){
+        this.lock=null;
+        return false;
+      }
+    },
+    async release(){
+      try{
+        if(this.lock){ await this.lock.release(); }
+      }catch(e){}
+      this.lock=null;
+    },
+    hookVisibility(){
+      document.addEventListener('visibilitychange', ()=>{
+        if(document.visibilityState==='visible'){
+          if(App.monitoringWanted && BLE.scanning && Settings.prefs.screenAwake){
+            this.request();
+          }
+        }else{
+          // don't force release; browser may auto-release anyway
+        }
+      });
+    }
+  };
+
+  /* ----------------------------- AI PACK v4.0 ----------------------------- */
+
+  // kNN classifier (personalized, learns from feedback)
+  class KNNLite {
+    constructor(k=5){
+      this.k=k;
+      this.samples=[]; // {x:number[], y:0|1}
+    }
+    _dist(a,b){
+      let s=0;
+      for(let i=0;i<a.length;i++){
+        const d=(a[i]-b[i]);
+        s+=d*d;
+      }
+      return Math.sqrt(s);
+    }
+    add(x,y){
+      if(!Array.isArray(x) || x.length<3) return;
+      this.samples.push({x:x.slice(0,8), y: y?1:0, t: nowMs()});
+      if(this.samples.length>180) this.samples.shift();
+    }
+    predict(x){
+      if(!Array.isArray(x) || this.samples.length<6) return {label:null, conf:0};
+      const k=Math.min(this.k, this.samples.length);
+      const sorted=this.samples
+        .map(s=>({d:this._dist(x,s.x), y:s.y}))
+        .sort((a,b)=>a.d-b.d)
+        .slice(0,k);
+      const sum=sorted.reduce((a,b)=>a+b.y,0);
+      const p=sum/k;
+      return {label: p>=0.5?1:0, conf: Math.round(Math.max(p,1-p)*100)};
+    }
+    export(){
+      return {k:this.k, samples:this.samples.slice(-180)};
+    }
+    import(d){
+      if(!d) return;
+      this.k = typeof d.k==='number' ? d.k : this.k;
+      if(Array.isArray(d.samples)) this.samples = d.samples.slice(-180);
+    }
+    reset(){
+      this.samples=[];
+    }
+  }
+
+  // RLS calibration for path-loss model: RSSI = a + b*log10(dist)
+  class RLSCalibrator {
+    constructor(){
+      this.theta=[-59, -25]; // [a, b] where b≈-10n
+      this.P=[[100,0],[0,100]];
+      this.lambda=0.985;
+      this.count=0;
+    }
+    update(dist, rssi){
+      if(!dist || dist<=0 || !isFinite(dist) || !isFinite(rssi)) return;
+      const x=[1, Math.log10(dist)];
+      // P*x
+      const Px=[this.P[0][0]*x[0]+this.P[0][1]*x[1], this.P[1][0]*x[0]+this.P[1][1]*x[1]];
+      const denom = this.lambda + x[0]*Px[0] + x[1]*Px[1];
+      const K=[Px[0]/denom, Px[1]/denom];
+      const yHat = this.theta[0]*x[0] + this.theta[1]*x[1];
+      const err = rssi - yHat;
+      this.theta[0] += K[0]*err;
+      this.theta[1] += K[1]*err;
+
+      // P = (P - K*x^T*P)/lambda
+      const xTP=[x[0]*this.P[0][0]+x[1]*this.P[1][0], x[0]*this.P[0][1]+x[1]*this.P[1][1]];
+      const KP=[[K[0]*xTP[0], K[0]*xTP[1]],[K[1]*xTP[0], K[1]*xTP[1]]];
+      this.P=[
+        [(this.P[0][0]-KP[0][0])/this.lambda, (this.P[0][1]-KP[0][1])/this.lambda],
+        [(this.P[1][0]-KP[1][0])/this.lambda, (this.P[1][1]-KP[1][1])/this.lambda]
+      ];
+
+      this.count++;
+    }
+    params(){
+      // Convert to txPower & n (approx)
+      const a=this.theta[0];
+      const b=this.theta[1];
+      const n = clamp(Math.abs(b)/10, 1.5, 4.5);
+      const tx = clamp(a, -78, -40);
+      return {txPower:tx, n:n, a:a, b:b, count:this.count};
+    }
+    export(){ return {theta:this.theta, P:this.P, lambda:this.lambda, count:this.count}; }
+    import(d){
+      if(!d) return;
+      if(Array.isArray(d.theta) && d.theta.length===2) this.theta=[d.theta[0], d.theta[1]];
+      if(Array.isArray(d.P) && d.P.length===2) this.P=d.P;
+      if(typeof d.lambda==='number') this.lambda=d.lambda;
+      this.count = d.count||0;
+    }
+    reset(){
+      this.theta=[-59,-25];
+      this.P=[[100,0],[0,100]];
+      this.count=0;
+    }
+  }
+
+  // Isolation Forest (lite, small dimensional) for anomaly scoring
+  class IsolationForestLite {
+    constructor(opts={}){
+      this.trees=[];
+      this.nTrees=opts.nTrees||10;
+      this.sampleSize=opts.sampleSize||48;
+      this.maxDepth=opts.maxDepth||8;
+      this.trained=false;
+      this.dim=opts.dim||5;
+    }
+
+    _randInt(n){ return Math.floor(Math.random()*n); }
+    _harmonic(n){
+      // approximation H(n) ~ ln(n) + gamma
+      const gamma=0.5772156649;
+      return Math.log(n) + gamma;
+    }
+    _c(n){
+      if(n<=1) return 0;
+      return 2*this._harmonic(n-1) - (2*(n-1)/n);
+    }
+
+    _buildTree(samples, depth){
+      if(depth>=this.maxDepth || samples.length<=1){
+        return {leaf:true, n:samples.length, depth};
+      }
+      const q=this._randInt(this.dim);
+      let min=Infinity,max=-Infinity;
+      for(const s of samples){
+        const v=s[q];
+        if(v<min) min=v;
+        if(v>max) max=v;
+      }
+      if(!isFinite(min) || !isFinite(max) || min===max){
+        return {leaf:true, n:samples.length, depth};
+      }
+      const split = min + Math.random()*(max-min);
+      const left=[], right=[];
+      for(const s of samples){
+        (s[q] < split ? left : right).push(s);
+      }
+      return {leaf:false, q, split, left:this._buildTree(left, depth+1), right:this._buildTree(right, depth+1), depth};
+    }
+
+    train(data){
+      if(!Array.isArray(data) || data.length<12) { this.trained=false; this.trees=[]; return; }
+      // sample subset for each tree
+      this.dim = data[0].length;
+      this.trees=[];
+      for(let i=0;i<this.nTrees;i++){
+        const subset=[];
+        for(let j=0;j<Math.min(this.sampleSize, data.length);j++){
+          subset.push(data[this._randInt(data.length)]);
+        }
+        this.trees.push(this._buildTree(subset, 0));
+      }
+      this.trained=true;
+    }
+
+    _pathLen(x, node){
+      if(!node || node.leaf){
+        const n = node ? node.n : 1;
+        // leaf adjustment
+        return (node ? node.depth : 0) + this._c(n);
+      }
+      if(x[node.q] < node.split) return this._pathLen(x, node.left);
+      return this._pathLen(x, node.right);
+    }
+
+    score(x){
+      if(!this.trained || !this.trees.length) return 0.0;
+      let sum=0;
+      for(const t of this.trees) sum += this._pathLen(x, t);
+      const Eh = sum/this.trees.length;
+      const cn = this._c(this.sampleSize);
+      const s = Math.pow(2, -Eh / (cn || 1));
+      return clamp(s, 0, 1);
+    }
+
+    export(){
+      // Keep it light: don't persist trees (huge). Persist only config.
+      return {nTrees:this.nTrees, sampleSize:this.sampleSize, maxDepth:this.maxDepth, dim:this.dim, trained:false};
+    }
+    import(d){
+      if(!d) return;
+      if(typeof d.nTrees==='number') this.nTrees=d.nTrees;
+      if(typeof d.sampleSize==='number') this.sampleSize=d.sampleSize;
+      if(typeof d.maxDepth==='number') this.maxDepth=d.maxDepth;
+      if(typeof d.dim==='number') this.dim=d.dim;
+    }
+    reset(){ this.trees=[]; this.trained=false; }
+  }
+
+  const AIPackV4 = {
+    enabledDefault: true,
+
+    attachPet(p){
+      if(!p) return;
+      p.aiToggles = Object.assign({knn:true, anomaly:true, rls:false}, p.aiToggles||{});
+      if(!p.ai4){
+        p.ai4 = {
+          knn: new KNNLite(5),
+          rls: new RLSCalibrator(),
+          iso: new IsolationForestLite({nTrees:10, sampleSize:48, maxDepth:8, dim:5}),
+          // safe baseline samples for training
+          safeSamples: new RingBuffer(120),
+          lastX: null,
+          lastAnom: 0,
+          lastKnn: {label:null, conf:0},
+          lastTrainMs: 0
+        };
+      }
+      // import persisted states if present
+      try{
+        const st = p.aiState || {};
+        if(st.knn) p.ai4.knn.import(st.knn);
+        if(st.rls) p.ai4.rls.import(st.rls);
+        if(st.iso) p.ai4.iso.import(st.iso);
+      }catch(e){}
+    },
+
+    featureVector(p, now){
+      // Normalize into small [0..1]ish space for learning
+      const rssi = clamp((p.smoothedRssi + 100)/70, 0, 1);                 // -100..-30
+      const vel = clamp((p.kalman.getVelocity() + 10)/20, 0, 1);           // approx
+      const f = p.behavior.getFeatures() || {variance:60, trend:0};
+      const varN = clamp(f.variance/160, 0, 1);
+      const trendN = clamp((f.trend + 12)/24, 0, 1);
+      const silentN = clamp(((now - (p.lastSeenMs||now))/ (perfProfile.lostMs||9000)), 0, 1);
+      return [rssi, vel, varN, trendN, silentN];
+    },
+
+    onPetProcessed(p, now){
+      if(!p || !p.ai4) return;
+      const x=this.featureVector(p, now);
+      p.ai4.lastX = x;
+
+      // Anomaly: train only on SAFE windows to learn baseline
+      if(p.aiToggles.anomaly){
+        if(p.zone.stable==='SAFE' && p.confidence>=50){
+          p.ai4.safeSamples.push(x);
+        }
+        // retrain occasionally
+        if(p.ai4.safeSamples.length>=30 && (now - p.ai4.lastTrainMs)>30000){
+          try{
+            p.ai4.iso.train(p.ai4.safeSamples.data);
+            p.ai4.lastTrainMs=now;
+          }catch(e){}
+        }
+        const a = p.ai4.iso.trained ? p.ai4.iso.score(x) : 0;
+        // hybrid with heuristic when untrained
+        const heuristic = clamp((Math.max(0, (-p.kalman.getVelocity())/6) + (((p.behavior.getFeatures && p.behavior.getFeatures())||{}).variance||60)/220)/2, 0, 1);
+        p.ai4.lastAnom = p.ai4.iso.trained ? clamp((a*0.7 + heuristic*0.3),0,1) : heuristic;
+      }
+
+      // kNN prediction only when we have samples
+      if(p.aiToggles.knn){
+        p.ai4.lastKnn = p.ai4.knn.predict(x);
+      }
+    },
+
+    learnFromFeedback(p, helpful){
+      if(!p || !p.ai4 || !p.ai4.lastX) return;
+      // label: 1 means "real danger (helpful)", 0 means "false alarm / safe"
+      p.ai4.knn.add(p.ai4.lastX, helpful?1:0);
+    },
+
+    exportState(p){
+      const st = p.aiState || {};
+      if(p.ai4){
+        st.knn = p.ai4.knn.export();
+        st.rls = p.ai4.rls.export();
+        st.iso = p.ai4.iso.export();
+      }
+      return st;
+    },
+
+    explain(p){
+      if(!p || !p.ai4) return {anom:0, knn:null};
+      return {
+        anom: Math.round((p.ai4.lastAnom||0)*100),
+        knn: (!p.ai4.lastKnn || p.ai4.lastKnn.label===null) ? null : {label:p.ai4.lastKnn.label, conf:p.ai4.lastKnn.conf}
+      };
+    }
+  };
+
+  /* ----------------------------- CONDUCTOR AI (Self-heal / UX suggestions) ----------------------------- */
+  const ConductorAI = {
+    enabled:true,
+    lastTick:0,
+    lastSuggest:0,
+    safeMode:false,
+    battery:null,
+    lastBatteryAt:0,
+
+    async init(){
+      this.enabled = await Store.getSetting('autoOptimize', true);
+      try{
+        this.battery = await Capabilities.battery();
+      }catch(e){ this.battery=null; }
+    },
+
+    async refreshBattery(){
+      const now=nowMs();
+      if(now - this.lastBatteryAt < 15000) return;
+      this.lastBatteryAt=now;
+      try{
+        if(navigator.getBattery){
+          this.battery = await navigator.getBattery();
+        }
+      }catch(e){}
+    },
+
+    batteryInfo(){
+      const b=this.battery;
+      if(!b) return null;
+      return {
+        level: (typeof b.level==='number') ? b.level : null,
+        charging: !!b.charging
+      };
+    },
+
+    compute(){
+      const now=nowMs();
+      const tips=[];
+      const actions=[];
+
+      // Environment guidance
+      if(location.protocol.startsWith('file')){
+        tips.push({k:'env_file', t:'Running from file:// can reduce BLE reliability. Use HTTPS/localhost or install as PWA.'});
+      }
+      if(!window.isSecureContext && !location.hostname.includes('localhost')){
+        tips.push({k:'env_secure', t:'Secure context required for reliable BLE. Use HTTPS/localhost.'});
+      }
+
+      // Scan health
+      if(App.monitoringWanted && !BLE.scanning){
+        tips.push({k:'scan_off', t:'Monitoring is OFF. Tap Start Monitoring.'});
+      }
+      if(BLE.scanning){
+        const silent = now - (BLE.lastAnyAdvMs||0);
+        if(silent > perfProfile.scanStallMs*0.9){
+          tips.push({k:'scan_stall', t:'Scan looks stalled. The watchdog will try restart. Keep screen awake, or enable Audio Keepalive.'});
+          if(!Settings.prefs.keepAlive) actions.push({label:'Enable Keepalive', fn:()=>Settings.toggle('keepAlive')});
+          if(!Settings.prefs.screenAwake) actions.push({label:'Enable Screen Awake', fn:()=>Settings.toggleV40('screenAwake')});
+        }
+        if(BLE.congestionLevel()==='high'){
+          tips.push({k:'scan_cong', t:'High BLE congestion. Use Focus mode on one pet for better accuracy.'});
+          if(App.trackMode!=='focus') actions.push({label:'Switch to Focus', fn:()=>App.setTrackMode('focus')});
+        }
+      }
+
+      // Battery / performance
+      const bi=this.batteryInfo();
+      if(bi && bi.level!==null){
+        const pct=Math.round(bi.level*100);
+        if(pct<=18 && App.monitoringWanted && Settings.prefs.perfMode!=='saver'){
+          tips.push({k:'bat_low', t:`Battery is low (${pct}%). Consider Saver performance mode.`});
+          actions.push({label:'Set Saver Mode', fn:()=>Settings.setPerf('saver')});
+        }
+      }
+
+      // Pet-specific detection errors
+      const troubled = App.pets.find(p=>p.ambiguousCount>0 && (now-(p.lastAmbiguousMs||0))<120000);
+      if(troubled){
+        tips.push({k:'ambig', t:`${troubled.name}: signal ambiguous. Re-verify tag near the phone to improve matching.`});
+        actions.push({label:'Re-verify Tag', fn:()=>Wizard.open(troubled.id)});
+      }
+
+      // Safe mode suggestion
+      if(BLE.stallCount>=3 || BLE.restartCount>=MAX_RESTARTS_PER_MIN){
+        tips.push({k:'safe', t:'Frequent scan restarts detected. Consider Safe Mode (reduces CPU, increases stability).'});
+        if(!this.safeMode) actions.push({label:'Enable Safe Mode', fn:()=>SafeMode.enable('scan_instability')});
+      }
+
+      return {tips, actions};
+    },
+
+    tick(){
+      const now=nowMs();
+      if(now - this.lastTick < 900) return;
+      this.lastTick=now;
+      if(!this.enabled) return;
+      this.refreshBattery();
+      // no auto-actions without consent; only suggestions
+    }
+  };
+
+  const SafeMode = {
+    active:false,
+    reason:'',
+    async enable(reason='manual'){
+      if(this.active) return;
+      this.active=true;
+      this.reason=reason;
+      await Store.saveSetting('safeMode', true);
+      await Store.saveSetting('safeModeReason', reason);
+      // apply conservative settings
+      if(Settings.prefs.perfMode!=='saver') await Settings.setPerf('saver');
+      // reduce motion can help old devices
+      if(!Settings.prefs.reduceMotion){ Settings.prefs.reduceMotion=true; await Store.saveSetting('reduceMotion', true); }
+      Accessibility.apply();
+      V40UI.renderSafeBanner();
+      Toast.show('Safe Mode enabled');
+    },
+    async disable(){
+      this.active=false;
+      this.reason='';
+      await Store.saveSetting('safeMode', false);
+      await Store.saveSetting('safeModeReason', '');
+      V40UI.renderSafeBanner();
+      Toast.show('Safe Mode disabled');
+    },
+    async load(){
+      this.active = await Store.getSetting('safeMode', false);
+      this.reason = await Store.getSetting('safeModeReason', '') || '';
+    }
+  };
+
+  /* ----------------------------- RESET / INITIALIZE CENTER ----------------------------- */
+  const ResetCenter = {
+    ensureUI(){
+      if($('reset-overlay')) return;
+      const wrap=document.createElement('div');
+      wrap.innerHTML = `
+        <div id="reset-overlay" class="overlay">
+          <div class="overlay-header">
+            <div class="overlay-title">Reset / Initialize</div>
+            <button class="overlay-close" onclick="ResetCenter.close()">✕</button>
+          </div>
+          <div class="overlay-body" id="reset-body"></div>
+        </div>
+      `;
+      document.body.appendChild(wrap.firstElementChild);
+    },
+
+    open(){
+      this.ensureUI();
+      this.render();
+      $('reset-overlay').classList.add('active');
+    },
+    close(){
+      var ro=$('reset-overlay'); if(ro) ro.classList.remove('active');
+    },
+
+    async render(){
+      const caps = Capabilities.computeSync();
+      const pwaHint = caps.serviceWorker ? 'This may also clear PWA cache depending on option.' : 'Service Worker not supported here.';
+      $('reset-body').innerHTML = `
+        <div class="tip-card warn">
+          <div class="tip-title">Reset Options (V4.0)</div>
+          <div class="tip-body">
+            Use this if you experience bugs, tag confusion, or you want to hand the phone to a new owner.
+            <br><br>
+            <strong>Reminder:</strong> Santa AI stores data locally (IndexedDB/localStorage). No cloud sync.
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="section-title" style="font-size:.8rem;margin:0 0 8px">1) Soft Reset (recommended first)</div>
+          <div style="font-size:.78rem;color:var(--text-secondary);line-height:1.55">
+            Clears temporary state: scan timers, recent errors, UI cache. Keeps pets, signatures, and calibration.
+          </div>
+          <button class="btn btn-secondary btn-block" style="margin-top:10px" onclick="ResetCenter.soft()">Soft Reset</button>
+        </div>
+
+        <div class="card">
+          <div class="section-title" style="font-size:.8rem;margin:0 0 8px">2) Hard Reset (re-tag required)</div>
+          <div style="font-size:.78rem;color:var(--text-secondary);line-height:1.55">
+            Deletes pets, signatures, alerts, AI learning, and settings. You will need to re-add tags.
+          </div>
+          <button class="btn btn-danger-outline btn-block" style="margin-top:10px" onclick="ResetCenter.hard()">Hard Reset</button>
+        </div>
+
+        <div class="card">
+          <div class="section-title" style="font-size:.8rem;margin:0 0 8px">3) Factory Reset (deep clean)</div>
+          <div style="font-size:.78rem;color:var(--text-secondary);line-height:1.55">
+            Hard Reset + clear Service Worker registrations and caches (best effort). ${pwaHint}
+          </div>
+          <button class="btn btn-danger-outline btn-block" style="margin-top:10px" onclick="ResetCenter.factory()">Factory Reset</button>
+        </div>
+
+        <div class="tip-card info">
+          <div class="tip-title">Export before you wipe</div>
+          <div class="tip-body">
+            Tip: Go to Settings → Backup to export your pets/signatures before hard reset.
+          </div>
+        </div>
+      `;
+    },
+
+    async soft(){
+      if(!confirm('Soft reset? (Keeps pets)')) return;
+      try{
+        // stop timers and restart scan cleanly
+        BLE.stopScan();
+        App.resetTimers();
+        ErrorShield.clear();
+        // clear minor UI settings
+        await Store.saveSetting('lastTab', 'home');
+        await Store.saveSetting('coachDismissed', false);
+      }catch(e){}
+      Toast.show('Soft reset done');
+      this.close();
+      // best effort: restart monitoring if it was wanted
+      if(App.monitoringWanted) BLE.startScan('track', {silent:true});
+    },
+
+    async _confirmHard(){
+      const msg = 'Type RESET to confirm (case-sensitive).';
+      const v = prompt(msg, '');
+      return v === 'RESET';
+    },
+
+    async hard(){
+      if(!await this._confirmHard()) { Toast.show('Cancelled'); return; }
+      try{
+        BLE.stopScan();
+        AudioEngine.stopKeepAlive();
+        await WakeLockManager.release();
+      }catch(e){}
+
+      try{
+        await Store.clearAll();
+      }catch(e){}
+      Toast.show('Hard reset complete');
+      this.close();
+      setTimeout(()=>location.reload(), 700);
+    },
+
+    async factory(){
+      if(!await this._confirmHard()) { Toast.show('Cancelled'); return; }
+
+      try{
+        BLE.stopScan();
+        AudioEngine.stopKeepAlive();
+        await WakeLockManager.release();
+      }catch(e){}
+
+      try{
+        await Store.clearAll();
+      }catch(e){}
+
+      // Best effort: unregister SW and delete caches
+      try{
+        if('serviceWorker' in navigator){
+          const regs = await navigator.serviceWorker.getRegistrations();
+          await Promise.all(regs.map(r=>r.unregister()));
+        }
+      }catch(e){}
+      try{
+        if('caches' in window){
+          const keys = await caches.keys();
+          await Promise.all(keys.map(k=>caches.delete(k)));
+        }
+      }catch(e){}
+
+      // Best effort: delete our database (may fail if open)
+      try{ indexedDB.deleteDatabase(DB_NAME); }catch(e){}
+
+      Toast.show('Factory reset complete');
+      this.close();
+      setTimeout(()=>location.reload(), 900);
+    }
+  };
+
+  /* ----------------------------- ENCRYPTED BACKUP (AES-GCM) ----------------------------- */
+  const CryptoBox = {
+    supported(){
+      return !!(window.crypto && crypto.subtle && window.TextEncoder && window.TextDecoder);
+    },
+    _b64(u8){
+      let s='';
+      for(let i=0;i<u8.length;i++) s+=String.fromCharCode(u8[i]);
+      return btoa(s);
+    },
+    _u8(b64){
+      const bin=atob(b64);
+      const u8=new Uint8Array(bin.length);
+      for(let i=0;i<bin.length;i++) u8[i]=bin.charCodeAt(i);
+      return u8;
+    },
+    async _deriveKey(pass, salt){
+      const enc=new TextEncoder();
+      const baseKey = await crypto.subtle.importKey('raw', enc.encode(pass), 'PBKDF2', false, ['deriveKey']);
+      return crypto.subtle.deriveKey(
+        {name:'PBKDF2', salt, iterations:120000, hash:'SHA-256'},
+        baseKey,
+        {name:'AES-GCM', length:256},
+        false,
+        ['encrypt','decrypt']
+      );
+    },
+    async encryptString(plain, pass){
+      const enc=new TextEncoder();
+      const salt=crypto.getRandomValues(new Uint8Array(16));
+      const iv=crypto.getRandomValues(new Uint8Array(12));
+      const key=await this._deriveKey(pass, salt);
+      const ct=await crypto.subtle.encrypt({name:'AES-GCM', iv}, key, enc.encode(plain));
+      return {
+        enc:true,
+        v:1,
+        alg:'AES-GCM',
+        it:120000,
+        salt:this._b64(salt),
+        iv:this._b64(iv),
+        ct:this._b64(new Uint8Array(ct))
+      };
+    },
+    async decryptToString(pack, pass){
+      const dec=new TextDecoder();
+      const salt=this._u8(pack.salt);
+      const iv=this._u8(pack.iv);
+      const ct=this._u8(pack.ct);
+      const key=await this._deriveKey(pass, salt);
+      const pt=await crypto.subtle.decrypt({name:'AES-GCM', iv}, key, ct);
+      return dec.decode(pt);
+    }
+  };
+
+  /* ----------------------------- V40 UI INJECTION ----------------------------- */
+  const V40UI = {
+    injected:false,
+
+    inject(){
+      if(this.injected) return;
+      this.injected=true;
+
+      Accessibility.injectCSS();
+      ResetCenter.ensureUI();
+
+      // Inject Advanced toggles card into Settings panel (UX)
+      const panel=$('panel-settings');
+      if(panel && !document.getElementById('v40-advanced-card')){
+        const card=document.createElement('div');
+        card.className='card';
+        card.id='v40-advanced-card';
+        card.innerHTML = `
+          <div class="section-title" style="font-size:.8rem;margin-top:0">V4.0 Advanced</div>
+
+          <div class="setting-row">
+            <span style="font-size:.78rem">Screen Awake (Wake Lock)</span>
+            <div class="toggle" id="toggle-screenAwake" onclick="Settings.toggleV40('screenAwake')"></div>
+          </div>
+
+          <div class="setting-row">
+            <span style="font-size:.78rem">Use Scan Filters (less noise)</span>
+            <div class="toggle" id="toggle-scanFilters" onclick="Settings.toggleV40('useScanFilters')"></div>
+          </div>
+
+          <div class="setting-row">
+            <span style="font-size:.78rem">Auto Optimize (Conductor)</span>
+            <div class="toggle" id="toggle-autoOptimize" onclick="Settings.toggleV40('autoOptimize')"></div>
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="section-title" style="font-size:.8rem;margin-top:0">Accessibility</div>
+
+          <div class="setting-row">
+            <span style="font-size:.78rem">Large Text</span>
+            <div class="toggle" id="toggle-largeText" onclick="Settings.toggleV40('largeText')"></div>
+          </div>
+          <div class="setting-row">
+            <span style="font-size:.78rem">High Contrast</span>
+            <div class="toggle" id="toggle-highContrast" onclick="Settings.toggleV40('highContrast')"></div>
+          </div>
+          <div class="setting-row">
+            <span style="font-size:.78rem">Reduce Motion</span>
+            <div class="toggle" id="toggle-reduceMotion" onclick="Settings.toggleV40('reduceMotion')"></div>
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="section-title" style="font-size:.8rem;margin-top:0">Tools</div>
+
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <button class="btn btn-secondary btn-sm" onclick="ResetCenter.open()">🧼 Reset / Initialize</button>
+            <button class="btn btn-secondary btn-sm" onclick="V40UI.exportEncrypted()">🔐 Encrypted Backup</button>
+            <button class="btn btn-secondary btn-sm" onclick="V40UI.showPitch()">📊 Impact Deck</button>
+          </div>
+
+          <div id="v40-adv-hint" style="margin-top:10px;font-size:.72rem;color:var(--text-muted);line-height:1.45">
+            Tip: Screen Awake helps prevent OS from pausing BLE scanning.
+          </div>
+        `;
+        // place near bottom but before the "Guides" card if possible
+        const guidesBtn = panel.querySelector('button[onclick="Help.open()"]');
+        const guidesCard = guidesBtn ? guidesBtn.closest('.card') : null;
+        panel.insertBefore(card, guidesCard || null);
+      }
+
+      this.renderSafeBanner();
+    },
+
+    renderSafeBanner(){
+      // small banner in Home panel if safe mode
+      const home=$('panel-home');
+      if(!home) return;
+      let banner=document.getElementById('safe-banner');
+      if(!banner){
+        banner=document.createElement('div');
+        banner.id='safe-banner';
+        banner.style.margin='10px 0';
+        home.insertBefore(banner, (home.firstElementChild && home.firstElementChild.nextElementSibling) ? home.firstElementChild.nextElementSibling : null);
+      }
+      if(SafeMode.active){
+        banner.innerHTML = `
+          <div class="tip-card warn" style="margin:0">
+            <div class="tip-title">🛡 Safe Mode ON</div>
+            <div class="tip-body">
+              Stability-first settings are active ${SafeMode.reason?('('+Sanitizer.text(SafeMode.reason,60)+')'):''}.
+              <div style="display:flex;gap:8px;margin-top:10px">
+                <button class="btn btn-secondary btn-sm" style="flex:1" onclick="SafeMode.disable()">Disable</button>
+                <button class="btn btn-secondary btn-sm" style="flex:1" onclick="Diag.open()">Diagnostics</button>
+              </div>
+            </div>
+          </div>
+        `;
+      }else{
+        banner.innerHTML='';
+      }
+    },
+
+    async exportEncrypted(){
+      if(!CryptoBox.supported()){ Toast.show('WebCrypto not supported'); return; }
+      const pass = prompt('Set a passphrase for encrypted backup (write it down).', '');
+      if(!pass || pass.length<6){ Toast.show('Passphrase too short'); return; }
+
+      // Use DataManager export structure
+      const includeVoice = await Store.getBlob(VoiceRecall.key) ? confirm('Include Voice Recall audio? (larger file)') : false;
+      let voiceBase64=null;
+
+      if(includeVoice){
+        const blob=await Store.getBlob(VoiceRecall.key);
+        if(blob){
+          voiceBase64 = await new Promise(res=>{
+            const fr=new FileReader();
+            fr.onload=()=>res(fr.result);
+            fr.onerror=()=>res(null);
+            fr.readAsDataURL(blob);
+          });
+        }
+      }
+
+      const data={
+        appVersion:APP_VERSION,
+        schemaVersion:SCHEMA_VERSION,
+        exported:new Date().toISOString(),
+        pets:App.pets.map(p=>p.toJSON()),
+        settings:Settings.prefs,
+        voiceRecall: voiceBase64 ? {included:true, dataUrl:voiceBase64} : {included:false}
+      };
+
+      try{
+        const pack = await CryptoBox.encryptString(JSON.stringify(data), pass);
+        downloadText('santa-ai-v40-backup-encrypted-'+Date.now()+'.json', safeJson(pack), 'application/json');
+        Toast.show('Encrypted backup exported');
+      }catch(e){
+        Toast.show('Encrypt failed');
+      }
+    },
+
+    showPitch(){
+      // open About & Legal directly on Impact tab
+      try{
+        Legal.open('impact');
+      }catch(e){
+        Legal.open();
+      }
+    }
+  };
+
+  /* ----------------------------- PATCH: Settings (new prefs + toggles) ----------------------------- */
+  Settings.prefs = Object.assign({
+    useScanFilters:true,
+    screenAwake:false,
+    autoOptimize:true,
+    largeText:false,
+    highContrast:false,
+    reduceMotion:false
+  }, Settings.prefs||{});
+
+  const _settingsLoad = Settings.load.bind(Settings);
+  Settings.load = async function(){
+    await _settingsLoad();
+
+    this.prefs.useScanFilters = await Store.getSetting('useScanFilters', true);
+    this.prefs.screenAwake = await Store.getSetting('screenAwake', false);
+    this.prefs.autoOptimize = await Store.getSetting('autoOptimize', true);
+    this.prefs.largeText = await Store.getSetting('largeText', false);
+    this.prefs.highContrast = await Store.getSetting('highContrast', false);
+    this.prefs.reduceMotion = await Store.getSetting('reduceMotion', false);
+
+    Accessibility.apply();
+    this._updateToggles();
+    this._updateTogglesV40();
+  };
+
+  Settings._updateTogglesV40 = function(){
+    const t1=$('toggle-scanFilters');
+    const t2=$('toggle-screenAwake');
+    const t3=$('toggle-autoOptimize');
+    const t4=$('toggle-largeText');
+    const t5=$('toggle-highContrast');
+    const t6=$('toggle-reduceMotion');
+    if(t1) t1.classList.toggle('on', !!this.prefs.useScanFilters);
+    if(t2) t2.classList.toggle('on', !!this.prefs.screenAwake);
+    if(t3) t3.classList.toggle('on', !!this.prefs.autoOptimize);
+    if(t4) t4.classList.toggle('on', !!this.prefs.largeText);
+    if(t5) t5.classList.toggle('on', !!this.prefs.highContrast);
+    if(t6) t6.classList.toggle('on', !!this.prefs.reduceMotion);
+  };
+
+  Settings.toggleV40 = async function(key){
+    if(!(key in this.prefs)) return;
+    this.prefs[key]=!this.prefs[key];
+    await Store.saveSetting(key, this.prefs[key]);
+
+    if(key==='useScanFilters'){
+      Toast.show(this.prefs.useScanFilters?'Scan filters ON':'Scan filters OFF');
+      // Apply immediately: restart scan (best effort)
+      if(BLE.scanning) BLE.restartScan('toggle_filters');
+    }
+    if(key==='screenAwake'){
+      Toast.show(this.prefs.screenAwake?'Screen Awake ON':'Screen Awake OFF');
+      if(this.prefs.screenAwake && App.monitoringWanted && BLE.scanning) WakeLockManager.request();
+      else WakeLockManager.release();
+    }
+    if(key==='autoOptimize'){
+      Toast.show(this.prefs.autoOptimize?'Conductor ON':'Conductor OFF');
+      ConductorAI.enabled=this.prefs.autoOptimize;
+      await Store.saveSetting('autoOptimize', this.prefs.autoOptimize);
+    }
+    if(key==='largeText' || key==='highContrast' || key==='reduceMotion'){
+      Accessibility.apply();
+      Toast.show('Accessibility updated');
+    }
+
+    this._updateTogglesV40();
+  };
+
+  // Replace the old destructive Settings.resetApp with the reset center
+  Settings.resetApp = function(){ ResetCenter.open(); };
+
+  /* ----------------------------- PATCH: BLE filters toggle ----------------------------- */
+  const _buildTrackFilters = BLE._buildTrackFilters.bind(BLE);
+  BLE._buildTrackFilters = function(pets){
+    if(Settings && Settings.prefs && Settings.prefs.useScanFilters===false) return null;
+    return _buildTrackFilters(pets);
+  };
+
+  /* ----------------------------- PATCH: Pet AI attach + safe sanitize ----------------------------- */
+  const _origPetToJSON = Pet.prototype.toJSON;
+  Pet.prototype.toJSON = function(){
+    const d=_origPetToJSON.call(this);
+    d.name = Sanitizer.name(d.name);
+    d.icon = Sanitizer.icon(d.icon);
+    d.aiToggles = Object.assign({knn:true, anomaly:true, rls:false}, d.aiToggles||{});
+    d.aiState = d.aiState || {};
+    try{
+      if(this.ai4){
+        d.aiState.knn = this.ai4.knn.export();
+        d.aiState.rls = this.ai4.rls.export();
+        d.aiState.iso = this.ai4.iso.export();
+      }
+    }catch(e){}
+    return d;
+  };
+
+  const _origProcess = Pet.prototype.processRssi;
+  Pet.prototype.processRssi = function(rssi, now){
+    _origProcess.call(this, rssi, now);
+    try{
+      AIPackV4.attachPet(this);
+      AIPackV4.onPetProcessed(this, now);
+    }catch(e){}
+  };
+
+  const _origMarkLost = Pet.prototype.markLost;
+  Pet.prototype.markLost = function(now){
+    _origMarkLost.call(this, now);
+    try{
+      AIPackV4.attachPet(this);
+      AIPackV4.onPetProcessed(this, now);
+    }catch(e){}
+  };
+
+  /* ----------------------------- PATCH: Detail feedback => kNN learning + extra explain ----------------------------- */
+  const _origAiFeedback = Detail.aiFeedback.bind(Detail);
+  Detail.aiFeedback = async function(helpful){
+    try{
+      if(this.pet){
+        AIPackV4.attachPet(this.pet);
+        AIPackV4.learnFromFeedback(this.pet, helpful);
+        await Store.savePet(this.pet);
+      }
+    }catch(e){}
+    return _origAiFeedback(helpful);
+  };
+
+  const _origDetailRender = Detail.render.bind(Detail);
+  Detail.render = async function(){
+    await _origDetailRender();
+
+    const p=this.pet;
+    if(!p) return;
+    AIPackV4.attachPet(p);
+
+    // Add V4 AI explain block under AI section (best effort)
+    try{
+      const explain=AIPackV4.explain(p);
+      const aiSuggestion = document.getElementById('ai-suggestion');
+      if(aiSuggestion){
+        const box=document.createElement('div');
+        box.className='tip-card info';
+        box.style.marginTop='10px';
+        const knnText = (explain.knn===null) ? 'kNN: learning… (need feedback samples)'
+          : (`kNN: <strong>${explain.knn.label? 'DANGER':'SAFE'}</strong> (${explain.knn.conf}% confidence)`);
+        box.innerHTML = `
+          <div class="tip-title">AI Explain (V4)</div>
+          <div class="tip-body">
+            Anomaly score: <strong>${explain.anom}%</strong><br>
+            ${knnText}<br>
+            <span style="color:var(--text-muted)">These are advisory signals. Primary logic remains hysteresis + Kalman smoothing.</span>
+          </div>
+        `;
+        // Insert only once
+        if(!document.getElementById('v40-ai-explain')){
+          box.id='v40-ai-explain';
+          aiSuggestion.parentElement.appendChild(box);
+        }
+      }
+    }catch(e){}
+  };
+
+  /* ----------------------------- PATCH: Wizard + Emergency sanitize ----------------------------- */
+  const _wizardSave = Wizard.save.bind(Wizard);
+  Wizard.save = async function(){
+    try{
+      if($('input-name')) $('input-name').value = Sanitizer.name($('input-name').value||'');
+      this.chosenIcon = Sanitizer.icon(this.chosenIcon);
+    }catch(e){}
+    return _wizardSave();
+  };
+
+  const _emgSaveFromUI = Emergency.saveFromUI.bind(Emergency);
+  Emergency.saveFromUI = function(){
+    try{
+      if($('emg-name')) $('emg-name').value = Sanitizer.text($('emg-name').value||'', 50);
+      if($('emg-phone')) $('emg-phone').value = Sanitizer.phone($('emg-phone').value||'');
+      if($('emg-medical')) $('emg-medical').value = Sanitizer.text($('emg-medical').value||'', 220);
+    }catch(e){}
+    return _emgSaveFromUI();
+  };
+
+  /* ----------------------------- PATCH: App init / monitoring => wake lock + conductor + error shield ----------------------------- */
+  const _appInit = App.init.bind(App);
+  App.init = async function(){
+    ErrorShield.hook();
+    V40UI.inject();
+
+    await _appInit();
+
+    // Post-init loads
+    try{ await ErrorShield.load(); }catch(e){}
+    try{ await SafeMode.load(); }catch(e){}
+    try{ await ConductorAI.init(); }catch(e){}
+    try{ WakeLockManager.hookVisibility(); }catch(e){}
+
+    // Upgrade pets with new AI + sanitize imported names/icons
+    try{
+      for(const p of this.pets){
+        p.name = Sanitizer.name(p.name);
+        p.icon = Sanitizer.icon(p.icon);
+        AIPackV4.attachPet(p);
+      }
+    }catch(e){}
+
+    Accessibility.apply();
+    if(Settings._updateTogglesV40) Settings._updateTogglesV40();
+    V40UI.renderSafeBanner();
+  };
+
+  const _toggleMonitoring = App.toggleMonitoring.bind(App);
+  App.toggleMonitoring = async function(){
+    const before = this.monitoringWanted;
+    await _toggleMonitoring();
+    const after = this.monitoringWanted;
+    if(after && !before){
+      // just turned on
+      if(Settings.prefs.keepAlive) AudioEngine.startKeepAlive();
+      if(Settings.prefs.screenAwake) WakeLockManager.request();
+    }
+    if(!after && before){
+      await WakeLockManager.release();
+    }
+  };
+
+  const _watchdog = App._watchdog.bind(App);
+  App._watchdog = function(){
+    try{ _watchdog(); }catch(e){}
+    try{ ConductorAI.tick(); }catch(e){}
+    // auto safe-mode trigger (best effort, non-destructive)
+    try{
+      if(!SafeMode.active && (BLE.stallCount>=4 || BLE.restartCount>=MAX_RESTARTS_PER_MIN+1)){
+        SafeMode.enable('auto_scan_instability');
+      }
+    }catch(e){}
+  };
+
+  /* ----------------------------- PATCH: Diagnostics (capabilities + error log + battery) ----------------------------- */
+  const _diagSnapshot = Diag.snapshot.bind(Diag);
+  Diag.snapshot = function(){
+    const s=_diagSnapshot();
+    try{
+      s.capabilities = Capabilities.computeSync();
+      s.safeMode = {active:SafeMode.active, reason:SafeMode.reason};
+      s.errors = ErrorShield.ring.data;
+      const bi=ConductorAI.batteryInfo();
+      if(bi) s.battery = bi;
+    }catch(e){}
+    return s;
+  };
+
+  Diag.render = function(){
+    const snap=this.snapshot();
+    const errs = (snap.errors||[]).slice(-12).reverse();
+    $('diag-body').innerHTML = `
+      <div class="tip-card info">
+        <div class="tip-title">Diagnostics Snapshot (V4.0)</div>
+        <div class="tip-body">
+          Use this for debugging scan issues, checking device compatibility, or sharing with maintainers.
+        </div>
+      </div>
+
+      <div style="display:flex;gap:8px;margin:10px 0">
+        <button class="btn btn-secondary btn-sm" style="flex:1" onclick="Diag.copy()">📋 Copy</button>
+        <button class="btn btn-secondary btn-sm" style="flex:1" onclick="Diag.download()">⬇️ Download</button>
+      </div>
+
+      ${Capabilities.renderHTML()}
+
+      <div class="card" style="margin-top:10px">
+        <div class="section-title" style="font-size:.8rem;margin:0 0 8px">Recent Errors</div>
+        ${errs.length ? errs.map(e=>`
+          <div style="border-top:1px solid var(--border-color);padding:10px 0;font-size:.72rem;color:var(--text-secondary);line-height:1.45">
+            <div style="color:var(--text-muted)">${e.t} · <span class="kbd">${e.kind}</span></div>
+            <div><strong>${e.msg}</strong></div>
+            ${e.where?`<div style="color:var(--text-muted)">${e.where}</div>`:''}
+          </div>
+        `).join('') : `<div style="font-size:.75rem;color:var(--text-muted);padding:6px 0">No errors captured.</div>`}
+        <button class="btn btn-secondary btn-sm" style="margin-top:10px;width:100%" onclick="ErrorShield.clear()">Clear Error Log</button>
+      </div>
+
+      <pre id="diag-pre" style="white-space:pre-wrap;background:var(--bg-elevated);padding:12px;border-radius:12px;border:1px solid var(--border-color);font-size:.72rem;color:var(--text-secondary);line-height:1.4;margin-top:10px">${safeJson(snap)}</pre>
+
+      <div class="tip-card warn">
+        <div class="tip-title">Privacy Note</div>
+        <div class="tip-body">
+          This snapshot stays local unless you manually share it. It contains device info (user-agent), but no cloud identifiers.
+        </div>
+      </div>
+    `;
+  };
+
+  Diag.download = function(){
+    const snap=this.snapshot();
+    const blob=new Blob([safeJson(snap)], {type:'application/json'});
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement('a');
+    a.href=url;
+    a.download='santa-ai-v40-diagnostics-'+Date.now()+'.json';
+    a.click();
+    URL.revokeObjectURL(url);
+    Toast.show('Downloaded');
+  };
+
+  /* ----------------------------- PATCH: Coach card (tips + one-tap actions) ----------------------------- */
+  Coach.compute = function(){
+    const {tips, actions} = ConductorAI.compute();
+    // keep original small tips too (fallback)
+    const baseTips=[];
+    try{
+      if(!BLE.checkSupport()){
+        baseTips.push({k:'ble', t:'This browser may not support BLE scanning. Use Android Chrome or Demo mode.'});
+      }
+    }catch(e){}
+    return {tips:[...baseTips, ...tips], actions};
+  };
+
+  Coach.render = function(){
+    const res=this.compute();
+    const tips=res.tips||[];
+    const actions=res.actions||[];
+    const card=$('coach-card');
+    const body=$('coach-body');
+    if(!card || !body) return;
+    if(!tips.length && !actions.length){ card.style.display='none'; return; }
+
+    body.innerHTML = `
+      <ul style="margin-left:18px;line-height:1.6">
+        ${tips.slice(0,6).map(t=>'<li>'+t.t+'</li>').join('')}
+      </ul>
+      ${actions.length ? `
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px">
+          ${actions.slice(0,3).map((a,i)=>`<button class="btn btn-secondary btn-sm" onclick="(${a.fn.toString()})()">${a.label}</button>`).join('')}
+        </div>
+      `:''}
+    `;
+    card.style.display='block';
+  };
+
+  /* ----------------------------- PATCH: Legal / About (Impact Deck + Refugee Self-Reliance content) ----------------------------- */
+  const ImpactDeck = {
+    _lastTab:'about',
+    open(tab='about'){
+      this._lastTab=tab;
+      Legal.open(tab);
+    },
+    // draw a simple unit economics + scale chart
+    draw(){
+      try{
+        const c1=$('impact-chart1');
+        const c2=$('impact-chart2');
+        if(c1) this._drawUnitEconomics(c1);
+        if(c2) this._drawScale(c2);
+      }catch(e){}
+    },
+    _drawUnitEconomics(canvas){
+      const ctx=canvas.getContext('2d');
+      const w=canvas.width=canvas.clientWidth||320;
+      const h=canvas.height=180;
+      ctx.clearRect(0,0,w,h);
+      const pad=18;
+      const barW=62;
+      const x0=pad;
+      const y0=h-pad;
+      const scale= (h-2*pad)/20;
+      // $20 price
+      const parts=[
+        {label:'Social\n$9.50', val:9.5},
+        {label:'Hardware\n$3.00', val:3.0},
+        {label:'R&D\n$2.50', val:2.5},
+        {label:'Retail\n$5.00', val:5.0}
+      ];
+      // stacked bar
+      let y=y0;
+      parts.forEach((p,i)=>{
+        const bh=p.val*scale;
+        ctx.fillStyle = ['#2ecc71','#3498db','#f1c40f','#9b59b6'][i%4];
+        ctx.fillRect(x0, y-bh, barW, bh);
+        y-=bh;
+      });
+      ctx.fillStyle='rgba(255,255,255,.75)';
+      ctx.font='12px system-ui';
+      ctx.fillText('Unit Economics ($20)', x0, pad-4);
+      ctx.font='11px system-ui';
+      let lx=x0+barW+14, ly=pad+18;
+      parts.forEach((p,i)=>{
+        ctx.fillStyle = ['#2ecc71','#3498db','#f1c40f','#9b59b6'][i%4];
+        ctx.fillRect(lx, ly-10, 10, 10);
+        ctx.fillStyle='rgba(255,255,255,.85)';
+        ctx.fillText(p.label.replace('\n',' '), lx+14, ly);
+        ly+=18;
+      });
+    },
+    _drawScale(canvas){
+      const ctx=canvas.getContext('2d');
+      const w=canvas.width=canvas.clientWidth||320;
+      const h=canvas.height=200;
+      ctx.clearRect(0,0,w,h);
+      const pad=28;
+      const x0=pad;
+      const y0=h-pad;
+      ctx.fillStyle='rgba(255,255,255,.75)';
+      ctx.font='12px system-ui';
+      ctx.fillText('Impact Scale Prediction', x0, pad-8);
+
+      const tiers=[
+        {label:'1k', units:1000, val:9500},
+        {label:'10k', units:10000, val:95000},
+        {label:'100k', units:100000, val:950000}
+      ];
+      const max=tiers[2].val;
+      const bw=60;
+      const gap=24;
+      tiers.forEach((t,i)=>{
+        const bh=(t.val/max)*(h-2*pad);
+        const x=x0+i*(bw+gap);
+        ctx.fillStyle='#2ecc71';
+        ctx.fillRect(x, y0-bh, bw, bh);
+        ctx.fillStyle='rgba(255,255,255,.9)';
+        ctx.font='12px system-ui';
+        ctx.fillText(t.label, x+18, y0+16);
+        ctx.font='11px system-ui';
+        ctx.fillText('$'+Math.round(t.val/1000)+'k', x+10, y0-bh-6);
+      });
+    }
+  };
+
+  Legal.open = function(tab){
+    $('legal-overlay').classList.add('active');
+    $('legal-body').innerHTML = this._content(tab||'about');
+    setTimeout(()=>ImpactDeck.draw(), 60);
+  };
+
+  Legal._content = function(tab='about'){
+    const tabs = [
+      {k:'about', t:'About'},
+      {k:'impact', t:'Impact Report'},
+      {k:'refugee', t:'Refugee System'},
+      {k:'legal', t:'Legal'}
+    ];
+    const tabBtns = `
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px">
+        ${tabs.map(x=>`
+          <button class="btn btn-sm ${tab===x.k?'btn-primary':'btn-secondary'}" onclick="Legal.open('${x.k}')">${x.t}</button>
+        `).join('')}
+      </div>
+    `;
+
+    const about = `
+      ${tabBtns}
+      <h2 style="margin-bottom:10px">Santa Claus AI (Offline)</h2>
+      <div class="highlight-box">
+        <p><strong>Santa Claus AI</strong> is an offline-first, single-file safety tool for pets and families using Bluetooth proximity (not GPS).</p>
+        <p style="margin-top:8px"><strong>Core mission:</strong> “The more people know about this AI, the more homeless people can become independent.”</p>
+      </div>
+
+      <div class="tip-card info">
+        <div class="tip-title">Why offline matters</div>
+        <div class="tip-body">
+          Cloud AI assumes money, internet, and modern devices. Offline-first tools can run on old phones, with no monthly fees,
+          and with <strong>privacy-by-design</strong> because data stays on-device.
+        </div>
+      </div>
+
+      <div class="tip-card warn">
+        <div class="tip-title">Reality check</div>
+        <div class="tip-body">
+          Bluetooth RSSI is noisy. Walls, metal, crowds, and tag orientation change signal strength.
+          Use alerts as <em>signals</em>, not absolute truth.
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <h3>Source / Project</h3>
+      <div class="tip-card info">
+        <div class="tip-title">Open-source direction</div>
+        <div class="tip-body">
+          Repository: GitHub (header link)<br>
+          Partners: Mediators Foundation / Mesa (impact program)
+        </div>
+      </div>
+    `;
+
+    const impact = `
+      ${tabBtns}
+      <h2 style="margin-bottom:6px">[SOCIAL IMPACT REPORT] Santa Claus AI</h2>
+      <div style="color:var(--text-muted);font-size:.78rem;margin-bottom:12px">Project: The Resurrection of Dignity · Date: February 2026</div>
+
+      <div class="tip-card info">
+        <div class="tip-title">Executive Summary</div>
+        <div class="tip-body">
+          This project combines <strong>Offline AI</strong> with a <strong>self-reliance manufacturing model</strong> to turn tech exclusion into a safety net.
+          We do not just sell a product — we propose a new standard for <strong>dignity</strong> and <strong>survival</strong>.
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="section-title" style="font-size:.82rem;margin-top:0">Problem</div>
+        <div style="font-size:.78rem;color:var(--text-secondary);line-height:1.6">
+          <ul style="margin:8px 0 0 18px">
+            <li><strong>Digital exclusion:</strong> most AI requires expensive devices + internet.</li>
+            <li><strong>Low-value self-help work:</strong> many programs offer only short-term, low-skill labor.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="section-title" style="font-size:.82rem;margin-top:0">Innovation</div>
+        <div style="font-size:.78rem;color:var(--text-secondary);line-height:1.6">
+          <strong>Sentinel Survival Core</strong> concepts:
+          PWA, Wake Lock, self-reload, safety-grade offline operation, and multi-hazard readiness.
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="section-title" style="font-size:.82rem;margin-top:0">Unit Economics</div>
+        <div style="font-size:.78rem;color:var(--text-secondary);line-height:1.55">
+          Retail price example: <strong>$20</strong><br>
+          Social value returned: <strong>$9.50</strong> (47.5% of revenue)
+        </div>
+        <canvas id="impact-chart1" style="width:100%;border-radius:12px;border:1px solid var(--border-color);margin-top:10px"></canvas>
+      </div>
+
+      <div class="card">
+        <div class="section-title" style="font-size:.82rem;margin-top:0">Impact Scale</div>
+        <div style="font-size:.78rem;color:var(--text-secondary);line-height:1.55">
+          10,000 units sold → <strong>$95,000</strong> social fund + 5,000 hours of dignified work (example model).
+        </div>
+        <canvas id="impact-chart2" style="width:100%;border-radius:12px;border:1px solid var(--border-color);margin-top:10px"></canvas>
+      </div>
+
+      <div class="tip-card info">
+        <div class="tip-title">Ethical Trojan Horse (Strategy)</div>
+        <div class="tip-body">
+          We do not fight big-tech in their home turf. We go where they cannot:
+          <ul style="margin:8px 0 0 18px;line-height:1.5">
+            <li><strong>B2B:</strong> ESG-driven corporate purchases,</li>
+            <li><strong>B2G:</strong> city budgets for missing pets/children,</li>
+            <li><strong>B2C:</strong> “lifetime safety” with no monthly subscription.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <h3>Entrepreneur Pitch (1-minute)</h3>
+      <div class="highlight-box">
+        <p><strong>We are not donating gadgets.</strong> We are building an economy where every sale funds wages, operations, and safety infrastructure — automatically.</p>
+        <p style="margin-top:8px">Offline-first + privacy-first makes it viable in the exact places where “AI revolution” never arrives.</p>
+      </div>
+    `;
+
+    const refugee = `
+      ${tabBtns}
+      <h2 style="margin-bottom:10px">Refugee Self-Reliance System</h2>
+
+      <div class="tip-card info">
+        <div class="tip-title">Concept</div>
+        <div class="tip-body">
+          A <strong>Refugee Self-Reliance System</strong> adapts the same offline manufacturing model to humanitarian settings:
+          refugee camps, temporary shelters, and conflict-displaced communities.
+          The goal is to convert “aid dependency” into <strong>skills + income + community safety</strong>.
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="section-title" style="font-size:.82rem;margin-top:0">How it works</div>
+        <div style="font-size:.78rem;color:var(--text-secondary);line-height:1.65">
+          <ol style="margin:8px 0 0 18px">
+            <li><strong>Offline devices</strong> assembled locally with visual step-by-step guides.</li>
+            <li><strong>Immediate micro-wages</strong> per assembly (transparent payout).</li>
+            <li><strong>Community safety layer</strong>: missing children, elder wandering, disaster alerts — without internet.</li>
+            <li><strong>Privacy-by-design</strong>: no cloud profiles, no forced registration, local-only data.</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="tip-card warn">
+        <div class="tip-title">Human rights constraint</div>
+        <div class="tip-body">
+          This system must never become surveillance. Deployment requires consent, anti-abuse safeguards, and independent oversight.
+        </div>
+      </div>
+
+      <div class="highlight-box">
+        <p><strong>Why it matters:</strong> dignity is not a slogan — it is cashflow, identity, and safety you can measure.</p>
+      </div>
+    `;
+
+    const legal = `
+      ${tabBtns}
+      <h2 style="margin-bottom:10px">Legal & Safety</h2>
+
+      <div class="warning-legal">
+        <p><strong>No Warranty / No Liability:</strong> This app provides best-effort alerts only. Use common sense and real-world safety practices.</p>
+        <p><strong>Not GPS:</strong> Bluetooth RSSI cannot produce an accurate map location.</p>
+      </div>
+
+      <div class="divider"></div>
+
+      <h3>Ethical License (Hippocratic 3.0 Derivative)</h3>
+      <div class="tip-card info">
+        <div class="tip-title">Humanitarian Use Only</div>
+        <div class="tip-body">
+          Allowed: pet safety, family safety, rescue coordination, accessibility tools, humanitarian support.<br>
+          Prohibited: military, surveillance, oppression, non-consensual tracking, border militarization, weaponization.
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <h3>Technical Manifest</h3>
+      <pre style="white-space:pre-wrap;background:var(--bg-elevated);padding:12px;border-radius:12px;border:1px solid var(--border-color);font-size:.72rem;color:var(--text-secondary);line-height:1.4">${safeJson(ETHICAL_MANIFEST)}</pre>
+    `;
+
+    if(tab==='impact') return impact;
+    if(tab==='refugee') return refugee;
+    if(tab==='legal') return legal;
+    return about;
+  };
+
+  /* ----------------------------- PATCH: SOS snapshot sanitize ----------------------------- */
+  const _sosUpdateSnapshot = SOS.updateSnapshot.bind(SOS);
+  SOS.updateSnapshot = function(pet){
+    try{
+      if(pet){
+        pet.name = Sanitizer.name(pet.name);
+        pet.icon = Sanitizer.icon(pet.icon);
+      }
+    }catch(e){}
+    return _sosUpdateSnapshot(pet);
+  };
+
+  /* ----------------------------- PATCH: Data import supports encrypted pack ----------------------------- */
+  const _handleImport = DataManager.handleImport.bind(DataManager);
+  DataManager.handleImport = async function(ev){
+    const file=ev.target.files && ev.target.files[0];
+    if(!file) return;
+    try{
+      const text=await file.text();
+      let data=JSON.parse(text);
+
+      if(data && data.enc){
+        if(!CryptoBox.supported()) throw new Error('Crypto not supported');
+        const pass = prompt('Enter passphrase to decrypt this backup:', '');
+        if(!pass) throw new Error('No passphrase');
+        const plain = await CryptoBox.decryptToString(data, pass);
+        data = JSON.parse(plain);
+        // Build a fake event payload for original handler
+        const blob = new Blob([JSON.stringify(data)], {type:'application/json'});
+        const f2 = new File([blob], 'decrypted-backup.json', {type:'application/json'});
+        const ev2 = {target:{files:[f2]}};
+        return _handleImport(ev2);
+      }
+    }catch(e){
+      // fall through to normal handler
+    }
+    return _handleImport(ev);
+  };
+
+  /* ----------------------------- FINAL: boot once ----------------------------- */
+  // Ensure injection is ready even if Settings tab opened before init
+  try{ V40UI.inject(); }catch(e){}
+
+})();
+
 
 /* ----------------------------- GLOBAL EVENT HOOKS ----------------------------- */
 // Prime audio on first user gesture (helps autoplay restrictions)

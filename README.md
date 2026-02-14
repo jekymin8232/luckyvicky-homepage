@@ -1,3 +1,5 @@
+To test how flawlessly the offline AI engine and BLE proximity mesh perform in everyday environments, I initially built the prototype skinned as a 'Pet Safety Leash'—the most universal and harmless use case. However, this exact same underlying engine directly powers the Activist Survival Mode and the Refugee Self-Reliance system.
+
 # 🛡️ VitalGuard (formerly Santa Claus AI)
 
 ### Offline AI-Powered Humanitarian & Activist Safety System — In a Single 300kb HTML File

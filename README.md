@@ -1,6 +1,6 @@
-# 🎅 Santa Claus AI
+# 🛡️ VitalGuard (formerly Santa Claus AI)
 
-### Offline AI-Powered Pet Safety System — In a Single 139KB HTML File
+### Offline AI-Powered Humanitarian & Activist Safety System — In a Single 139KB HTML File
 
 ---
 
@@ -11,13 +11,26 @@
 
 ## What This Is
 
-Santa Claus AI is a complete pet safety system that runs **entirely offline** inside a **single HTML file (139KB)**. No servers. No cloud. No accounts. No app store. No internet required — ever.
+VitalGuard is a complete offline safety and survival system designed for **activists, refugees, and vulnerable individuals**, running **entirely offline** inside a **single HTML file (139KB)**. No servers. No cloud. No accounts. No data collection. No internet required — ever.
 
-It uses four real AI algorithms, Bluetooth Low Energy, and a smartphone to create a **virtual safety leash** around a pet. When the pet drifts too far, the system escalates through four alert zones — from a gentle chime to a full siren — while an embedded AI learns from user feedback to reduce false alarms over time.
+It uses four real AI algorithms, Bluetooth Low Energy (BLE), and a discarded legacy smartphone to create an **Offline Safety Tether** (proximity mesh) and an **Emergency Survival Mode**. 
 
-The entire system — UI, AI engine, audio synthesis, data storage, service worker, and PWA manifest — ships as **one file** that can be transferred via USB stick, Bluetooth file share, or QR code.
+The entire system — UI, AI engine, audio synthesis, data storage, and PWA manifest — ships as **one auditable file** that can be transferred via USB stick, Bluetooth file share, or offline QR code.
 
-**Price:** $5 one-time. **50% goes to homeless charities.**
+**Social Mission:** 50% of any commercial application proceeds go to homeless rehabilitation. The core tech remains 100% free and open-source for humanitarian use.
+
+---
+
+## Core Humanitarian Features
+
+### 1. Emergency Mode (Activist Survival)
+Turns any smartphone into a **panic device**: loud siren (Web Audio synthesis), RGB strobe (CSS animation), and an offline QR code encoding emergency contacts and critical medical information. Activates instantly via a 2-second hold or physical shake.
+
+### 2. Refugee Self-Reliance System
+Designed for refugee camps and temporary shelters. Converts tech exclusion into a community safety net. Missing children or wandering elders can be protected using $2 offline BLE tags, while assembly and maintenance create dignified micro-income for the displaced.
+
+### 3. Invisible Safety Tether (Proximity AI)
+Uses 4 AI algorithms to stabilize noisy BLE signals into a reliable distance estimator. Alerts caregivers or companions when a vulnerable person (e.g., a child in a crowded camp) drifts too far away, preventing loss before it happens.
 
 ---
 

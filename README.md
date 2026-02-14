@@ -1,6 +1,6 @@
 # 🛡️ VitalGuard (formerly Santa Claus AI)
 
-### Offline AI-Powered Humanitarian & Activist Safety System — In a Single 139KB HTML File
+### Offline AI-Powered Humanitarian & Activist Safety System — In a Single 300kb HTML File
 
 ---
 
@@ -11,7 +11,7 @@
 
 ## What This Is
 
-VitalGuard is a complete offline safety and survival system designed for **activists, refugees, and vulnerable individuals**, running **entirely offline** inside a **single HTML file (139KB)**. No servers. No cloud. No accounts. No data collection. No internet required — ever.
+VitalGuard is a complete offline safety and survival system designed for **activists, refugees, and vulnerable individuals**, running **entirely offline** inside a **single HTML file (300kb)**. No servers. No cloud. No accounts. No data collection. No internet required — ever.
 
 It uses four real AI algorithms, Bluetooth Low Energy (BLE), and a discarded legacy smartphone to create an **Offline Safety Tether** (proximity mesh) and an **Emergency Survival Mode**. 
 
@@ -162,7 +162,7 @@ that can't account for a pet that always hangs out near the metal fence
 ## Architecture: One File, Zero Dependencies
 
 ```
-santa-AI-complete.html (139KB)
+santa-AI-complete.html (300kb)
 ├── CSS .............. ~870 lines   Dark theme, responsive, PWA-ready
 ├── HTML ............. ~1,200 lines  3 modes + 5 overlays + settings
 ├── JavaScript ....... ~2,500 lines  All logic below
@@ -205,7 +205,7 @@ A single HTML file can be shared via USB stick, Bluetooth file transfer, WhatsAp
 
 | Metric | Value |
 |---|---|
-| File size | 139KB (smaller than most JPEG photos) |
+| File size | 300kb (smaller than most JPEG photos) |
 | Total lines of code | 3,716 |
 | AI algorithm lines | ~585 (4 algorithms, production-ready) |
 | External dependencies | 0 |
@@ -319,7 +319,7 @@ These principles are the foundation of this project. They are not subject to com
 ## File Structure
 
 ```
-santa-AI-complete.html .... The entire application (139KB)
+santa-AI-complete.html .... The entire application (300kb)
 README.md ................. This document
 ```
 

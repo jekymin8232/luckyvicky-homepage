@@ -1,98 +1,102 @@
-# VitalGuard AI — Life‑Saving Offline AI Demo (v4.1.2)
+# VitalGuard AI — Life‑Saving Offline AI Demo (v4.1.3)
 
-VitalGuard AI is a **single‑file, offline‑only** demo that pairs a **tiny on‑device AI engine** with **Bluetooth (BLE) proximity** to keep helping people even when the cloud is unavailable.
+VitalGuard AI is a **single‑file, offline‑only** technology demonstration that pairs a **tiny on‑device AI engine (~100KB‑class)** with **Bluetooth (BLE) proximity scanning**.
 
-- **Runs in shutdown conditions:** no internet, no cloud accounts, no app store dependency  
-- **No data collection:** no telemetry, no analytics, no server calls → **GDPR‑friendly by design**  
-- **Demo skin:** the current UI is shown as a “Pet Safety Leash” because it’s universal and harmless — **it’s a demo presentation**, not the final product domain.
+It’s designed as a *resilience primitive* — something that can still work when the cloud, accounts, app stores, or networks are unavailable.
+
+- **Offline by design:** no server calls, no cloud dependency, no login
+- **No data collection:** no telemetry, no analytics, no tracking scripts → **GDPR‑friendly posture**
+- **Auditable:** a single HTML file with vanilla JS (no external libraries)
+- **Demo skin:** the UI is intentionally presented as a **“Pet Safety Leash”** because it’s universal and harmless — **this is a demo presentation, not the final product domain**
+
+**Public repository:** https://github.com/jekymin8232/luckyvicky-homepage
 
 > **Default UI language:** English  
-> **Supported UI languages:** English, 한국어, العربية, 日本語, Français, 繁體中文(台灣), Español
+> **Supported UI languages:** English, 한국어, العربية, 日本語, Français, 繁體中文(台灣), Español  
+> (In v4.1.3 you can switch language via the header Language menu or the dropdown.)
 
-Repository (public source): https://github.com/jekymin8232/luckyvicky-homepage
+---
 
+## What it does (plain language)
 
-## What this demo is (plain language)
-
-When networks fail (wildfires, landslides, tsunamis, mass evacuations), many “smart” solutions stop working because they depend on:
+When networks fail (wildfires, landslides, tsunamis, evacuations), many “smart” systems stop working because they depend on:
 - accounts / logins
 - cloud APIs
-- payments / subscriptions
+- subscriptions
 - background services that require connectivity
 
 VitalGuard AI demonstrates a different approach:
 
-1) **A phone listens to nearby BLE tags** (cheap key‑finder tags, beacons, trackers).  
-2) The signal (RSSI) is noisy, so a **small AI layer** stabilizes it.  
-3) The app shows simple “zones” (SAFE / CAUTION / WARNING) and can trigger **offline SOS primitives** (QR contact card, audio beacon, etc.).
+1) A phone **listens to nearby BLE tags** (cheap key‑finder tags, beacons, small trackers).  
+2) BLE signal strength (**RSSI**) is noisy, so a **small AI layer stabilizes it** (math‑based filtering).  
+3) The UI shows simple **zones** (SAFE / CAUTION / WARNING) instead of pretending BLE is perfect GPS.  
+4) Optional **offline SOS primitives** (QR contact card, audio beacon, etc.) are available for field use.
 
-This is intentionally designed to be understandable by **diplomats, NGOs, universities, and companies** — not only by AI engineers.
+This is intentionally written so **diplomats, NGOs, universities, and non‑engineers** can understand the system quickly.
 
+---
 
-## Why it matters (life‑saving focus)
+## Why it matters (life‑saving angle)
 
-VitalGuard AI is structured as a **resilience primitive**: simple tools that still work during a blackout or shutdown.
+VitalGuard AI is not “a pet product”. The leash UI is only a harmless demo wrapper.
 
-Example humanitarian / disaster uses (concept demos):
-- **Evacuation centers:** tag medical kits / generators → alert if moved outside a safe zone  
-- **Search & rescue:** tag responders or equipment → quickly know what is nearby in low visibility  
-- **Family reunification:** proximity monitoring between guardian and child (**not GPS**)  
+The underlying offline engine can support demonstrations such as:
+- **Evacuation centers:** tag medical kits / generators → alert if moved outside a safe zone
+- **Search & rescue:** tag responders/equipment → quickly know what is nearby in low visibility
+- **Family reunification:** proximity monitoring between guardian and child (**not GPS**)
 - **Critical inventory control:** offline zone alerts for water/food/medical supplies
 
+---
 
-## What makes it credible
+## What’s inside the demo (key capabilities)
 
-- **Auditable:** one HTML file, no external libraries, easy for security review  
-- **No silent networking:** no analytics SDKs, no tracking scripts  
-- **Tiny AI engine:** the core logic is ~**100 KB**‑class (roughly “smaller than a single photo”) and relies on compact, math‑based processing rather than a heavy cloud model  
-- **Deployable:** works on common Android phones + cheap BLE tags  
-- **Mesh‑ready:** concept support for cooperative multi‑phone scanning and offline result sharing  
-- **Secure hand‑off:** optional encrypted “Rescue Pack” exports for audits / field transfer  
-- **Security features:** encrypted export/backup options (when enabled) and local‑first design
+- **Offline BLE proximity monitoring** (scan‑based, RSSI stream)
+- **Tiny AI signal stabilizer** (compact math‑based processing; no cloud model)
+- **Zone logic** (anti‑flapping / hysteresis to reduce noisy false alerts)
+- **Multi‑tag support** (register multiple demo tags)
+- **Diagnostics export** (share a self‑contained debug snapshot during field tests)
+- **Encrypted local backup** (optional AES‑GCM “Rescue Pack” export for transfer/audit)
+- **Single‑file deployment** (easy for security review and offline distribution)
 
+---
 
 ## Quick demo (recommended)
 
 **Best environment:** Android + Chrome  
-**Note:** Web Bluetooth typically requires a secure context (**https://** or **localhost**). Some browsers may not allow BLE scanning from `file://`.
+**Important:** Web Bluetooth typically requires a secure context (**https://** or **localhost**). Some browsers restrict BLE scanning from `file://`.
 
-1. Open the demo page (GitHub Pages or a local HTTPS server).  
-2. Prepare a cheap BLE key‑finder tag (keywords: *iTag*, *Key Finder*, *Anti‑lost BLE*).  
-3. Home → **Add Demo Tag** → follow the wizard (near → move away → name).  
-4. Start monitoring and observe SAFE/CAUTION/WARNING zone changes as proximity changes.  
-5. Test **SOS** features (offline QR + audio beacon).
+1) Open the demo page (GitHub Pages or a local HTTPS server).  
+2) Prepare a cheap BLE key‑finder tag (search keywords: *iTag*, *Key Finder*, *Anti‑lost BLE*).  
+3) Home → **Add Demo Tag** → follow the wizard (near → move away → name).  
+4) Start monitoring and observe SAFE/CAUTION/WARNING zone changes as proximity changes.  
+5) Test **SOS** features (offline QR + audio beacon).
 
-If BLE permission prompts appear: it’s a browser security policy. Installing as a PWA often improves stability.
+If BLE permission prompts appear: that’s a browser security policy. Installing as a PWA often improves stability.
 
+---
 
-## Privacy & GDPR
+## Privacy & GDPR posture (what we mean)
 
 VitalGuard AI is built around a strict privacy posture:
 - **No accounts**
 - **No telemetry / analytics**
 - **No server uploads**
-- Data is stored locally on the device (and can be erased anytime)
+- Data stays **on the device** (and can be erased anytime)
 - Export/backup/diagnostics are **user‑initiated only**
 
+---
 
-## Important limitations (honest notes)
+## Honest limitations
 
-- **Not GPS:** BLE proximity is affected by walls, crowds, pockets, metal, and weather conditions.  
-- Treat zones as **signals**, not exact meters.  
-- This is a **technology demonstration**, not a certified life‑critical device.  
-- Web Bluetooth support varies by platform (iOS Safari is typically limited).
+- **Not GPS:** BLE proximity is affected by walls, crowds, pockets, metal, and weather.
+- Treat zones as **signals**, not exact meters.
+- This is a **technology demonstration**, not a certified life‑critical medical device.
+- Browser BLE support varies by platform.
 
+---
 
-## Project identity & contact
+## Identity & contact
 
 - Organization: **McorpAI** — mcorpai.org  
 - Creator: **Morgan J.** (Korean name: **Gyumin Jeon**)  
 - Contact: **contact@mcorpai.org**
-
-
-## License / Ethical use
-
-This project is intended for **humanitarian, life‑saving purposes**.  
-Military or surveillance use is prohibited by the project’s ethical license.
-
-(See the license section inside the HTML for the most current text.)

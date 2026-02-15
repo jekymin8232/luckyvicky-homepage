@@ -1,102 +1,113 @@
-# VitalGuard AI — Life‑Saving Offline AI Demo (v4.1.3)
+# VitalGuard AI — Life‑Saving Offline AI Demo (v4.1.4)
 
-VitalGuard AI is a **single‑file, offline‑only** technology demonstration that pairs a **tiny on‑device AI engine (~100KB‑class)** with **Bluetooth (BLE) proximity scanning**.
+A **single‑file, offline‑only** web demo that combines:
 
-It’s designed as a *resilience primitive* — something that can still work when the cloud, accounts, app stores, or networks are unavailable.
+- **Bluetooth Low Energy (BLE) proximity** (RSSI from advertisement scanning)
+- A tiny **on‑device “micro‑AI” engine** (signal smoothing + stability logic + optional local learning)
+- **Emergency/SOS** UX that still works when the network/cloud is unavailable
 
-- **Offline by design:** no server calls, no cloud dependency, no login
-- **No data collection:** no telemetry, no analytics, no tracking scripts → **GDPR‑friendly posture**
-- **Auditable:** a single HTML file with vanilla JS (no external libraries)
-- **Demo skin:** the UI is intentionally presented as a **“Pet Safety Leash”** because it’s universal and harmless — **this is a demo presentation, not the final product domain**
+This repository is intentionally built so that a reviewer can open **one HTML file** and understand what it does — no build system, no external JS libraries, and no hidden telemetry.
 
-**Public repository:** https://github.com/jekymin8232/luckyvicky-homepage
-
-> **Default UI language:** English  
-> **Supported UI languages:** English, 한국어, العربية, 日本語, Français, 繁體中文(台灣), Español  
-> (In v4.1.3 you can switch language via the header Language menu or the dropdown.)
+**Live / source:** https://github.com/jekymin8232/luckyvicky-homepage  
+**Contact:** Morgan J. (Gyumin Jeon) · contact@mcorpai.org · mcorpai.org
 
 ---
 
-## What it does (plain language)
+## Why the UI looks like a “Pet Safety Leash”
 
-When networks fail (wildfires, landslides, tsunamis, evacuations), many “smart” systems stop working because they depend on:
-- accounts / logins
-- cloud APIs
-- subscriptions
-- background services that require connectivity
+To test the offline AI engine and BLE proximity system **in everyday environments**, the prototype is skinned as a **“Pet Safety Leash”** — a universal, non‑sensitive use case.
 
-VitalGuard AI demonstrates a different approach:
+The **same underlying offline engine** can be re‑skinned for humanitarian and disaster contexts such as:
 
-1) A phone **listens to nearby BLE tags** (cheap key‑finder tags, beacons, small trackers).  
-2) BLE signal strength (**RSSI**) is noisy, so a **small AI layer stabilizes it** (math‑based filtering).  
-3) The UI shows simple **zones** (SAFE / CAUTION / WARNING) instead of pretending BLE is perfect GPS.  
-4) Optional **offline SOS primitives** (QR contact card, audio beacon, etc.) are available for field use.
+- evacuation / muster guidance,
+- search & rescue assistance,
+- field operations in low‑connectivity environments,
+- disaster response coordination *without cloud dependencies*.
 
-This is intentionally written so **diplomats, NGOs, universities, and non‑engineers** can understand the system quickly.
+(Important: this demo uses **BLE proximity**, not GPS.)
 
 ---
 
-## Why it matters (life‑saving angle)
+## What it does (high level)
 
-VitalGuard AI is not “a pet product”. The leash UI is only a harmless demo wrapper.
+### 1) Offline BLE proximity tracking (Advertisement RSSI)
+- Uses **Web Bluetooth LE Scanning** (`requestLEScan` + `advertisementreceived`) to read RSSI repeatedly.
+- Tracks one or many BLE tags with a **registration wizard** (name the tag, save a signature, verify by moving).
+- Includes **scan health** monitoring (events/sec + watchdog restart when the scan stalls).
 
-The underlying offline engine can support demonstrations such as:
-- **Evacuation centers:** tag medical kits / generators → alert if moved outside a safe zone
-- **Search & rescue:** tag responders/equipment → quickly know what is nearby in low visibility
-- **Family reunification:** proximity monitoring between guardian and child (**not GPS**)
-- **Critical inventory control:** offline zone alerts for water/food/medical supplies
+### 2) Decision stability (“AI core”)
+BLE RSSI is noisy. VitalGuard focuses on **stable decisions**, not fake precision.
 
----
+The core engine includes:
+- **Kalman filtering** to smooth RSSI and estimate trend/velocity.
+- **Hysteresis + anti‑flapping zone logic** so alerts don’t bounce rapidly.
+- **Lost detection** when signal is absent for a configured window.
 
-## What’s inside the demo (key capabilities)
+Optional “local learning” modules are included (all on‑device, no cloud):
+- **k‑NN Lite** (learns from user feedback samples)
+- **IsolationForest Lite** (baseline anomaly scoring from SAFE windows)
+- **Q‑learning Lite** (small threshold adjustments from feedback)
+- **RLS calibration** (optional calibration of RSSI→distance mapping)
 
-- **Offline BLE proximity monitoring** (scan‑based, RSSI stream)
-- **Tiny AI signal stabilizer** (compact math‑based processing; no cloud model)
-- **Zone logic** (anti‑flapping / hysteresis to reduce noisy false alerts)
-- **Multi‑tag support** (register multiple demo tags)
-- **Diagnostics export** (share a self‑contained debug snapshot during field tests)
-- **Encrypted local backup** (optional AES‑GCM “Rescue Pack” export for transfer/audit)
-- **Single‑file deployment** (easy for security review and offline distribution)
-
----
-
-## Quick demo (recommended)
-
-**Best environment:** Android + Chrome  
-**Important:** Web Bluetooth typically requires a secure context (**https://** or **localhost**). Some browsers restrict BLE scanning from `file://`.
-
-1) Open the demo page (GitHub Pages or a local HTTPS server).  
-2) Prepare a cheap BLE key‑finder tag (search keywords: *iTag*, *Key Finder*, *Anti‑lost BLE*).  
-3) Home → **Add Demo Tag** → follow the wizard (near → move away → name).  
-4) Start monitoring and observe SAFE/CAUTION/WARNING zone changes as proximity changes.  
-5) Test **SOS** features (offline QR + audio beacon).
-
-If BLE permission prompts appear: that’s a browser security policy. Installing as a PWA often improves stability.
+### 3) SOS / Emergency UX (offline)
+- **SOS Finder**: a focused UI to assist locating a selected tag.
+- **Emergency Mode**: loud siren / strobe / big on‑screen message.
+- **Rescue Assist**: share an offline **“Rescue Pack”** so another phone can scan for the same tag.
+- **Backups**: export/import local data; **optional encrypted exports** (AES‑GCM) for safe hand‑off.
 
 ---
 
-## Privacy & GDPR posture (what we mean)
+## Privacy & GDPR posture (plain language)
 
-VitalGuard AI is built around a strict privacy posture:
-- **No accounts**
-- **No telemetry / analytics**
-- **No server uploads**
-- Data stays **on the device** (and can be erased anytime)
-- Export/backup/diagnostics are **user‑initiated only**
+- **No accounts. No cloud sync. No analytics/telemetry.**
+- Data is stored **locally on the device** (browser storage).
+- Nothing is uploaded unless the user **explicitly exports** a file.
 
----
-
-## Honest limitations
-
-- **Not GPS:** BLE proximity is affected by walls, crowds, pockets, metal, and weather.
-- Treat zones as **signals**, not exact meters.
-- This is a **technology demonstration**, not a certified life‑critical medical device.
-- Browser BLE support varies by platform.
+This is designed to be **GDPR‑friendly by architecture** (local‑only).  
+*(This README is not legal advice.)*
 
 ---
 
-## Identity & contact
+## How to run the demo
 
-- Organization: **McorpAI** — mcorpai.org  
-- Creator: **Morgan J.** (Korean name: **Gyumin Jeon**)  
-- Contact: **contact@mcorpai.org**
+1. Download/open `VitalGuard AI_complete_V41_4.html`.
+2. Use a **Chromium‑based browser** that supports Web Bluetooth scanning (support varies by platform).
+3. For the most reliable behavior, serve the file from:
+   - `https://…` or `http://localhost`  
+   (some browsers restrict BLE on `file://`).
+4. Click **Add Demo Tag** → register a BLE tag → start monitoring.
+
+---
+
+## Limitations (important to understand)
+
+- **BLE RSSI is not a tape measure.** Walls, pockets, bodies, and reflections can distort signal strength.
+- Scanning can pause due to OS battery restrictions; the demo includes watchdog recovery, but **background behavior varies** by device.
+- This is a **technology demo**, not a certified safety/medical product.
+
+---
+
+## What to look at (for reviewers)
+
+- `BLE` module: scanning lifecycle, filters, scan watchdog, adv/sec metrics
+- `Wizard`: tag registration + signature capture
+- `Pet` processing: Kalman smoothing, zone stability, alert rules
+- `AIPackV4` / `QLearningLite`: optional on‑device learning
+- Export/import + optional encryption (“Rescue Pack”)
+
+---
+
+## License & use
+
+This demo is published openly for review and humanitarian innovation.  
+It includes an ethical‑use notice (no military/surveillance use).
+
+---
+
+If you are evaluating this for humanitarian or disaster use, please share:
+- device models,
+- tag types,
+- whether you tested indoors/outdoors,
+- whether scanning remains stable in the background.
+
+That feedback helps harden the offline engine for real‑world conditions.

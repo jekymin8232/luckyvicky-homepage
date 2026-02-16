@@ -1,4 +1,18 @@
-# VitalGuard AI — Life‑Saving Offline AI Demo (v4.1.4)
+# VitalGuard AI — Infrastructure‑Independent Survival Framework (v4.1.5)
+
+
+**VitalGuard AI v4.1.5** is a **single‑file, offline‑first** _Infrastructure‑Independent Survival Framework_ built for continuity when power and connectivity are disrupted.
+
+It is deliberately packaged as one self‑contained HTML file so decision‑makers and reviewers can validate the concept quickly—no build system, no external JS libraries, and no hidden uploads.
+
+### Main-screen pillars (for diplomats & senior decision‑makers)
+
+1) **Extreme S&R (Avalanche/Landslide)** — Bluetooth beacon proximity + on‑device stability logic to support a **radar‑like life‑locator workflow** when responders are operating off‑grid.
+2) **Upcycling E‑Waste (ESG & SDGs)** — repurpose retired / abandoned smartphones into offline relief nodes, aligning with ESG and UN SDG objectives.
+3) **Off‑Grid Agriculture & Asset Protection** — practical patterns for livestock and asset safety in rangeland/desert environments with no coverage.
+4) **Arabic & Global Ready** — multilingual UI is built in (7 languages), including **Arabic (RTL)** for immediate field deployment.
+
+> Note: This project is a technology demonstration and decision‑support tool. It does not replace certified emergency equipment, medical advice, or formal incident command systems.
 
 A **single‑file, offline‑only** web demo that combines:
 
@@ -100,7 +114,7 @@ This is designed to be **GDPR‑friendly by architecture** (local‑only).
 ## License & use
 
 This demo is published openly for review and humanitarian innovation.  
-It includes an ethical‑use notice (no military/surveillance use).
+It includes an ethical‑use notice: **exclusively for civilian, agricultural, and humanitarian use**.
 
 ---
 
@@ -152,7 +166,7 @@ This is a practical checklist for embassy / NGO / enterprise review teams.
 ### Safety boundaries / ethics
 - [ ] Confirm the UI clearly states: **“NOT GPS”** and proximity estimates are approximate.
 - [ ] Confirm the demo is presented as a **technology demonstration**, not a certified safety/medical product.
-- [ ] Confirm the intended use excludes surveillance/harassment (ethical use notice).
+- [ ] Confirm the intended use is **civilian, agricultural, or humanitarian**, and privacy‑first (local‑only; zero data‑retention footprint).
 
 ---
 

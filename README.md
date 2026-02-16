@@ -2,7 +2,6 @@
 
 VitalGuard AI is a **single-file, offline-first** continuity demo that keeps **local decision support** available when **power and connectivity are disrupted** - with **no accounts, no cloud dependency, and no telemetry by design**.
 
-**Primary audience:** diplomats; government/agency reviewers; enterprise security/compliance teams; university research labs  
 **Format:** one self-contained HTML file (no build system; no external JS/CSS libraries)
 
 ---
@@ -15,7 +14,7 @@ VitalGuard AI is a **single-file, offline-first** continuity demo that keeps **l
 | Release artifact | `VitalGuard_AI_complete_V41_7.html` (single-file offline demo) |
 | Version | v4.1.7 |
 | Release date | 2026-02-16 |
-| Owner | Morgan J. (Gyumin Jeon) - Hanbat National University (Daejeon, Republic of Korea) |
+| Owner | Morgan J. (Gyumin Jeon) |
 | Contact | contact@mcorpai.org (mcorpai.org) |
 | Classification | Unclassified - For external review |
 | Distribution | Embassies/UN/NGOs; government/agency reviewers; corporate security/compliance; university research reviewers |

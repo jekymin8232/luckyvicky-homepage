@@ -17,7 +17,6 @@ VitalGuard AI is a **single-file, offline-first** continuity demo that keeps **l
 | Owner | Morgan J. (Gyumin Jeon) |
 | Contact | contact@mcorpai.org (mcorpai.org) |
 | Classification | Unclassified - For external review |
-| Distribution | Embassies/UN/NGOs; government/agency reviewers; corporate security/compliance; university research reviewers |
 
 ---
 

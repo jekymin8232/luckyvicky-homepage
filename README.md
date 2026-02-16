@@ -5,7 +5,7 @@
 
 It is deliberately packaged as one self‑contained HTML file so decision‑makers and reviewers can validate the concept quickly—no build system, no external JS libraries, and no hidden uploads.
 
-### Main-screen pillars (for diplomats & senior decision‑makers)
+### Main-screen pillars
 
 1) **Extreme S&R (Avalanche/Landslide)** — Bluetooth beacon proximity + on‑device stability logic to support a **radar‑like life‑locator workflow** when responders are operating off‑grid.
 2) **Upcycling E‑Waste (ESG & SDGs)** — repurpose retired / abandoned smartphones into offline relief nodes, aligning with ESG and UN SDG objectives.
@@ -84,7 +84,7 @@ This is designed to be **GDPR‑friendly by architecture** (local‑only).
 
 ## How to run the demo
 
-1. Download/open `VitalGuard AI_complete_V41_4.html`.
+1. Download/open `VitalGuard AI_complete_V41_5.html`.
 2. Use a **Chromium‑based browser** that supports Web Bluetooth scanning (support varies by platform).
 3. For the most reliable behavior, serve the file from:
    - `https://…` or `http://localhost`  

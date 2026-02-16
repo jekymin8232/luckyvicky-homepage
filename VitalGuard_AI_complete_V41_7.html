@@ -5861,7 +5861,7 @@ const Help = {
     $('help-overlay').classList.remove('active');
   },
   _content(){
-    const lang = (window.I18N && I18N.getLang) ? I18N.getLang() : 'en';
+    const lang = (typeof I18N!=='undefined' && I18N.getLang) ? I18N.getLang() : 'en';
     return (I18N && I18N.HTML && I18N.HTML.help && (I18N.HTML.help[lang] || I18N.HTML.help.en)) || '';
   }
 };
@@ -5878,7 +5878,7 @@ const Legal = {
     $('legal-overlay').classList.remove('active');
   },
   _content(){
-    const lang = (window.I18N && I18N.getLang) ? I18N.getLang() : 'en';
+    const lang = (typeof I18N!=='undefined' && I18N.getLang) ? I18N.getLang() : 'en';
     return (I18N && I18N.HTML && I18N.HTML.legal && (I18N.HTML.legal[lang] || I18N.HTML.legal.en)) || '';
   }
 };
@@ -5896,15 +5896,15 @@ const Lang = {
     if(ov) ov.classList.remove('active');
   },
   choose(code){
-    try{ if(window.I18N && I18N.setLang) I18N.setLang(code); }catch(e){}
+    try{ if(typeof I18N!=='undefined' && I18N.setLang) I18N.setLang(code); }catch(e){}
     const sel = $('langSelect');
     if(sel){
-      try{ sel.value = (window.I18N && I18N.getLang) ? I18N.getLang() : code; }catch(e){ sel.value = code; }
+      try{ sel.value = (typeof I18N!=='undefined' && I18N.getLang) ? I18N.getLang() : code; }catch(e){ sel.value = code; }
     }
     this.close();
   },
   _syncUI(){
-    const current = (window.I18N && I18N.getLang) ? I18N.getLang() : 'en';
+    const current = (typeof I18N!=='undefined' && I18N.getLang) ? I18N.getLang() : 'en';
     document.querySelectorAll('#lang-overlay [data-lang]').forEach(btn=>{
       const is = btn.getAttribute('data-lang') === current;
       btn.classList.toggle('btn-primary', is);
@@ -7968,7 +7968,7 @@ const App = {
   // Replace the previous social-impact deck with a diplomacy‑friendly, life‑saving demo explanation.
   Legal.open = function(){
     try{
-      const lang = (window.I18N && I18N.getLang) ? I18N.getLang() : 'en';
+      const lang = (typeof I18N!=='undefined' && I18N.getLang) ? I18N.getLang() : 'en';
       if($('legal-body')) $('legal-body').innerHTML = (I18N && I18N.HTML && I18N.HTML.legal && (I18N.HTML.legal[lang] || I18N.HTML.legal.en)) || '';
     }catch(e){
       if($('legal-body')) $('legal-body').textContent = '';
@@ -7976,7 +7976,7 @@ const App = {
     $('legal-overlay').classList.add('active');
   };
   Legal._content = function(){
-    const lang = (window.I18N && I18N.getLang) ? I18N.getLang() : 'en';
+    const lang = (typeof I18N!=='undefined' && I18N.getLang) ? I18N.getLang() : 'en';
     return (I18N && I18N.HTML && I18N.HTML.legal && (I18N.HTML.legal[lang] || I18N.HTML.legal.en)) || '';
   };
 
@@ -9249,7 +9249,7 @@ document.addEventListener('pointerdown', async ()=>{
 
 /* ----------------------------- INIT ----------------------------- */
 document.addEventListener('DOMContentLoaded', ()=>{
-  try{ I18N.init(); }catch(e){ console.warn('I18N init:', e); }
+  try{ I18N.init(); }catch(e){ console.warn('I18N.init error:', e); }
   App.init();
 });
 

@@ -4,9 +4,10 @@
 > No cloud. No cell towers. No accounts: local coordination, SOS relay, and continuity across nearby nodes.  
 > **Early‑warning system + life‑saving mesh**—an infrastructure‑independent resilience layer, deployable from ordinary phones.
 
-# VitalGuard AI - Infrastructure-Independent Survival Framework (v4.1.8)
+# VitalGuard AI - Infrastructure-Independent Survival Framework (v4.1.9)
 
 VitalGuard AI is a **single-file, offline-first** continuity demo that keeps **local decision support** available when **power and connectivity are disrupted** - with **no accounts, no cloud dependency, and no telemetry by design**.
+**UI languages (7):** English · 한국어 · العربية (RTL) · 日本語 · Français · 繁體中文(台灣) · Español
 
 **Format:** one self-contained HTML file (no build system; no external JS/CSS libraries)
 
@@ -17,9 +18,9 @@ VitalGuard AI is a **single-file, offline-first** continuity demo that keeps **l
 | Field | Value |
 |---|---|
 | Document | VitalGuard AI README (Executive + Audit Notes) |
-| Release artifact | `VitalGuard_AI_complete_V41_8.html` (single-file offline demo) |
-| Version | v4.1.8 |
-| Release date | 2026-02-16 |
+| Release artifact | `VitalGuard_AI_complete_V41_9.html` (single-file offline demo) |
+| Version | v4.1.9 |
+| Release date | 2026-02-17 |
 | Owner | Morgan J. (Gyumin Jeon) |
 | Contact | contact@mcorpai.org (mcorpai.org) |
 | Classification | Unclassified - For external review |
@@ -28,13 +29,13 @@ VitalGuard AI is a **single-file, offline-first** continuity demo that keeps **l
 
 ## Release integrity (recommended for restricted environments)
 
-**SHA-256 (approved artifact):** `5f323bfd545ffbf8e1071590765b5ec5083fa1104426a469f591232696b36998`  
-**File size:** 405259 bytes (~395.8 KiB)
+**SHA-256 (approved artifact):** `62b0157e537f22d599c961d9a66f144396dc0526cc3964d6516ba8aefdb310cb`  
+**File size:** 412716 bytes (~403.0 KiB)
 
 Integrity verification commands:
-- macOS: `shasum -a 256 VitalGuard_AI_complete_V41_8.html`
-- Linux: `sha256sum VitalGuard_AI_complete_V41_8.html`
-- Windows (PowerShell): `Get-FileHash .\VitalGuard_AI_complete_V41_8.html -Algorithm SHA256`
+- macOS: `shasum -a 256 VitalGuard_AI_complete_V41_9.html`
+- Linux: `sha256sum VitalGuard_AI_complete_V41_9.html`
+- Windows (PowerShell): `Get-FileHash .\VitalGuard_AI_complete_V41_9.html -Algorithm SHA256`
 
 Why this matters:
 - **Single audited artifact:** reduces runtime supply-chain exposure and "what exactly ran?" ambiguity.
@@ -104,7 +105,7 @@ Use these as fast, objective "done" conditions for reviewers:
 
 ## How to run the demo (practical)
 
-1. Open `VitalGuard_AI_complete_V41_8.html`.
+1. Open `VitalGuard_AI_complete_V41_9.html`.
 2. Use a Chromium-based browser that supports Web Bluetooth scanning (platform support varies).
 3. For the most reliable BLE behavior, open from a **secure context**:
    - `https://...` or `http://localhost` (recommended)

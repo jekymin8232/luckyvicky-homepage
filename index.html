@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
 <meta name="theme-color" content="#c0392b">
-<title>VitalGuard AI v4.2 — Infrastructure‑Independent Survival Framework</title>
+<title>VitalGuard AI v4.2.2 — Infrastructure‑Independent Survival Framework</title>
 <link rel="manifest" id="pwa-manifest">
 <style>
 /* ============================================================
@@ -269,7 +269,7 @@ body{font-family:var(--font-body);background:var(--bg-primary);color:var(--text-
       <div id="i18n_hero_body" style="font-size:.82rem;color:var(--text-secondary);line-height:1.6">
         VitalGuard AI v4.2 is a single‑file, offline‑first continuity toolkit combining Bluetooth beacon proximity and lightweight on‑device logic—designed to operate during outages and off‑grid deployments, with data kept on‑device by default (no cloud retention unless you export).
       </div>
-      <div class="small" id="i18n_contact_line" style="margin-top:10px;opacity:.85;text-align:center">Contact: contact@mcorpai.org • mcorpai.org </div>
+      <div class="small" id="i18n_contact_line" style="margin-top:10px;opacity:.85;text-align:center">Contact: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="8cefe3e2f8edeff8cce1efe3fefcede5a2e3feeb">[email&#160;protected]</a> • mcorpai.org </div>
       <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:10px">
         <span class="badge ok" id="i18n_badge_offline">100% Offline</span>
         <span class="badge ok" id="i18n_badge_gdpr">GDPR‑friendly</span>
@@ -669,7 +669,7 @@ body{font-family:var(--font-body);background:var(--bg-primary);color:var(--text-
 
 </div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 
 /* ============================================================
    VitalGuard AI v4.2
@@ -2619,6 +2619,28 @@ const I18N = (function(){
   return { init, apply, t, setLang, getLang, HTML };
 })();
 
+/* ---- V4.2.2 SECURITY HELPERS (global scope) ---- */
+function safeLocalStorageSet(key,val){
+  try{ localStorage.setItem(key,val); }
+  catch(e){
+    if(e&&(e.name==='QuotaExceededError'||e.code===22)){
+      try{
+        var kk=[];
+        for(var ii=0;ii<localStorage.length;ii++){var k=localStorage.key(ii);if(k&&k.startsWith('vg_'))kk.push(k);}
+        kk.sort().slice(0,5).forEach(function(k){try{localStorage.removeItem(k);}catch(x){}});
+        try{localStorage.setItem(key,val);}catch(x){}
+      }catch(x){}
+    }
+  }
+}
+function _vgE(s){
+  if(s==null)return'';
+  return String(s).replace(/[&<>'"]/g,function(c){
+    return{'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]||c;
+  });
+}
+function _vgI(s){return String(s==null?'':s).replace(/[^a-zA-Z0-9_-]/g,'').slice(0,64);}
+
 /* ----------------------------- STORAGE ----------------------------- */
 const Store = {
   db: null,
@@ -2651,10 +2673,10 @@ const Store = {
         const tx=this.db.transaction('pets','readwrite');
         tx.objectStore('pets').put(data);
         tx.oncomplete=()=>r();
-        tx.onerror=()=>{ localStorage.setItem(LS_PREFIX+'pet_'+data.id, JSON.stringify(data)); r(); };
+        tx.onerror=()=>{ safeLocalStorageSet(LS_PREFIX+'pet_'+data.id,JSON.stringify(data)); r(); };
       });
     }
-    localStorage.setItem(LS_PREFIX+'pet_'+data.id, JSON.stringify(data));
+    safeLocalStorageSet(LS_PREFIX+'pet_'+data.id,JSON.stringify(data));
   },
 
   async getAllPets() {
@@ -2715,10 +2737,10 @@ const Store = {
         const tx=this.db.transaction('settings','readwrite');
         tx.objectStore('settings').put({key,value});
         tx.oncomplete=()=>r();
-        tx.onerror=()=>{ localStorage.setItem(LS_PREFIX+'s_'+key, JSON.stringify(value)); r(); };
+        tx.onerror=()=>{ safeLocalStorageSet(LS_PREFIX+'s_'+key,JSON.stringify(value)); r(); };
       });
     }
-    localStorage.setItem(LS_PREFIX+'s_'+key, JSON.stringify(value));
+    safeLocalStorageSet(LS_PREFIX+'s_'+key,JSON.stringify(value));
   },
 
   async getSetting(key, def) {
@@ -2739,10 +2761,10 @@ const Store = {
         const tx=this.db.transaction('ai','readwrite');
         tx.objectStore('ai').put({key, ...data});
         tx.oncomplete=()=>r();
-        tx.onerror=()=>{ localStorage.setItem(LS_PREFIX+'ai_'+key, JSON.stringify(data)); r(); };
+        tx.onerror=()=>{ safeLocalStorageSet(LS_PREFIX+'ai_'+key,JSON.stringify(data)); r(); };
       });
     }
-    localStorage.setItem(LS_PREFIX+'ai_'+key, JSON.stringify(data));
+    safeLocalStorageSet(LS_PREFIX+'ai_'+key,JSON.stringify(data));
   },
 
   async getAI(key) {
@@ -5039,8 +5061,8 @@ const SOS = {
       App.pets.map(p=>`
         <button class="btn btn-sm ${this.targetPet && this.targetPet.id===p.id ? 'btn-success':'btn-secondary'}"
           style="margin:0 4px 4px 0"
-          onclick="SOS.selectPet('${p.id}')"
-        >${p.icon} ${p.name}</button>
+          onclick="SOS.selectPet('${_vgI(p.id)}')"
+        >${_vgE(p.icon)} ${_vgE(p.name)}</button>
       `).join('');
   },
 
@@ -5602,6 +5624,13 @@ const Nav = {
     }
 
     if(tab==='settings') Settings.renderPetList();
+
+    if(tab==='tips'){
+      try{
+        I18N.apply();
+        /* tips i18n hydrate on first open */
+      }catch(e){}
+    }
   }
 };
 
@@ -5735,10 +5764,10 @@ const Settings = {
     el.innerHTML = App.pets.map(p=>`
       <div class="setting-row">
         <div>
-          <span style="font-size:1.2rem">${p.icon}</span> <strong>${p.name}</strong>
-          <div style="font-size:.65rem;color:var(--text-muted)">ID: ${p.rescueId} | Added ${new Date(p.createdAt).toLocaleDateString()}</div>
+          <span style="font-size:1.2rem">${_vgE(p.icon)}</span> <strong>${_vgE(p.name)}</strong>
+          <div style="font-size:.65rem;color:var(--text-muted)">ID: ${_vgE(p.rescueId)} | Added ${new Date(p.createdAt).toLocaleDateString()}</div>
         </div>
-        <button class="btn btn-danger-outline btn-sm" onclick="Settings.removePet('${p.id}')">Remove</button>
+        <button class="btn btn-danger-outline btn-sm" onclick="Settings.removePet('${_vgI(p.id)}')">Remove</button>
       </div>
     `).join('');
   },
@@ -5819,6 +5848,7 @@ const DataManager = {
 
       let imported=0;
       for(const pd of data.pets){
+        if(pd.id) pd.id=_vgI(pd.id);
         if(App.pets.find(p=>p.id===pd.id)) continue;
         const pet=new Pet(pd);
         App.pets.push(pet);
@@ -6404,7 +6434,7 @@ const App = {
     row.classList.remove('hidden');
     row.innerHTML = this.pets.map(p=>{
       const active = (this.trackMode==='focus' && this.focusPetId===p.id);
-      return `<div class="pet-chip ${active?'active':''}" onclick="App.focusFromChip('${p.id}')">${p.icon} ${p.name}</div>`;
+      return `<div class="pet-chip ${active?'active':''}" onclick="App.focusFromChip('${_vgI(p.id)}')"> ${_vgE(p.icon)} ${_vgE(p.name)}</div>`;
     }).join('');
   },
 
@@ -6662,7 +6692,12 @@ const App = {
       s = String((s===undefined||s===null)?'🐶':s);
       // allow only known icons (prevents weird glyphs breaking UI)
       return ICONS.includes(s) ? s : '🐶';
-    }
+    },
+    escapeHTML(s){
+      if(s==null)return'';
+      return String(s).replace(/[&<>'"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]||c;});
+    },
+    safeId(s){return String(s==null?'':s).replace(/[^a-zA-Z0-9_-]/g,'').slice(0,64);}
   };
 
   function sleep(ms){ return new Promise(r=>setTimeout(r, ms)); }
@@ -8835,9 +8870,9 @@ V41UI.injectDetailAlertPrefs = function(pet){
       };
 
       const pet = new Pet({
-        name: (pack.p?.n || 'Rescue Target'),
-        icon: (pack.p?.i || '🐾'),
-        rescueId: (pack.p?.r || 'UNKNOWN'),
+        name: Sanitizer.name(pack.p?.n || 'Rescue Target'),
+        icon: Sanitizer.icon(pack.p?.i || '🐾'),
+        rescueId: Sanitizer.text(pack.p?.r || 'UNKNOWN', 32),
         signature
       });
       pet.disabled = false; // it is not in App.pets; but keep consistent
@@ -9030,17 +9065,18 @@ V41UI.injectDetailAlertPrefs = function(pet){
     box.style.display = 'block';
     const pet = SOS._assist.pet;
     const age = pet.lastSeenMs ? Math.round((nowMs() - pet.lastSeenMs)/1000) : null;
+    const _e=Sanitizer.escapeHTML.bind(Sanitizer);
     box.innerHTML = `
       <div style="display:flex;justify-content:space-between;align-items:center;gap:10px">
         <div>
-          <div style="font-weight:900">${pet.icon} ${pet.name} <span class="badge">${pet.zone?.stable || '—'}</span></div>
+          <div style="font-weight:900">${_e(pet.icon)} ${_e(pet.name)} <span class="badge">${_e(pet.zone?.stable||'—')}</span></div>
           <div style="font-size:.74rem;color:var(--text-muted);line-height:1.4">
-            Rescue ID: <b>${pet.rescueId}</b> · last seen: <b>${age===null?'—':age+'s'}</b> ago
+            Rescue ID: <b>${_e(pet.rescueId)}</b> · last seen: <b>${age===null?'—':age+'s'}</b> ago
           </div>
         </div>
         <div style="text-align:right">
-          <div style="font-size:.78rem">RSSI: <b>${Number.isFinite(pet.smoothedRssi)? Math.round(pet.smoothedRssi):'—'}</b>dBm</div>
-          <div style="font-size:.78rem">Distance: <b>${Number.isFinite(pet.estimatedDistanceM)? pet.estimatedDistanceM.toFixed(1):'—'}</b>m</div>
+          <div style="font-size:.78rem">RSSI: <b>${Number.isFinite(pet.smoothedRssi)?Math.round(pet.smoothedRssi):'—'}</b>dBm</div>
+          <div style="font-size:.78rem">Distance: <b>${Number.isFinite(pet.estimatedDistanceM)?pet.estimatedDistanceM.toFixed(1):'—'}</b>m</div>
         </div>
       </div>
     `;

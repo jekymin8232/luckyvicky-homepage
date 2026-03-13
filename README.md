@@ -29,7 +29,7 @@ VitalGuard AI is a **single-file, offline-first** continuity demo that keeps **l
 
 ## Release integrity (recommended for restricted environments)
 
-**SHA-256 (approved artifact):** `f37502a9f511c856d4c6d720b93cac202214ff23e01280d7f69eabf33bdd3721`  
+**SHA-256 (approved artifact):** `7c22c0d182473f424597fa132b3fd1f408b0d5f1d191aabf849bbfaad2cf12cb`  
 **File size:** 412572 bytes (~402.9 KiB)
 
 Integrity verification commands:

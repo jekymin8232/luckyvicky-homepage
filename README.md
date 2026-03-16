@@ -7,12 +7,20 @@
 > No cloud. No cell towers. No accounts: local coordination, SOS relay, and continuity across nearby nodes.  
 > **Early‑warning system + life‑saving mesh**—an infrastructure‑independent resilience layer, deployable from ordinary phones.
 
-# VitalGuard AI - Infrastructure-Independent Survival Framework (v4.2) was designed and technically reviewed with GDPR compliance in mind.
+# VitalGuard AI - Infrastructure-Independent Survival Framework (v4.2) 
 
-VitalGuard AI is a **single-file, offline-first** continuity demo that keeps **local decision support** available when **power and connectivity are disrupted** - with **no accounts, no cloud dependency, and no telemetry by design**.
+VitalGuard AI is a **technically reviewed with GDPR compliance in mind. single-file, offline-first** continuity demo that keeps **local decision support** available when **power and connectivity are disrupted** - with **no accounts, no cloud dependency, and no telemetry by design**.
 **UI languages (7):** English · 한국어 · العربية (RTL) · 日本語 · Français · 繁體中文(台灣) · Español
 
 **Format:** one self-contained HTML file (no build system; no external JS/CSS libraries)
+
+South Korea operates specialized public institutions, such as KOTRA, dedicated to attracting foreign investment. 
+By leveraging a $100,000 grant from a U.S. public institution and linking it with South Korean local governments, we can unlock a $1,000,000 matching fund.
+
+I am providing the official evidence regarding the strategic and institutional framework for this initiative:
+
+🔗 [Official English Press Release] South Korea’s AI Strategy – Ministry of Science and ICT (MSIT)
+https://www.msit.go.kr/eng/bbs/view.do?sCode=eng&mId=4&mPid=2&bbsSeqNo=42&nttSeqNo=1071
 
 ---
 

@@ -1,3 +1,6 @@
+> A $100,000 grant from OTF is not just a budget; it is a catalytic seed.
+> While true self-sustainability is notoriously difficult for open-source projects to achieve, this investment provides the bridge we need to turn technical excellence into long-term independence.
+> 
 > **This “Pet Safety Leash” UI is a neutral demo skin for everyday usability testing.**  
 > Under the hood, it is an **Offline Bluetooth Swarm Network** built for zero‑infrastructure disaster response.  
 > When internet and grid power collapse to zero—wildfires, floods, hurricanes—devices self‑organize and keep operating.  

@@ -1,11 +1,11 @@
-> A $100,000 grant from OTF is not just a budget; it is a catalytic seed.
-> While true self-sustainability is notoriously difficult for open-source projects to achieve, this investment provides the bridge we need to turn technical excellence into long-term independence.
-> 
-> **This “Pet Safety Leash” UI is a neutral demo skin for everyday usability testing.**  
-> Under the hood, it is an **Offline Bluetooth Swarm Network** built for zero‑infrastructure disaster response.  
-> When internet and grid power collapse to zero—wildfires, floods, hurricanes—devices self‑organize and keep operating.  
-> No cloud. No cell towers. No accounts: local coordination, SOS relay, and continuity across nearby nodes.  
-> **Early‑warning system + life‑saving mesh**—an infrastructure‑independent resilience layer, deployable from ordinary phones.
+> A $100,000 grant from OTF is not just a budget line. It is catalytic seed funding.
+> For open-source projects, true long-term self-sustainability is notoriously difficult to achieve. This investment provides the bridge needed to convert technical excellence into lasting independence.
+>
+> **This “Pet Safety Leash” UI serves as a neutral demo skin for everyday usability testing.**
+> Beneath that surface, however, it is an **Offline Bluetooth Swarm Network** designed for disaster response in zero-infrastructure environments.
+> When both internet access and grid power fail during wildfires, floods, hurricanes, or similar crises, nearby devices can self-organize and continue operating locally.
+> There is no cloud dependency, no reliance on cell towers, and no account system by design. Instead, it enables local coordination, SOS relay, and operational continuity across nearby nodes.
+> **An early-warning system and life-saving mesh combined**—an infrastructure-independent resilience layer deployable on ordinary smartphones.
 
 # VitalGuard AI - Infrastructure-Independent Survival Framework (v4.2)
 

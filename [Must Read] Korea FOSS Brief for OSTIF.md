@@ -8,9 +8,9 @@ I am Morgan J., a Korean AI developer and the architect of mcorpai.org. I am rea
 
 How frustrated would someone have to be to reach out to OSTIF?
 
-**Independence is critical. Without it, supply chain attacks are inevitable. They occur when open-source developers, lacking sustainable support, are forced to transfer control of their libraries to untrusted parties**
+Independence is critical. Without it, supply chain attacks are inevitable. They occur when open-source developers, lacking sustainable support, are forced to transfer control of their libraries to untrusted parties. Around 60% of libraries may be vulnerable to supply chain attacks, reflecting a deeper reality: a significant number of open-source developers are on the verge of burnout or stepping away.
 
-**Around 60% of libraries may be vulnerable to supply chain attacks, reflecting a deeper reality: a significant number of open-source developers are on the verge of burnout or stepping away**
+**OTF commits tens of millions annually, yet without fixing the foundation, this can become a leaky bucket. The real priority is the libraries themselves. “Don’t reinvent the wheel” is no longer valid if the wheel itself cannot be trusted.**
 
 ## 1. The Anxiety of the "August Gap"
 Long-term financial independence is our highest priority. OTF’s support would be a vital catalyst, but it cannot and should not be the project’s permanent foundation.

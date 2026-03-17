@@ -11,6 +11,11 @@ Independence is critical. Without it, supply chain attacks are inevitable. They 
 
 **OTF commits tens of millions annually, yet without fixing the foundation, this can become a leaky bucket. The real priority is the libraries themselves. “Don’t reinvent the wheel” is no longer valid if the wheel itself cannot be trusted.**
 
+A solid foundation is essential—and it begins with trusting the people who build it. But under the current system, can we truly trust library developers?
+
+If we are building systems meant to save lives, we must know the people behind every library we depend on. Only then can a single message lead to a rapid response when vulnerabilities arise. 
+If that is not possible, those libraries should not be used. It may sound demanding, but anything less is unacceptable when lives are at stake.
+
 ## 1. The Anxiety of the "August Gap"
 Long-term financial independence is our highest priority. OTF’s support would be a vital catalyst, but it cannot and should not be the project’s permanent foundation.
 

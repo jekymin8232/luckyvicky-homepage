@@ -120,7 +120,8 @@ South Korea is not just a participant in the AI race; we are leading with a mass
 
 I am attaching the official evidence from the Ministry of Science and ICT (MSIT) regarding South Korea's strategic AI roadmap: (English press release)
 
-🔗 South Korea’s AI Strategy - MSIT Official Press Release
+🔗 **[Official English Press Release] South Korea’s AI Strategy – Ministry of Science and ICT (MSIT)**  
+https://www.msit.go.kr/eng/bbs/view.do?sCode=eng&mId=4&mPid=2&bbsSeqNo=42&nttSeqNo=1071
 
 Within this broader context, the distinction between “black-box AI” and “white-box AI” becomes particularly important. Black-box AI systems, by their nature, offer limited opportunities for meaningful participation from the open-source community.
 

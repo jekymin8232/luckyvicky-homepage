@@ -154,7 +154,3 @@ P.S. While this remains a forward-looking scenario, a supportive public statemen
 South Korea is highly responsive to external credibility and international recognition. The United States and the Netherlands may want to carefully consider this dynamic.
 
 With even a warm endorsement from the United States, one of South Korea’s closest allies, or from the Netherlands, a highly respected European country, regional governments in South Korea can unlock public budgets worth tens of millions of dollars. This reflects a distinctive aspect of South Korea’s institutional culture, where recognition from trusted Western public institutions often carries significant weight.
-
-The administrative process can be carried out through an official diplomatic channel. A one-page formal letter from a Dutch or U.S. public official can be delivered via their respective embassy in South Korea, and the embassy can then formally transmit it to KOTRA (Korea Trade-Investment Promotion Agency).
-
-I have previously followed a similar approach, through which this project underwent a three-week review by the Government of Luxembourg—marking a first of its kind in the AI domain.

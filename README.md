@@ -1,6 +1,6 @@
-> Open-source projects are inherently difficult to sustain independently. However, passing a security audit can open a viable path toward self-sufficiency.
-> I would greatly appreciate just five minutes of your time to review this.
->
+> Open-source projects are inherently difficult to sustain independently. 
+> However, passing a security audit can open a viable path toward self-sufficiency.
+> 
 > **This “Pet Safety Leash” UI serves as a neutral demo skin for everyday usability testing.**
 > Beneath that surface, however, it is an **Offline Bluetooth Swarm Network** designed for disaster response in zero-infrastructure environments.
 > When both internet access and grid power fail during wildfires, floods, hurricanes, or similar crises, nearby devices can self-organize and continue operating locally.

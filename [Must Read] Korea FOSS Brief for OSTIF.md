@@ -9,7 +9,7 @@ I am not simply telling a story—I would like to illustrate how South Korea can
 
 I am Morgan J., a Korean AI developer and the architect of mcorpai.org. I am reaching out to you with complete candor. I discovered OSTIF through Gemini, which pointed to your foundation as a pillar of open-source security. Gemini did not indicate this—may I kindly ask if you have any close collaboration with OTF? May I ask whether you offer guidance or advice on supply chain security?
 
-How frustrated would someone have to be to reach out to OSTIF?
+**How frustrated would someone have to be to reach out to OSTIF?**
 
 Independence is critical. Without it, supply chain attacks are inevitable. They occur when open-source developers, lacking sustainable support, are forced to transfer control of their libraries to untrusted parties. Around 60% of libraries may be vulnerable to supply chain attacks, reflecting a deeper reality: a significant number of open-source developers are on the verge of burnout or stepping away.
 

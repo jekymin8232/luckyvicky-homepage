@@ -1,5 +1,5 @@
-> A $100,000 grant from OTF is not just a budget line. It is catalytic seed funding.
-> For open-source projects, true long-term self-sustainability is notoriously difficult to achieve. This investment provides the bridge needed to convert technical excellence into lasting independence.
+> Open-source projects are inherently difficult to sustain independently. However, passing a security audit can open a viable path toward self-sufficiency.
+> I would greatly appreciate just five minutes of your time to review this.
 >
 > **This “Pet Safety Leash” UI serves as a neutral demo skin for everyday usability testing.**
 > Beneath that surface, however, it is an **Offline Bluetooth Swarm Network** designed for disaster response in zero-infrastructure environments.

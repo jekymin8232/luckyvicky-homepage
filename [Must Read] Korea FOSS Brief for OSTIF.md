@@ -157,7 +157,7 @@ Black-box AI cannot save countless lives.
 
 South Korea has a significant disparity between Seoul, the capital region, and the rest of the country. IT developers tend to concentrate heavily in Seoul. The reason is straightforward: for Korean developers, Seoul offers far greater career opportunities and advantages.
 
-Under President Lee Jae-myung, the South Korean government allocates billions of dollars each year to regional cities through AI-related funds and various IT support programs. Local public institutions are required to actively deploy these allocated budgets.
+the South Korean government allocates billions of dollars each year to regional cities through AI-related funds and various IT support programs. Local public institutions are required to actively deploy these allocated budgets.
 
 ---
 

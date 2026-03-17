@@ -6,7 +6,8 @@ I am Morgan J., a Korean AI developer and the architect of mcorpai.org. I am rea
 
 How frustrated would someone have to be to reach out to OSTIF?
 
-## 1. The Anxiety of the "August Gap" Financial independence is the top priority. We can't rely on OTF forever.
+## 1. The Anxiety of the "August Gap"
+** Long-term financial independence is our highest priority. OTF’s support would be a vital catalyst, but it cannot and should not be the project’s permanent foundation. **
 
 I am writing because I feel a strong sense of urgency. I am concerned that my project (#21441) could stall at the final hurdle: the security audit. As you may know, the Open Technology Fund (OTF) is currently in the process of selecting new security audit vendors. According to their recent RFP, the new vendor contracts are tentatively scheduled to begin around August. I am willing to wait if necessary, but if the project is rejected during the review process, it will be extremely difficult for us to remain independent. The team she leads at Radically Open Security (ROS) is among the best in the field, and I believe she understands the importance of vanilla code. After all, the worst risk we face today is supply chain attacks.
 

@@ -1,6 +1,6 @@
 Dear Amir and the OSTIF Team,
 
-If there is an opportunity for the open-source ecosystem to become self-sustaining, it must be seized—because such opportunities are rare.
+**If there is an opportunity for the open-source ecosystem to become self-sustaining, it must be seized—because such opportunities are rare**
 
 **Please take a moment to read just these 7 pages. It'll only take 5 minutes**
 

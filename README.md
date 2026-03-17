@@ -15,7 +15,7 @@ VitalGuard AI is a **single-file, offline-first continuity demo** that has been 
 
 **Format:** One self-contained HTML file with no build system and no external JS/CSS libraries.
 
-South Korea operates specialized public institutions, such as KOTRA, dedicated to attracting foreign investment. By leveraging a **$100,000 grant** from a U.S. public institution and aligning it with partnerships involving South Korean local governments, there is strong potential to unlock up to **matching funds**.
+South Korea operates specialized public institutions, such as KOTRA, to attract foreign investment. By leveraging public funding from U.S. institutions and aligning it with partnerships involving South Korean local governments, there is strong potential to secure mutually beneficial matching funds.
 
 I am providing the official evidence regarding the strategic and institutional framework for this initiative:
 

@@ -164,6 +164,6 @@ Regional cities often have substantial budgets available, but face a severe shor
 
 This is because local governments must actively spend their budgets to qualify for future allocations. Once funding exceeds $1 million, it becomes feasible to establish partnerships with U.S. and European IT institutions and deploy the funds in a stable and strategic manner. Budgets must be spent to ensure continued allocation in subsequent years. This mechanism operates on the same principle as OTF’s own funding cycle.
 
-South Korea is highly responsive to external credibility and international recognition. The United States and the Netherlands may want to carefully consider this dynamic.
-
 With even a warm endorsement from the United States, one of South Korea’s closest allies, or from the Netherlands, a highly respected European country, regional governments in South Korea can unlock public budgets worth tens of millions of dollars. This reflects a distinctive aspect of South Korea’s institutional culture, where recognition from trusted Western public institutions often carries significant weight.
+
+South Korea is highly responsive to external credibility and international recognition. The United States and the Netherlands may want to carefully consider this dynamic.

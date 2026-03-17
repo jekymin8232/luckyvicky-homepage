@@ -1,7 +1,6 @@
 Dear Amir and the OSTIF Team,
 
 **If there is an opportunity for the open-source ecosystem to become self-sustaining, it must be seized—because such opportunities are rare**
-
 **Please take a moment to read just these 7 pages. It'll only take 5 minutes**
 
 I am Morgan J., a Korean AI developer and the architect of mcorpai.org. I am reaching out to you with complete candor. I discovered OSTIF through Gemini, which pointed to your foundation as a pillar of open-source security.

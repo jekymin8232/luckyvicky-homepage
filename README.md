@@ -1,5 +1,7 @@
 ## [Unnecessary expenses] Using libraries means accepting dependency.
 Even in the worst situations, lives must be saved. Relying on libraries and external APIs can slow down responsiveness. Anyone should be able to fix the code on the spot—this is only possible with vanilla code.
+Using external libraries introduces dependency on third-party maintainers, which can create risks in long-term maintenance, security auditing, and update compatibility.
+In critical environments, minimizing such dependencies can significantly improve reliability and auditability.
 
 >**I sincerely ask that you read “[Must Read] Korea FOSS Brief for OSTIF.md.”**
 >

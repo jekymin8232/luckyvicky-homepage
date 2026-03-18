@@ -3,6 +3,8 @@
 Public funds should be spent carefully. If supply chains are unstable, everything OTF is working on could become ineffective.
 Libraries are not trustworthy, because they rely on free labor.
 We don’t need elegant code. We need rugged, life-saving code — something closer to Rambo than refinement.
+<img width="303" height="282" alt="1" src="https://github.com/user-attachments/assets/33a376a8-11aa-48d8-9758-2118ac930437" />
+
 
 Dear Amir and the OSTIF Team,
 

@@ -185,7 +185,7 @@ This is because local governments must actively spend their budgets to qualify f
 
 With even a warm endorsement from the United States, one of South Korea’s closest allies, or from the Netherlands, a highly respected European country, regional governments in South Korea can unlock public budgets worth tens of millions of dollars. This reflects a distinctive aspect of South Korea’s institutional culture, where recognition from trusted Western public institutions often carries significant weight.
 
-**South Korea is highly responsive to external credibility and international recognition. Endorsements from trusted global security institutions like OSTIF and ROS carry immense weight and can serve as the definitive catalyst for unlocking these public resources.**
+## South Korea is highly responsive to external credibility and international recognition. Endorsements from trusted global security institutions like OSTIF and ROS carry immense weight and can serve as the definitive catalyst for unlocking these public resources.
 
 An investment on the order of tens of millions of dollars has the potential to build an entirely new library-based supply chain ecosystem. While it may be difficult to apply this approach to existing software or applications currently supported by OTF, it can certainly be implemented in newly developed software.
 

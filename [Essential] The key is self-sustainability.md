@@ -13,6 +13,7 @@ Relying on libraries can be inherently risky, as their development and maintenan
 <img width="303" height="282" alt="1" src="https://github.com/user-attachments/assets/33a376a8-11aa-48d8-9758-2118ac930437" />
 
 
+## Even in the worst situations, lives must be saved.
 
 Dear Amir and the OSTIF Team,
 

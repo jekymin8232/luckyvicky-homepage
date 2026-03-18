@@ -1,4 +1,4 @@
-## The key is self-sustainability.(Direct version)
+## The key is self-sustainability. (Direct version)
 **The Republic of Korea is implementing a basic AI law. Once I am recognized by the United States, I can sustain the project independently**
 **I prepared two versions in case it might not pass the review. This one is the straightforward version. It includes a human, emotional touch.**
 

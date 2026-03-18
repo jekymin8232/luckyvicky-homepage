@@ -177,4 +177,4 @@ The amount I am requesting from OTF is $100,000, which would serve as seed fundi
 
 From OTF’s perspective, I understand that $100,000 is a level of funding that can be approved through internal review alone. Therefore, it is important to move forward as quickly as possible in order to align with the administrative timeline in South Korea.
 
-If we are given the opportunity to become self-sustaining, we must ensure that it truly leads to independence.
+**If we are given the opportunity to become self-sustaining, we must ensure that it truly leads to independence.**

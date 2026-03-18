@@ -1,4 +1,6 @@
-> Open-source projects are inherently difficult to sustain independently. 
+>**I sincerely ask that you read “[Must Read] Korea FOSS Brief for OSTIF.md.”**
+>
+>Open-source projects are inherently difficult to sustain independently. 
 > However, passing a security audit can open a viable path toward self-sufficiency.
 > 
 > **This “Pet Safety Leash” UI serves as a neutral demo skin for everyday usability testing.**

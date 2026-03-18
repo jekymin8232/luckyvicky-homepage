@@ -175,6 +175,6 @@ An investment on the order of tens of millions of dollars has the potential to b
 
 The amount I am requesting from OTF is $100,000, which would serve as seed funding. In simple terms, it also carries symbolic value—it demonstrates that the project has been officially recognized by a U.S. public institution. It becomes a visible foundation of trust.
 
-From OTF’s perspective, I understand that $100,000 is a level of funding that can be approved through internal review alone. Therefore, it is important to move forward as quickly as possible in order to align with the administrative timeline in South Korea.
+I understand that a $100,000 grant may fall within the threshold for a more streamlined review process. Given the strict administrative timelines in South Korea, aligning our verification process as swiftly as possible would be mutually highly beneficial.
 
 **If we are given the opportunity to become self-sustaining, we must ensure that it truly leads to independence.**

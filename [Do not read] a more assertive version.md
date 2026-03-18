@@ -1,5 +1,9 @@
 **I prepared two versions in case it might not pass the review. This one is the straightforward version. It includes a human, emotional touch.**
 
+Public funds should be spent carefully. If supply chains are unstable, everything OTF is working on could become ineffective.
+Libraries are not trustworthy, because they rely on free labor.
+We don’t need elegant code. We need rugged, life-saving code — something closer to Rambo than refinement.
+
 Dear Amir and the OSTIF Team,
 
 **If there is an opportunity for the open-source ecosystem to become self-sustaining, it must be seized—because such opportunities are rare.**

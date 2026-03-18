@@ -1,4 +1,6 @@
 ## [Unnecessary expenses] Using libraries means accepting dependency.
+Even in the worst situations, lives must be saved. Relying on libraries and external APIs can slow down responsiveness. Anyone should be able to fix the code on the spot—this is only possible with vanilla code.
+
 >**I sincerely ask that you read “[Must Read] Korea FOSS Brief for OSTIF.md.”**
 >
 >We’ve outlined a way to break free from supply chain attacks—meaning risks from libraries and external APIs. At the very least, any libraries we rely on for life-critical systems must be secured against these threats.

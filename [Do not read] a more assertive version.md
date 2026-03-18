@@ -1,6 +1,5 @@
 ## The key is self-sustainability. 
 **The Republic of Korea is implementing a basic AI law. Once I am recognized by the United States, I can sustain the project independently**
-
 **I prepared two versions in case it might not pass the review. This one is the straightforward version. It includes a human, emotional touch.**
 
 Public funds should be spent carefully. If supply chains are unstable, everything OTF is working on could become ineffective.

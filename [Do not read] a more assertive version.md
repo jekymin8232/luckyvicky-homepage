@@ -1,3 +1,5 @@
+**I prepared two versions in case it might not pass the review. This one is the straightforward version. It includes a human, emotional touch.**
+
 Dear Amir and the OSTIF Team,
 
 **If there is an opportunity for the open-source ecosystem to become self-sustaining, it must be seized—because such opportunities are rare.**

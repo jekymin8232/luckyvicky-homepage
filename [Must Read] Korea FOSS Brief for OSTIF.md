@@ -135,26 +135,3 @@ South Korea AI Strategy – Ministry of Science and ICT (MSIT):
 https://www.msit.go.kr/eng/bbs/view.do?sCode=eng&mId=4&mPid=2&bbsSeqNo=42&nttSeqNo=1071
 
 ---
-
-## Supplementary Letter: To Dr. Melanie Rieback, Radically Open Security
-
-Dear Dr. Rieback,
-
-I am reaching out because Radically Open Security's approach to security work—prioritizing transparency and public benefit over extractive profit—reflects the same principles that shape VitalGuard AI's design.
-
-I have submitted VitalGuard (OTF #21441) with ROS identified as the preferred audit partner. I wanted to make direct contact in parallel, both to introduce the project and to ask a practical question: given VitalGuard's unusual architecture (zero external dependencies, single-file vanilla HTML/JS, offline-first), would you be willing to offer an informal assessment of whether the project is appropriately scoped for a formal security engagement?
-
-The reason I ask is that a zero-dependency architecture presents a different audit surface than most projects ROS would typically encounter. There are no library call graphs to analyze, no npm or pip dependency trees to trace. The audit scope would focus on the implementation of cryptographic primitives, BLE mesh protocol security, on-device data handling, and the integrity of the offline AI inference logic. I would value your perspective on whether this scope is appropriately sized and whether any scoping adjustments would make the engagement more productive.
-
-VitalGuard has undergone a three-week review by the Luxembourg government (confirmed via official embassy correspondence) and is in exploratory engagement with IDS and UCL GDI Hub. The South Korean AI Basic Act implementation creates a policy window in 2026-2027 that makes timely technical validation particularly valuable.
-
-I am not asking for a commitment. I am asking for a candid technical conversation.
-
-Thank you for your time and consideration.
-
-Morgan J. (Gyu-min Jeon)  
-contact@mcorpai.org
-
----
-
-*© 2026 Morgan J. (Gyu-min Jeon) | M-Corp Ethical AI — M-Corp 윤리적 AI 라이선스 (Hippocratic 3.0 파생 라이선스) 오직 민간·농업·인도주의 목적에 한해 사용 가능*

@@ -33,14 +33,13 @@ I am writing because I feel a strong sense of urgency. I am concerned that my pr
 
 I value self-reliance above all else. I understand that neither OTF nor OSTIF can provide indefinite support. An open-source developer must grow through independence. South Korea is implementing a landmark AI Act in 2026 to foster local talent, but there is a unique cultural hurdle I must overcome.
 
-In South Korea, immense weight is placed on external, international authority. No matter how much talent or innovation we show locally, it is nearly impossible to achieve true self-reliance without global validation. This is a deep-rooted custom. Therefore, what I am seeking from you is not "money," but "recognition."
+In South Korea, immense weight is placed on external, international authority. No matter how much talent or innovation we show locally, it is nearly impossible to achieve true self-reliance without global validation. This is a deep-rooted custom. Therefore, while financial support is vital, the rigorous technical validation and the resulting "recognition" from a respected institution like yours are what will truly unlock our path to independence.
 
 ## 3. Open-source developers must remain independent.
 
-A security audit from an institution like OSTIF is the definitive path to that recognition. It is the key that will unlock the national resources I need to make VitalGuard a self-sustaining, independent project.
+A world-class security audit from an institution like OSTIF is the definitive path to that recognition. It is the key that will unlock the national resources I need to make VitalGuard a self-sustaining, independent project.
 
-I would appreciate a brief chat via Microsoft Teams to discuss how your recognition can act as the catalyst for our independence and open-source sovereignty.
-
+I would appreciate a brief chat via Microsoft Teams to discuss how your technical verification can act as the catalyst for our independence and open-source sovereignty.
 Without self-reliance, open source cannot truly evolve.
 
 Morgan J. (Gyu-min Jeon)
@@ -121,7 +120,7 @@ I have submitted VitalGuard (#21441) for an OTF security audit, but I am deeply 
 
 As a "White-box AI" (FOSS) project, my roadmap ensures that at least 30% of this budget is redirected to global open-source developers. Furthermore, this would enable a sustainable commitment of $100,000+ per year to ROS and OSTIF for ongoing audits and ecosystem support.
 
-What I seek from you is not just a service, but a strategic "Vote of Confidence." In South Korea, the recognition of a respected U.S.-based authority like ROS acts as a definitive catalyst that turns local innovation into national policy.
+What I seek from you is not just an audit service, but a world-class security verification that translates into a strategic "Vote of Confidence." In South Korea, the validation by a respected authority like ROS acts as a definitive catalyst that turns local innovation into national policy.
 
 VitalGuard is built on a "Zero Library" philosophy, making it architecturally immune to supply chain attacks. It has already cleared a 3-week ethical review by the Luxembourg government. Your endorsement would be the final key to ensuring this project achieves true independence rather than perpetual grant dependency.
 
@@ -170,12 +169,12 @@ This is because local governments must actively spend their budgets to qualify f
 
 With even a warm endorsement from the United States, one of South Korea’s closest allies, or from the Netherlands, a highly respected European country, regional governments in South Korea can unlock public budgets worth tens of millions of dollars. This reflects a distinctive aspect of South Korea’s institutional culture, where recognition from trusted Western public institutions often carries significant weight.
 
-**South Korea is highly responsive to external credibility and international recognition. The United States and the Netherlands may want to carefully consider this dynamic.**
+**South Korea is highly responsive to external credibility and international recognition. Endorsements from trusted global security institutions like OSTIF and ROS carry immense weight and can serve as the definitive catalyst for unlocking these public resources.**
 
 An investment on the order of tens of millions of dollars has the potential to build an entirely new library-based supply chain ecosystem. While it may be difficult to apply this approach to existing software or applications currently supported by OTF, it can certainly be implemented in newly developed software.
 
 The amount I am requesting from OTF is $100,000, which would serve as seed funding. In simple terms, it also carries symbolic value—it demonstrates that the project has been officially recognized by a U.S. public institution. It becomes a visible foundation of trust.
 
-I understand that a $100,000 grant may fall within the threshold for a more streamlined review process. Given the strict administrative timelines in South Korea, aligning our verification process as swiftly as possible would be mutually highly beneficial.
+Given the strict administrative timelines and the upcoming AI milestones in South Korea, I sincerely hope we can align our verification process as swiftly as your internal procedures allow. Capturing this upcoming window would be mutually highly beneficial for the global open-source ecosystem.
 
 **If we are given the opportunity to become self-sustaining, we must ensure that it truly leads to independence.**

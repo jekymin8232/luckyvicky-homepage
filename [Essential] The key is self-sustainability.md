@@ -8,7 +8,7 @@ Libraries are not trustworthy, because they rely on free labor.
 If external dependencies are high, it becomes difficult to save lives at scale. Only self-contained, “vanilla” code can truly do so — because it allows full control over every aspect of the system.
 Relying on libraries can be inherently risky, as their development and maintenance are often outside one’s direct control.
 
-## We don’t need elegant code. We need rugged, life-saving code — something closer to Rambo than refinement. 
+## We don’t need elegant code. We need rugged, life-saving code — something closer to Rambo than refinement. I need to be in control of everything. 
 
 <img width="303" height="282" alt="1" src="https://github.com/user-attachments/assets/33a376a8-11aa-48d8-9758-2118ac930437" />
 

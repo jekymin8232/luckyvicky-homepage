@@ -1,4 +1,5 @@
 >**I sincerely ask that you read “[Must Read] Korea FOSS Brief for OSTIF.md.”**
+>
 >We’ve outlined a way to break free from supply chain attacks—meaning risks from libraries and external APIs. At the very least, any libraries we rely on for life-critical systems must be secured against these threats.
 >
 >Open-source projects are inherently difficult to sustain independently. 

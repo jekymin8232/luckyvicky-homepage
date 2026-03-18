@@ -169,4 +169,12 @@ This is because local governments must actively spend their budgets to qualify f
 
 With even a warm endorsement from the United States, one of South Korea’s closest allies, or from the Netherlands, a highly respected European country, regional governments in South Korea can unlock public budgets worth tens of millions of dollars. This reflects a distinctive aspect of South Korea’s institutional culture, where recognition from trusted Western public institutions often carries significant weight.
 
-South Korea is highly responsive to external credibility and international recognition. The United States and the Netherlands may want to carefully consider this dynamic.
+**South Korea is highly responsive to external credibility and international recognition. The United States and the Netherlands may want to carefully consider this dynamic.**
+
+An investment on the order of tens of millions of dollars has the potential to build an entirely new library-based supply chain ecosystem. While it may be difficult to apply this approach to existing software or applications currently supported by OTF, it can certainly be implemented in newly developed software.
+
+The amount I am requesting from OTF is $100,000, which would serve as seed funding. In simple terms, it also carries symbolic value—it demonstrates that the project has been officially recognized by a U.S. public institution. It becomes a visible foundation of trust.
+
+From OTF’s perspective, I understand that $100,000 is a level of funding that can be approved through internal review alone. Therefore, it is important to move forward as quickly as possible in order to align with the administrative timeline in South Korea.
+
+If we are given the opportunity to become self-sustaining, we must ensure that it truly leads to independence.

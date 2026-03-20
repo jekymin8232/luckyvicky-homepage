@@ -1,4 +1,5 @@
-## The key is self-sustainability. (Direct version)
+## I have led the project to initial reviews by the Government of Luxembourg, as well as by leading institutions such as UCL and IDS, in pursuit of long-term independence. However, there are still critical gaps to address: technical validation and funding.
+
 **The Republic of Korea is implementing a basic AI law. Once I am recognized by the United States, I can sustain the project independently**
 **I prepared two versions in case it might not pass the review. This one is the straightforward version. It includes a human, emotional touch.**
 

@@ -1,4 +1,7 @@
 ## [Unnecessary expenses] Using libraries means accepting dependency.
+Open-source projects often face structural challenges in achieving long-term sustainability. For this reason, I am actively working toward a self-sustaining model.
+I see OTF’s support not as a dependency, but as a catalytic seed that can unlock matched funding and accelerate the project’s path toward independence.
+
 Even in the worst situations, lives must be saved. Relying on libraries and external APIs can slow down responsiveness. Anyone should be able to fix the code on the spot—this is only possible with vanilla code.
 Using external libraries introduces dependency on third-party maintainers, which can create risks in long-term maintenance, security auditing, and update compatibility.
 In critical environments, minimizing such dependencies can significantly improve reliability and auditability.

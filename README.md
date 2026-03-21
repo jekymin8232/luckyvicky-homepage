@@ -1,3 +1,5 @@
+**Do not reinvent the wheel. The real wheel is the browser. Chrome and Safari are robust platforms built by thousands of brilliant engineers. It is unfortunate to use them merely as conduits for libraries and external API calls.**
+
 ## [Unnecessary expenses] Using libraries means accepting dependency.
 Open-source projects often face structural challenges in achieving long-term sustainability. For this reason, I am actively working toward a self-sustaining model.
 I see OTF’s support not as a dependency, but as a catalytic seed that can unlock matched funding and accelerate the project’s path toward independence.

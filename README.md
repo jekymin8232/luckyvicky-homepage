@@ -1,5 +1,11 @@
 **Do not reinvent the wheel. The real wheel is the browser. Chrome and Safari are robust platforms built by thousands of brilliant engineers. It is unfortunate to use them merely as conduits for libraries and external API calls.**
 
+Open source is not “free.” The misconception that it is leads many developers and organizations to rely on it without recognizing the underlying risks. In reality, most libraries are built and maintained by individuals, often with limited support and resources.
+
+When that work is expected to be done for free, maintainers become vulnerable to burnout. And burnout is not an exception—it is a predictable outcome. Once a maintainer steps away or hands over control to others without proper continuity and oversight, the integrity of the library can deteriorate. At that point, security is no longer guaranteed.
+
+In that sense, the issue is not the concept of open source itself, but the structural assumption that it can be sustained without adequate support. That assumption is what ultimately makes many libraries more exposed to security risks.
+
 ## [Unnecessary expenses] Using libraries means accepting dependency.
 Open-source projects often face structural challenges in achieving long-term sustainability. For this reason, I am actively working toward a self-sustaining model.
 I see OTF’s support not as a dependency, but as a catalytic seed that can unlock matched funding and accelerate the project’s path toward independence.

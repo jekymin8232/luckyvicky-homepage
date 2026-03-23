@@ -1,3 +1,5 @@
+## Nothing in this world is truly free. What appears to be free often comes with a very high cost.
+
 **Do not reinvent the wheel. The real wheel is the browser. Chrome and Safari are robust platforms built by thousands of brilliant engineers. It is unfortunate to use them merely as conduits for libraries and external API calls.**
 
 Open source is not “free.” The misconception that it is leads many developers and organizations to rely on it without recognizing the underlying risks. In reality, most libraries are built and maintained by individuals, often with limited support and resources.

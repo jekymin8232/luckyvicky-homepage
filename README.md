@@ -1,4 +1,5 @@
 **Socrates once said, “Know yourself.”**
+
 I know my strengths and weaknesses with clarity.
 The vanilla code I design reflects the hardships I’ve lived through. Anyone can write code. But true design is something you only arrive at after enduring a life shaped by constraint and scarcity.
 In the end, the only person I can truly rely on is myself.

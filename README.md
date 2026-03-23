@@ -5,7 +5,6 @@ The vanilla code I design reflects the hardships I’ve lived through. Anyone ca
 In the end, the only person I can truly rely on is myself. 
 
 A designer is always alone, but that is where true safety lies.
-
 Those who adhere to principles are not mere coders, but designers.
 
 ## Nothing in this world is truly free. What appears to be free often comes with a very high cost. 

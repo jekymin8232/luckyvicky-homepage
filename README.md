@@ -1,4 +1,4 @@
-## Nothing in this world is truly free. What appears to be free often comes with a very high cost. Paying a fair price is what truly defines open source.
+## Nothing in this world is truly free. What appears to be free often comes with a very high cost. Paying a fair price is what truly defines open source. This is a longer-term goal, but I plan to build a team and develop any necessary libraries in-house — essentially, to build and use our own wheels.
 
 **Do not reinvent the wheel. The real wheel is the browser. Chrome and Safari are robust platforms built by thousands of brilliant engineers. It is unfortunate to use them merely as conduits for libraries and external API calls.**
 

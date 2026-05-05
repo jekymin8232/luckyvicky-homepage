@@ -1,19 +1,17 @@
 <!DOCTYPE html>
 <!--
 =================================================================================
- VitalGuard PWA Recorder — USAGM / OTF Security Lab Review Edition (Test V3.4)
+ VitalGuard PWA Recorder (Test V3.4)
 =================================================================================
  © 2026 Morgan J. (Gyu-min Jeon) | M-Corp Ethical AI
  License: M-Corp Ethical AI License (Hippocratic 3.0 Derivative)
  Permitted use: civilian, agricultural, and humanitarian purposes ONLY.
- Review status: USAGM / OTF Security Lab review demonstrator only.
  Not a public release, not a consumer app, and not intended for distribution.
 
  V3.4 Changes:
    1. Compact Visible Mode added for Samsung pop-up / split-screen testing.
    2. Calculator compact trigger: unlock code + % enters Compact Visible Mode.
    3. User-controlled compact UI opacity: 0%–100%.
-   4. Help text updated to clarify USAGM / OTF review-only status and PWA limits.
 
  V3.2 Changes:
    1. Calculator reset trigger: unlock code + = resets settings to initial defaults.
@@ -625,8 +623,8 @@ body.compact-visible-mode #compactExitBtn {
 
   <div id="helpEn">
     <div class="help-section warn">
-      <h3>⚠ USAGM / OTF REVIEW STATUS — READ FIRST</h3>
-      <p><strong>This file is a security-review demonstrator for USAGM / OTF Security Lab review.</strong> It is not a public release, not a consumer app, and not intended for distribution.</p>
+      <h3>⚠ READ FIRST</h3>
+      <p><strong>This file is a security-review demonstrator </strong> It is not a public release, not a consumer app, and not intended for distribution.</p>
       <p>The PWA recorder is used to demonstrate offline, single-file, zero-dependency recording patterns and their browser-level limits. It should be evaluated as a review artifact, not as a deployed field application.</p>
       <p>Calculator camouflage, Compact Visible Mode, and image-extension saving are reviewable design patterns. They do not remove platform limits, legal obligations, or device-level indicators controlled by Android or the browser.</p>
     </div>
@@ -710,8 +708,8 @@ body.compact-visible-mode #compactExitBtn {
 
   <div id="helpKo" style="display:none;">
     <div class="help-section warn">
-      <h3>⚠ USAGM / OTF 심사 상태 — 먼저 읽으세요</h3>
-      <p><strong>이 파일은 USAGM / OTF Security Lab 심사용 보안 검토 데모입니다.</strong> 공개 배포본이 아니며, 소비자용 앱도 아니고, 배포 목적도 아닙니다.</p>
+      <h3>⚠ 먼저 읽으세요</h3>
+      <p><strong>이 파일은 심사용 보안 검토 데모입니다.</strong> 공개 배포본이 아니며, 소비자용 앱도 아니고, 배포 목적도 아닙니다.</p>
       <p>이 PWA 녹음기는 오프라인·단일 파일·무의존성 녹음 패턴과 브라우저 수준의 한계를 검토하기 위한 산출물입니다. 실제 배포된 현장 앱이 아니라 심사용 아티팩트로 평가해야 합니다.</p>
       <p>계산기 위장, 작은 표시 모드, 이미지 확장자 저장은 검토 가능한 설계 패턴입니다. Android 또는 브라우저가 통제하는 플랫폼 한계, 법적 의무, 기기 수준 표시를 제거하지 않습니다.</p>
     </div>
@@ -1007,7 +1005,7 @@ const I18N = {
     pillAsis: "Saving as audio file (recommended)",
     pillImage: "Saving with .jpg extension — rename .jpg → .webm to play",
 
-    firstRunTitle: "Welcome — V3.4 (USAGM / OTF review test)",
+    firstRunTitle: "Welcome — V3.4 (review test)",
     firstRunMsg: "This is a review-stage demo.\n\nQuick guide:\n• Tap REC to record. The file saves as audio by default.\n• Calculator recording: enter 0000 (or your changed code), then press ×.\n• Settings reset: enter 0000 (or your changed code), then press =. This returns settings to the initial default state.\n• Calculator screen is silent — no popups, no recording indicator.\n• Default code is 0000 and can be changed in settings.",
 
     hideConfirmTitle: "Hide settings icon?",
@@ -1087,7 +1085,7 @@ const I18N = {
     pillAsis: "오디오 파일 그대로 저장 (권장)",
     pillImage: "이미지 확장자 위장 저장 — 재생하려면 .jpg → .webm으로 이름 변경",
 
-    firstRunTitle: "환영합니다 — V3.4 (USAGM / OTF 심사용 테스트)",
+    firstRunTitle: "환영합니다 — V3.4 (심사용 테스트)",
     firstRunMsg: "이 앱은 심사용 데모입니다.\n\n간단 안내:\n• 녹음 버튼을 누르면 녹음됩니다. 기본은 오디오 파일로 저장됩니다.\n• 계산기 녹음: 0000(변경한 경우 변경한 코드)을 누른 뒤 ×를 누르세요.\n• 설정 초기화: 0000(변경한 경우 변경한 코드)을 누른 뒤 =를 누르세요. 설정이 최초 기본 상태로 돌아갑니다.\n• 계산기 화면은 완전 침묵 — 팝업·녹음 인디케이터 모두 표시되지 않습니다.\n• 기본 코드는 0000이며 설정에서 변경할 수 있습니다.",
 
     hideConfirmTitle: "설정 아이콘을 숨길까요?",

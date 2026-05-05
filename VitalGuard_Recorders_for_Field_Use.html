@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <!--
 =================================================================================
- VitalGuard PWA Recorder — OTF Security Lab Review Edition (Test V3.2)
+ VitalGuard PWA Recorder — OTF Security Lab Review Edition (Test V3.3)
 =================================================================================
  © 2026 Morgan J. (Gyu-min Jeon) | M-Corp Ethical AI
  License: M-Corp Ethical AI License (Hippocratic 3.0 Derivative)
@@ -22,7 +22,7 @@
       no rec indicator. Recording happens covertly.
    3. Save format is a top-priority user choice:
       A) AS-IS  (default) — original audio file, fully playable.
-      B) IMAGE  — wrapped as a "broken JPEG" with .jpg extension.
+      B) IMAGE  — saved with a .jpg extension while preserving original audio bytes.
                   User must rename .jpg → .webm to restore playback.
    4. Hide-settings auto-switches to calculator first so user can recover
       via the keypad code (default 0000, user-changeable).
@@ -295,7 +295,7 @@ body { background: #1a1a1a; color: #fff; user-select: none; -webkit-user-select:
 
 <!-- ============ RECORDER SCREEN ============ -->
 <div id="recorderUI">
-  <div class="rec-version-banner">TEST VERSION V 3.2</div>
+  <div class="rec-version-banner">TEST VERSION V 3.3</div>
 
   <div class="mode-switcher" role="tablist">
     <button class="mode-switch-btn active" id="btnModeRecorder" data-screenmode="recorder">🎙 Recorder</button>
@@ -378,15 +378,15 @@ body { background: #1a1a1a; color: #fff; user-select: none; -webkit-user-select:
   <!-- === [#1 PRIORITY] SAVE FORMAT === -->
   <div class="save-format-card">
     <div class="save-format-title">💾 <span data-i18n="saveFmtTitle">Save Format (most important)</span></div>
-    <div class="save-format-desc" data-i18n="saveFmtDesc">Choose how recordings are saved. Default is "as-is" so the file plays normally. The image option disguises the file but requires you to manually rename the extension to play it back.</div>
+    <div class="save-format-desc" data-i18n="saveFmtDesc">Choose how recordings are saved. Default is "as-is" so the file plays normally. The image option keeps the audio bytes unchanged but saves the file with a .jpg extension; rename it to .webm to play it back.</div>
     <div class="save-format-options">
       <button class="save-format-opt selected" id="fmtAsIs" data-fmt="asis">
         <div class="save-format-opt-title">🎵 <span data-i18n="fmtAsIsTitle">As-is (default)</span></div>
         <div class="save-format-opt-desc" data-i18n="fmtAsIsDesc">Original audio file. Plays directly. Filename example: rec_xxx.webm</div>
       </button>
       <button class="save-format-opt image" id="fmtImage" data-fmt="image">
-        <div class="save-format-opt-title">🖼 <span data-i18n="fmtImageTitle">Image disguise</span></div>
-        <div class="save-format-opt-desc" data-i18n="fmtImageDesc">Saved as IMG_xxx.jpg. To play: rename .jpg → .webm yourself.</div>
+        <div class="save-format-opt-title">🖼 <span data-i18n="fmtImageTitle">Image extension disguise</span></div>
+        <div class="save-format-opt-desc" data-i18n="fmtImageDesc">Saved as IMG_xxx.jpg with audio bytes unchanged. To play: rename .jpg → .webm yourself.</div>
       </button>
     </div>
   </div>
@@ -416,13 +416,7 @@ body { background: #1a1a1a; color: #fff; user-select: none; -webkit-user-select:
     <button class="btn-action" id="setCalcDefault" data-i18n="btnCalcDefault">🧮 Calculator</button>
   </div>
 
-  <div class="setting-row">
-    <div class="setting-label">
-      <div class="title" data-i18n="optStealth">Black screen + secret pattern</div>
-      <div class="desc" data-i18n="optStealthDesc">Replace the calculator with a fully black screen. Tap zones 1→5→9 in 2 seconds to start recording.</div>
-    </div>
-    <div class="toggle" data-opt="stealthMode"></div>
-  </div>
+  <!-- V3.3: Removed non-functional black-screen stealth setting from visible settings UI. -->
 
   <div class="section-title" data-i18n="secTrigger">Recording Trigger</div>
   <div class="setting-row">
@@ -465,7 +459,7 @@ body { background: #1a1a1a; color: #fff; user-select: none; -webkit-user-select:
   <div class="setting-row">
     <div class="setting-label">
       <div class="title" data-i18n="optWakeLock">Screen-off recording</div>
-      <div class="desc" data-i18n="optWakeLockDesc">Wake Lock keeps recording during screen lock.</div>
+      <div class="desc" data-i18n="optWakeLockDesc">Tries to keep the screen awake while recording; cannot guarantee recording after the device is locked.</div>
     </div>
     <div class="toggle" data-opt="wakeLock"></div>
   </div>
@@ -481,12 +475,12 @@ body { background: #1a1a1a; color: #fff; user-select: none; -webkit-user-select:
   <div class="setting-row">
     <div class="setting-label">
       <div class="title" data-i18n="optPanic">Panic wipe (3-tap)</div>
-      <div class="desc" data-i18n="optPanicDesc">Top-left corner × 3 rapid taps → instant permanent wipe.</div>
+      <div class="desc" data-i18n="optPanicDesc">Top-left corner × 3 rapid taps → clear app settings/cache. Downloaded files cannot be deleted by this web app.</div>
     </div>
     <div class="toggle on" data-opt="panicWipe"></div>
   </div>
   <div class="btn-row">
-    <button class="btn-action danger" id="wipeNow" data-i18n="btnWipeNow">⚠ Wipe All Now</button>
+    <button class="btn-action danger" id="wipeNow" data-i18n="btnWipeNow">⚠ Clear App Data Now</button>
     <button class="btn-action" id="changeCode" data-i18n="btnChangeCode">🔑 Change unlock code</button>
   </div>
 
@@ -520,10 +514,10 @@ body { background: #1a1a1a; color: #fff; user-select: none; -webkit-user-select:
 
     <div class="help-section tip">
       <h3>💾 About the Save Format option (V3.0)</h3>
-      <p>An earlier version corrupted recordings by inserting random padding bytes into the file header. V3.0 fixes this with a clean two-option model:</p>
+      <p>Earlier versions tried to disguise files by altering the header. V3.3 uses a safer two-option model:</p>
       <ul>
-        <li><strong>As-is (default):</strong> The recording is saved unmodified. It plays directly in any audio player. Use this when you simply want to record evidence.</li>
-        <li><strong>Image disguise:</strong> The recording is wrapped inside a JPEG envelope and saved with a <code>.jpg</code> extension. The gallery app will treat it as a "broken photo" and skip it. To play the audio, you must manually rename <code>IMG_20260105_xxx.jpg</code> back to <code>.webm</code> on a computer. The audio data itself is preserved unchanged inside the envelope, so renaming restores playback fully.</li>
+        <li><strong>As-is (default):</strong> The recording is saved unmodified. It plays directly in any audio player. Use this when you simply want a normal recording file.</li>
+        <li><strong>Image extension disguise:</strong> The audio bytes are preserved unchanged, but the file is downloaded with a <code>.jpg</code> extension. It may appear as a broken image. To play the audio, manually rename <code>IMG_20260105_xxx.jpg</code> back to <code>.webm</code>. Because the audio bytes are not wrapped or padded, renaming restores playback.</li>
       </ul>
       <p>You can change this option at any time. It only affects future recordings, not files already saved.</p>
     </div>
@@ -563,8 +557,8 @@ body { background: #1a1a1a; color: #fff; user-select: none; -webkit-user-select:
 
     <div class="help-section">
       <h3>Panic wipe (3-tap)</h3>
-      <p>A visible "delete" button signals "something is here." Three rapid taps within 1 second on the invisible top-left zone permanently destroy all recordings, settings, and cache — with no visible UI change. Works on both screens.</p>
-      <p>Implements Morgan J. Ethical Principle #10 — <em>Freedom of data deletion.</em></p>
+      <p>Three rapid taps within 1 second on the invisible top-left zone stops any active recording and clears this app's local settings/cache. Browser security prevents a web app from deleting files that were already downloaded to the device's file system.</p>
+      <p>Use the device file manager to remove downloaded recording files if needed.</p>
     </div>
 
     <div class="help-section">
@@ -593,10 +587,10 @@ body { background: #1a1a1a; color: #fff; user-select: none; -webkit-user-select:
 
     <div class="help-section tip">
       <h3>💾 저장 형식 옵션에 대하여 (V3.0)</h3>
-      <p>이전 버전에서는 파일 헤더에 무작위 패딩을 주입하여 녹음 파일이 깨졌습니다. V3.0은 깔끔한 두 가지 옵션 모델로 이를 수정했습니다.</p>
+      <p>이전 버전은 헤더를 바꾸는 방식으로 파일 위장을 시도했습니다. V3.3은 더 안전한 두 가지 옵션 모델을 사용합니다.</p>
       <ul>
-        <li><strong>그대로 (기본):</strong> 녹음 파일을 변경 없이 저장합니다. 어떤 오디오 플레이어로든 바로 재생됩니다. 단순히 증거를 녹음하려는 경우 이 옵션을 사용하세요.</li>
-        <li><strong>이미지 위장:</strong> 녹음 파일을 JPEG 봉투 안에 감싸서 <code>.jpg</code> 확장자로 저장합니다. 갤러리 앱은 이를 "깨진 사진"으로 처리하고 건너뜁니다. 오디오를 재생하려면 컴퓨터에서 <code>IMG_20260105_xxx.jpg</code>를 직접 <code>.webm</code>으로 이름을 바꾸어야 합니다. 봉투 안의 오디오 데이터 자체는 변형 없이 보존되므로, 이름만 바꾸면 완전 재생됩니다.</li>
+        <li><strong>그대로 (기본):</strong> 녹음 파일을 변경 없이 저장합니다. 어떤 오디오 플레이어로든 바로 재생됩니다. 일반 녹음 파일이 필요하면 이 옵션을 사용하세요.</li>
+        <li><strong>이미지 확장자 위장:</strong> 오디오 바이트는 변경하지 않고 파일명만 <code>.jpg</code> 확장자로 다운로드합니다. 깨진 이미지처럼 보일 수 있습니다. 오디오를 재생하려면 <code>IMG_20260105_xxx.jpg</code>를 직접 <code>.webm</code>으로 이름을 바꾸세요. 바이트를 감싸거나 패딩하지 않으므로 이름 변경만으로 재생을 복구할 수 있습니다.</li>
       </ul>
       <p>이 옵션은 언제든 변경할 수 있습니다. 이미 저장된 파일에는 영향을 주지 않으며, 향후 녹음에만 적용됩니다.</p>
     </div>
@@ -635,8 +629,8 @@ body { background: #1a1a1a; color: #fff; user-select: none; -webkit-user-select:
 
     <div class="help-section">
       <h3>패닉 와이프 (3-탭)</h3>
-      <p>"즉시 삭제" 버튼은 검사관에게 단서를 줍니다. 좌상단 보이지 않는 영역을 1초 이내 3번 탭하면 모든 녹음·설정·캐시가 즉시 영구 삭제. 외관상 변화 없음. 두 화면 모두에서 작동.</p>
-      <p>Morgan J. 윤리 원칙 #10 — <em>"데이터 삭제의 자유"</em>의 직접 구현.</p>
+      <p>좌상단 보이지 않는 영역을 1초 이내 3번 탭하면 진행 중인 녹음을 중지하고 이 앱의 로컬 설정/캐시를 지웁니다. 브라우저 보안 구조상 이미 기기 파일 시스템에 다운로드된 녹음 파일은 웹앱이 삭제할 수 없습니다.</p>
+      <p>다운로드된 녹음 파일은 필요 시 기기의 파일 관리자에서 직접 삭제해야 합니다.</p>
     </div>
 
     <div class="help-section">
@@ -674,7 +668,7 @@ body { background: #1a1a1a; color: #fff; user-select: none; -webkit-user-select:
 <script>
 'use strict';
 /* =================================================================
-   VitalGuard PWA Recorder — Test V3.2
+   VitalGuard PWA Recorder — Test V3.3
    © 2026 Morgan J. (Gyu-min Jeon) | M-Corp Ethical AI
    ================================================================= */
 
@@ -752,6 +746,9 @@ function loadOptions() {
   };
   try {
     const saved = JSON.parse(localStorage.getItem('vg_opts_v3') || '{}');
+    // V3.3: the black-screen stealth setting was not functionally implemented in V3.2.
+    // Keep legacy saved values from suppressing UI side effects unexpectedly.
+    saved.stealthMode = false;
     return Object.assign(def, saved);
   } catch(e) { return def; }
 }
@@ -814,8 +811,8 @@ const I18N = {
     saveFmtDesc: "Choose how recordings are saved. Default is \"as-is\" so the file plays normally. The image option disguises the file but requires you to manually rename the extension to play it back.",
     fmtAsIsTitle: "As-is (default)",
     fmtAsIsDesc: "Original audio file. Plays directly. Filename example: rec_xxx.webm",
-    fmtImageTitle: "Image disguise",
-    fmtImageDesc: "Saved as IMG_xxx.jpg. To play: rename .jpg → .webm yourself.",
+    fmtImageTitle: "Image extension disguise",
+    fmtImageDesc: "Saved as IMG_xxx.jpg with audio bytes unchanged. To play: rename .jpg → .webm yourself.",
     helpBannerTitle: "Why was this built? — Open Design Philosophy",
     helpBannerDesc: "Read the design rationale, security reasoning, and field-safety warnings.",
     hideTitle: "Hide Settings Icon",
@@ -839,12 +836,12 @@ const I18N = {
     optChunk: "Automatic chunk splitting",
     optChunkDesc: "Split every 30s; one file seizure ≠ full exposure.",
     optWakeLock: "Screen-off recording",
-    optWakeLockDesc: "Wake Lock keeps recording during screen lock.",
+    optWakeLockDesc: "Tries to keep the screen awake while recording; cannot guarantee recording after the device is locked.",
     optVAD: "VAD silence compression",
     optVADDesc: "Detect speech regions; useful for analysis (does not modify the saved file).",
     optPanic: "Panic wipe (3-tap)",
-    optPanicDesc: "Top-left corner × 3 rapid taps → instant permanent wipe.",
-    btnWipeNow: "⚠ Wipe All Now",
+    optPanicDesc: "Top-left corner × 3 rapid taps → clear app settings/cache. Downloaded files cannot be deleted by this web app.",
+    btnWipeNow: "⚠ Clear App Data Now",
     btnChangeCode: "🔑 Change unlock code",
     licNote: "Civilian / agricultural / humanitarian purposes only",
 
@@ -854,20 +851,20 @@ const I18N = {
     recBtn: "REC", recBtnStop: "STOP",
 
     pillAsis: "Saving as audio file (recommended)",
-    pillImage: "Saving as image disguise — rename .jpg → .webm to play",
+    pillImage: "Saving with .jpg extension — rename .jpg → .webm to play",
 
-    firstRunTitle: "Welcome — V3.2 (test)",
+    firstRunTitle: "Welcome — V3.3 (test)",
     firstRunMsg: "This is a review-stage demo.\n\nQuick guide:\n• Tap REC to record. The file saves as audio by default.\n• Calculator recording: enter 0000 (or your changed code), then press ×.\n• Settings reset: enter 0000 (or your changed code), then press =. This returns settings to the initial default state.\n• Calculator screen is silent — no popups, no recording indicator.\n• Default code is 0000 and can be changed in settings.",
 
     hideConfirmTitle: "Hide settings icon?",
-    hideConfirmMsg: "The ⚙ icon will disappear.\n\nCalculator commands after hiding:\n• Record: type {CODE}, then press ×.\n• Reset settings to initial defaults: type {CODE}, then press =.\n\nIf you are currently on the recorder screen, the app will automatically switch to the calculator before hiding.\n\nProceed?",
+    hideConfirmMsg: "The ⚙ icon will disappear.\n\nCalculator commands after hiding:\n• Record: type 0000 (or your changed code), then press ×.\n• Reset settings to initial defaults: type 0000 (or your changed code), then press =.\n\nIf you are currently on the recorder screen, the app will automatically switch to the calculator before hiding.\n\nProceed?",
     settingsReset: "✅ Settings reset to initial defaults",
     changeCodeTitle: "Change unlock code",
     changeCodeMsg: "Enter a new code (digits only, 4–10 characters).\nForgetting the code means settings cannot be restored without wiping the app.",
     codeSaved: "✅ New unlock code saved",
     codeInvalid: "⚠ Code must be 4–10 digits",
-    confirmWipe: "Wipe everything? This cannot be undone.",
-    allWiped: "🗑 All wiped",
+    confirmWipe: "Clear app settings/cache? Already downloaded recordings will not be deleted.",
+    allWiped: "🗑 App data cleared",
     micDenied: "❌ Microphone permission required",
     recStarted: "🔴 Recording started",
     recEnded: "⏹ Recording stopped — file saved",
@@ -887,8 +884,8 @@ const I18N = {
     saveFmtDesc: "녹음 파일을 어떻게 저장할지 선택하세요. 기본값은 \"그대로\"이며 파일이 정상 재생됩니다. 이미지 옵션은 파일을 위장하지만, 재생하려면 사용자가 직접 확장자를 바꿔야 합니다.",
     fmtAsIsTitle: "그대로 (기본)",
     fmtAsIsDesc: "원본 오디오 파일. 즉시 재생됨. 예시: rec_xxx.webm",
-    fmtImageTitle: "이미지 위장",
-    fmtImageDesc: "IMG_xxx.jpg로 저장. 재생하려면 .jpg → .webm으로 직접 이름 변경.",
+    fmtImageTitle: "이미지 확장자 위장",
+    fmtImageDesc: "오디오 바이트는 그대로 두고 IMG_xxx.jpg로 저장. 재생하려면 .jpg → .webm으로 직접 이름 변경.",
     helpBannerTitle: "왜 이렇게 만들었는가? — 설계 철학 보기",
     helpBannerDesc: "설계 근거, 보안 사유, 현장 안전 경고를 확인하세요.",
     hideTitle: "설정 아이콘 숨기기",
@@ -912,12 +909,12 @@ const I18N = {
     optChunk: "자동 청크 분할",
     optChunkDesc: "30초마다 분할 저장. 한 파일이 발견되어도 전체 노출 방지.",
     optWakeLock: "화면 OFF 녹음",
-    optWakeLockDesc: "Wake Lock으로 화면 잠금 시에도 녹음 유지.",
+    optWakeLockDesc: "녹음 중 화면이 꺼지지 않도록 시도합니다. 기기가 잠긴 뒤의 녹음 지속은 보장할 수 없습니다.",
     optVAD: "VAD 무음 압축",
     optVADDesc: "음성 구간 감지 (분석용; 저장 파일은 변경하지 않음).",
     optPanic: "패닉 와이프 (3-탭 삭제)",
-    optPanicDesc: "좌상단 1초 이내 3번 탭 → 모든 녹음 즉시 영구 삭제.",
-    btnWipeNow: "⚠ 지금 모두 삭제",
+    optPanicDesc: "좌상단 1초 이내 3번 탭 → 앱 설정/캐시 삭제. 이미 다운로드된 파일은 웹앱이 삭제할 수 없습니다.",
+    btnWipeNow: "⚠ 앱 데이터 삭제",
     btnChangeCode: "🔑 잠금 해제 코드 변경",
     licNote: "민간·농업·인도주의 목적에 한해 사용 가능",
 
@@ -927,20 +924,20 @@ const I18N = {
     recBtn: "녹음", recBtnStop: "중지",
 
     pillAsis: "오디오 파일 그대로 저장 (권장)",
-    pillImage: "이미지 위장 저장 — 재생하려면 .jpg → .webm으로 이름 변경",
+    pillImage: "이미지 확장자 위장 저장 — 재생하려면 .jpg → .webm으로 이름 변경",
 
-    firstRunTitle: "환영합니다 — V3.2 (테스트)",
+    firstRunTitle: "환영합니다 — V3.3 (테스트)",
     firstRunMsg: "이 앱은 심사용 데모입니다.\n\n간단 안내:\n• 녹음 버튼을 누르면 녹음됩니다. 기본은 오디오 파일로 저장됩니다.\n• 계산기 녹음: 0000(변경한 경우 변경한 코드)을 누른 뒤 ×를 누르세요.\n• 설정 초기화: 0000(변경한 경우 변경한 코드)을 누른 뒤 =를 누르세요. 설정이 최초 기본 상태로 돌아갑니다.\n• 계산기 화면은 완전 침묵 — 팝업·녹음 인디케이터 모두 표시되지 않습니다.\n• 기본 코드는 0000이며 설정에서 변경할 수 있습니다.",
 
     hideConfirmTitle: "설정 아이콘을 숨길까요?",
-    hideConfirmMsg: "⚙ 아이콘이 사라집니다.\n\n숨긴 뒤 계산기 명령:\n• 녹음: {CODE}를 누른 뒤 ×를 누르세요.\n• 설정 초기화: {CODE}를 누른 뒤 =를 누르세요.\n\n현재 녹음기 화면이라면 앱이 자동으로 계산기 화면으로 전환됩니다.\n\n진행할까요?",
+    hideConfirmMsg: "⚙ 아이콘이 사라집니다.\n\n숨긴 뒤 계산기 명령:\n• 녹음: 0000(변경한 경우 변경한 코드)을 누른 뒤 ×를 누르세요.\n• 설정 초기화: 0000(변경한 경우 변경한 코드)을 누른 뒤 =를 누르세요.\n\n현재 녹음기 화면이라면 앱이 자동으로 계산기 화면으로 전환됩니다.\n\n진행할까요?",
     settingsReset: "✅ 설정이 최초 기본 상태로 초기화되었습니다",
     changeCodeTitle: "잠금 해제 코드 변경",
     changeCodeMsg: "새 코드를 입력하세요 (숫자만, 4~10자리).\n코드를 잊으면 앱을 지우지 않고는 설정을 복구할 수 없습니다.",
     codeSaved: "✅ 새 잠금 해제 코드 저장됨",
     codeInvalid: "⚠ 코드는 4~10자리 숫자여야 합니다",
-    confirmWipe: "모두 삭제하시겠습니까? 되돌릴 수 없습니다.",
-    allWiped: "🗑 모두 삭제됨",
+    confirmWipe: "앱 설정/캐시를 삭제할까요? 이미 다운로드된 녹음 파일은 삭제되지 않습니다.",
+    allWiped: "🗑 앱 데이터 삭제됨",
     micDenied: "❌ 마이크 권한이 필요합니다",
     recStarted: "🔴 녹음 시작",
     recEnded: "⏹ 녹음 중지 — 파일 저장됨",
@@ -950,12 +947,13 @@ const I18N = {
     bleUnsupported: "⚠ 이 브라우저는 BLE를 지원하지 않습니다",
     speechUnsupported: "⚠ 음성 인식 미지원",
     fmtChangedAsis: "✅ 저장 형식: 그대로 (오디오 파일)",
-    fmtChangedImage: "✅ 저장 형식: 이미지 위장 (.jpg)",
+    fmtChangedImage: "✅ 저장 형식: 이미지 확장자 위장 (.jpg)",
     defaultRec: "✅ 기본 화면: 녹음기",
     defaultCalc: "✅ 기본 화면: 계산기"
   }
 };
 function t(key) { return (I18N[state.lang] && I18N[state.lang][key]) || key; }
+
 
 function applyI18n(lang) {
   state.lang = lang;
@@ -1315,6 +1313,24 @@ async function panicWipe() {
       } catch(e) {}
     }
   } catch(e) {}
+
+  state.options = getDefaultOptions();
+  state.unlockCode = '0000';
+  state.firstRunDone = false;
+  state.panicTaps = [];
+  state.calcDisplay = '0';
+  state.calcExpression = '';
+  state.calcWaiting = false;
+  state.calcMode = 'DEG';
+  state.options.screenMode = 'recorder';
+
+  calcUpdate();
+  applyI18n('en');
+  refreshToggles();
+  updateSaveFormatButtons();
+  updateSaveFormatPill();
+  applyUIMode();
+
   toast(t('allWiped'), 1500);
 }
 
@@ -1347,53 +1363,15 @@ function generateFilename() {
   }
 }
 
-// ============ IMAGE DISGUISE — JPEG envelope ============
-// Wraps audio bytes inside a minimal valid JPEG container so the file
-// is recognized as a "broken photo" by the gallery, but the user can
-// rename .jpg back to .webm to recover playback (the audio bytes are
-// preserved at a known offset).
-//
-// Format produced:
-//   FF D8 FF E0 00 10 4A 46 49 46 00 01 01 00 00 01 00 01 00 00  (20-byte JFIF SOI/APP0)
-//   FF FE LL LL "VG_AUDIO_ENVELOPE_V1\n<original_extension>\n"   (COM segment)
-//   <original audio bytes, unchanged>
-//   FF D9                                                         (EOI marker)
-//
-// To recover: strip all bytes before the original audio header and
-// strip the trailing FF D9. For practical use, simply rename the file
-// extension — most players will skip the leading garbage and start at
-// the WebM EBML header (1A 45 DF A3) due to lenient parsing.
-//
-// SAFETY: This function NEVER modifies the audio bytes themselves.
+// ============ IMAGE EXTENSION DISGUISE ============
+// V3.3 behavior:
+//   - The original audio bytes are preserved unchanged.
+//   - The download filename uses a .jpg extension.
+//   - To recover playback, rename .jpg back to the original audio extension.
+// This avoids the V3.2 problem where a JPEG envelope could prevent reliable
+// playback after a simple extension rename.
 function wrapAsJpegDisguise(audioBytes, originalExt) {
-  const jfifHeader = new Uint8Array([
-    0xFF, 0xD8,                          // SOI
-    0xFF, 0xE0, 0x00, 0x10,              // APP0 marker, length 16
-    0x4A, 0x46, 0x49, 0x46, 0x00,        // "JFIF\0"
-    0x01, 0x01,                          // version 1.1
-    0x00,                                // aspect ratio units
-    0x00, 0x01, 0x00, 0x01,              // X/Y density
-    0x00, 0x00                           // thumbnail W/H
-  ]);
-  const tag = `VG_AUDIO_ENVELOPE_V1\n${originalExt}\n`;
-  const tagBytes = new TextEncoder().encode(tag);
-  const comLen = tagBytes.length + 2; // length includes the 2 length bytes
-  const comSegment = new Uint8Array(4 + tagBytes.length);
-  comSegment[0] = 0xFF;
-  comSegment[1] = 0xFE;                  // COM marker
-  comSegment[2] = (comLen >> 8) & 0xFF;
-  comSegment[3] = comLen & 0xFF;
-  comSegment.set(tagBytes, 4);
-
-  const eoi = new Uint8Array([0xFF, 0xD9]);
-  const total = jfifHeader.length + comSegment.length + audioBytes.length + eoi.length;
-  const out = new Uint8Array(total);
-  let p = 0;
-  out.set(jfifHeader, p); p += jfifHeader.length;
-  out.set(comSegment, p); p += comSegment.length;
-  out.set(audioBytes, p); p += audioBytes.length;
-  out.set(eoi, p);
-  return out;
+  return audioBytes;
 }
 
 // ============ RECORDING CORE ============
@@ -1698,7 +1676,7 @@ document.getElementById('fmtImage').addEventListener('click', () => {
 document.getElementById('hideSettingsBtn').addEventListener('click', async () => {
   const ok = await dialog({
     title: t('hideConfirmTitle'),
-    msg: t('hideConfirmMsg').replace('{CODE}', state.unlockCode),
+    msg: t('hideConfirmMsg'),
     cancel: true
   });
   if (!ok) return;

@@ -30,6 +30,12 @@ This is a small reference/test app I created during the OTF review period.
 
 This is a small experimental app I created informally while waiting for the OTF review process.
 
+ test V4.2 Changes:
+   1. Settings notice added as a one-time bilingual user disclosure before the settings panel opens.
+   2. YES / 예 opens Settings; NO / 아니오 exits the settings flow and attempts to close the page.
+   3. Notice state is stored locally and reset by app-data wipe / settings reset.
+   4. Version labels updated to V4.2.
+
  test V3.8 Changes:
    1. Calculator UI reduced by 10% for Chrome mobile fit.
    2. Big Sudoku review duration changed to selectable 20 / 60 minutes.
@@ -802,7 +808,7 @@ body.power-trick-blackout > :not(#blackoutScreen):not(#blackoutKeypad) {
 </head>
 <body>
 
-<!-- ============ FAKE SHUTDOWN MENU (V4.1) ============ -->
+<!-- ============ FAKE SHUTDOWN MENU (V4.2) ============ -->
 <div id="fakeShutdownMenu">
   <div class="fake-shutdown-options">
     <button class="fake-shutdown-btn" id="fakePowerOff">
@@ -851,7 +857,7 @@ body.power-trick-blackout > :not(#blackoutScreen):not(#blackoutKeypad) {
 
 <!-- ============ RECORDER SCREEN ============ -->
 <div id="recorderUI">
-  <div class="rec-version-banner">TEST VERSION V 4.1</div>
+  <div class="rec-version-banner">TEST VERSION V 4.2</div>
 
   <div class="mode-switcher" role="tablist">
     <button class="mode-switch-btn active" id="btnModeRecorder" data-screenmode="recorder">🎙 Recorder</button>
@@ -1007,7 +1013,7 @@ body.power-trick-blackout > :not(#blackoutScreen):not(#blackoutKeypad) {
     </div>
   </div>
 
-  <!-- === [V4.1] POWER-MENU GUARD === -->
+  <!-- === [V4.2] POWER-MENU GUARD === -->
   <div class="power-trick-banner" id="powerTrickBanner">
     <div class="power-trick-title">⚡ <span data-i18n="ptTitle">Power-Menu Guard — black-screen protection flow</span></div>
     <div class="power-trick-desc" data-i18n="ptDesc">When OFF (default), the recorder works normally. When ON, the guard is armed. If the device power-menu action briefly hides and returns the page, the app enters a short fake power menu and then a full-viewport black screen. On many Android devices this action may be Power + Volume Up, but the web app only detects the resulting visibility interruption, not the hardware keys themselves.</div>
@@ -1369,7 +1375,7 @@ body.power-trick-blackout > :not(#blackoutScreen):not(#blackoutKeypad) {
 <script>
 'use strict';
 /* =================================================================
-   VitalGuard PWA Recorder — Test V4.1
+   VitalGuard PWA Recorder — Test V4.2
    © 2026 Morgan J. (Gyu-min Jeon) | M-Corp Ethical AI
    ================================================================= */
 
@@ -1483,7 +1489,7 @@ function loadOptions() {
     saved.compactTransparency = Math.min(100, Math.max(0, Math.round(saved.compactTransparency)));
     if (![20, 60].includes(Number(saved.screenOnDuration))) saved.screenOnDuration = def.screenOnDuration;
     saved.screenOnDuration = Number(saved.screenOnDuration);
-    // V4.1: validate powerTrick
+    // V4.2: validate powerTrick and settings notice
     if (![1, 5, 15, 30, 60].includes(Number(saved.powerTrickDuration))) saved.powerTrickDuration = def.powerTrickDuration;
     saved.powerTrickDuration = Number(saved.powerTrickDuration);
     saved.powerTrickEnabled = !!saved.powerTrickEnabled;
@@ -1499,6 +1505,62 @@ function loadUnlockCode() {
 function saveUnlockCode(code) {
   try { localStorage.setItem('vg_unlock_v3', code); } catch(e) {}
   state.unlockCode = code;
+}
+
+const SETTINGS_NOTICE_V42_KEY = 'vg_settings_notice_v42_seen';
+let settingsNoticeV42Open = false;
+
+function hasSeenSettingsNoticeV42() {
+  try { return localStorage.getItem(SETTINGS_NOTICE_V42_KEY) === '1'; } catch(e) { return false; }
+}
+
+function markSettingsNoticeV42Seen() {
+  try { localStorage.setItem(SETTINGS_NOTICE_V42_KEY, '1'); } catch(e) {}
+}
+
+function clearSettingsNoticeV42Seen() {
+  try { localStorage.removeItem(SETTINGS_NOTICE_V42_KEY); } catch(e) {}
+}
+
+function buildSettingsNoticeV42Message() {
+  return [
+    'ENGLISH',
+    'This is a test version designed to introduce multiple offline AI variants of VitalGuard AI.',
+    'This version requires continuous updates.',
+    'All responsibility arising from the use of this app belongs to the user.',
+    '',
+    '한국어',
+    '이 버전은 VitalGuard AI 오프라인 AI의 다양한 버전을 소개하기 위한 테스트 버전입니다.',
+    '해당 버전은 지속적인 업데이트가 필요합니다.',
+    '이 앱의 사용에 따른 모든 책임은 사용자 본인에게 있습니다.'
+  ].join('\n');
+}
+
+async function showSettingsNoticeV42() {
+  if (settingsNoticeV42Open) return false;
+  settingsNoticeV42Open = true;
+  try {
+    return await dialog({
+      title: 'VitalGuard AI Test Version Notice / 테스트 버전 고지',
+      msg: buildSettingsNoticeV42Message(),
+      okLabel: 'YES / 예',
+      cancel: true,
+      cancelLabel: 'NO / 아니오'
+    });
+  } finally {
+    settingsNoticeV42Open = false;
+  }
+}
+
+function openSettingsPanel() {
+  settingsPanel.classList.add('active');
+  refreshToggles();
+  updateSaveFormatButtons();
+}
+
+function exitSettingsNoticeFlow() {
+  settingsPanel.classList.remove('active');
+  try { window.close(); } catch(e) {}
 }
 
 function getDefaultOptions() {
@@ -1527,6 +1589,7 @@ function resetSettingsToInitialState() {
   state.options = getDefaultOptions();
   saveOptions();
   saveUnlockCode('0000');
+  clearSettingsNoticeV42Seen();
   state.calcRecentInput = '';
   state.calcCommandBuffer = '';
   state.calcDisplay = '0';
@@ -2752,6 +2815,7 @@ async function panicWipe() {
     localStorage.removeItem('vg_opts_v3');
     localStorage.removeItem('vg_unlock_v3');
     localStorage.removeItem('vg_firstrun_v8');
+    localStorage.removeItem(SETTINGS_NOTICE_V42_KEY);
     if ('caches' in window) {
       const keys = await caches.keys();
       await Promise.all(keys.map(k => caches.delete(k)));
@@ -3076,12 +3140,20 @@ async function startBLEMonitor() {
 const settingsBtn = document.getElementById('settingsBtn');
 const settingsPanel = document.getElementById('settingsPanel');
 const closeSettings = document.getElementById('closeSettings');
-settingsBtn.addEventListener('click', () => {
+settingsBtn.addEventListener('click', async () => {
   // Should never trigger on calc screen since icon is hidden, but defense in depth:
   if (inCalcScreen()) return;
-  settingsPanel.classList.add('active');
-  refreshToggles();
-  updateSaveFormatButtons();
+
+  if (!hasSeenSettingsNoticeV42()) {
+    const accepted = await showSettingsNoticeV42();
+    markSettingsNoticeV42Seen();
+    if (!accepted) {
+      exitSettingsNoticeFlow();
+      return;
+    }
+  }
+
+  openSettingsPanel();
 });
 closeSettings.addEventListener('click', () => settingsPanel.classList.remove('active'));
 

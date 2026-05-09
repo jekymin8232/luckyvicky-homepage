@@ -30,6 +30,12 @@ This is a small reference/test app I created during the OTF review period.
 
 This is a small experimental app I created informally while waiting for the OTF review process.
 
+ test V4.2 Changes:
+   1. Settings notice added as a one-time bilingual user disclosure before the settings panel opens.
+   2. YES / 예 opens Settings; NO / 아니오 exits the settings flow and attempts to close the page.
+   3. Notice state is stored locally and reset by app-data wipe / settings reset.
+   4. Version labels updated to V4.2.
+
  test V3.8 Changes:
    1. Calculator UI reduced by 10% for Chrome mobile fit.
    2. Big Sudoku review duration changed to selectable 20 / 60 minutes.
@@ -637,10 +643,14 @@ body.compact-visible-mode #compactExitBtn {
 #dialog.active { display: flex; }
 .dialog-box {
   background: #1a1a1a; padding: 22px; border-radius: 12px;
-  width: 100%; max-width: 380px; border: 1px solid #444;
+  width: 100%; max-width: 380px; max-height: calc(100dvh - 40px);
+  overflow-y: auto; border: 1px solid #444;
 }
 .dialog-box h3 { margin-bottom: 12px; color: #ff8800; font-size: 1.05em; }
 .dialog-box p { color: #ccc; line-height: 1.55; margin-bottom: 14px; font-size: 0.9em; white-space: pre-wrap; }
+#dialog.tap-close { cursor: pointer; }
+#dialog.tap-close .dialog-box { cursor: pointer; }
+#dialog.tap-close .dialog-buttons { display: none; }
 .dialog-box input {
   width: 100%; padding: 10px; background: #000; border: 1px solid #444;
   color: #fff; border-radius: 6px; font-size: 1em; margin-bottom: 12px;
@@ -656,16 +666,198 @@ body.compact-visible-mode #compactExitBtn {
 }
 #recIndicator.show { display: block; }
 @keyframes blink { 50% { opacity: 0.3; } }
+/* ============================================================
+   POWER-MENU GUARD (V4.1)
+   ============================================================ */
+#fakeShutdownMenu {
+  display: none; position: fixed; inset: 0;
+  width: 100vw; height: 100dvh;
+  background: #000;
+  z-index: 2147483644; align-items: center; justify-content: center;
+  flex-direction: column; padding: 20px;
+  -webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px);
+  touch-action: none; overscroll-behavior: none;
+}
+#fakeShutdownMenu.active { display: flex; }
+.fake-shutdown-options {
+  display: flex; flex-direction: column; gap: 60px;
+  align-items: center; flex: 1; justify-content: center;
+}
+.fake-shutdown-btn {
+  display: flex; flex-direction: column; align-items: center; gap: 14px;
+  background: transparent; border: none; cursor: pointer; padding: 8px;
+}
+.fake-shutdown-btn:active { transform: scale(0.92); }
+.fake-shutdown-icon {
+  width: 84px; height: 84px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 42px; color: #fff;
+}
+.fake-shutdown-icon.power { background: #888; }
+.fake-shutdown-icon.restart { background: #2ecc71; }
+.fake-shutdown-icon.emergency { background: #e74c3c; }
+.fake-shutdown-label {
+  color: #fff; font-size: 1.05em; font-weight: 600; letter-spacing: 0.5px;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.6);
+}
+.fake-shutdown-bottom {
+  width: 100%; max-width: 420px; padding: 14px 24px;
+  background: rgba(40,40,40,0.85); border-radius: 30px;
+  color: #fff; text-align: center; font-size: 0.95em;
+  border: none; cursor: default;
+}
+
+/* Black-out screen */
+#blackoutScreen {
+  display: none; position: fixed; inset: 0;
+  width: 100vw; height: 100dvh;
+  min-width: 100vw; min-height: 100dvh;
+  background: #000 !important; z-index: 2147483646;
+  cursor: default; touch-action: none; overscroll-behavior: none;
+}
+#blackoutScreen.active { display: block; }
+body.power-trick-blackout {
+  background: #000 !important;
+  overflow: hidden !important;
+}
+body.power-trick-blackout > :not(#blackoutScreen):not(#blackoutKeypad) {
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+.blackout-recovery-zone {
+  position: absolute; top: 0; right: 0;
+  width: 80px; height: 80px;
+  background: transparent; border: none;
+  -webkit-tap-highlight-color: transparent;
+}
+/* Hidden tap zone — center-bottom of black screen, brings up keypad */
+.blackout-keypad-zone {
+  position: absolute; bottom: 0; left: 50%;
+  transform: translateX(-50%);
+  width: 120px; height: 120px;
+  background: transparent; border: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Keypad (recovery via numeric code) */
+#blackoutKeypad {
+  display: none; position: fixed; inset: 0;
+  width: 100vw; height: 100dvh;
+  background: rgba(0,0,0,0.98);
+  z-index: 2147483647;
+  align-items: center; justify-content: center;
+  flex-direction: column; padding: 20px;
+}
+#blackoutKeypad.active { display: flex; }
+.keypad-display {
+  background: #000; color: #0f0; font-family: 'Courier New', monospace;
+  font-size: 2.2em; padding: 18px; border-radius: 8px;
+  border: 1px solid #333; min-width: 240px; max-width: 100%;
+  text-align: center; margin-bottom: 16px; letter-spacing: 0.4em;
+  min-height: 70px;
+}
+.keypad-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
+  width: 100%; max-width: 320px;
+}
+.keypad-btn {
+  padding: 18px 0; background: #2a2a2a; color: #fff;
+  border: 1px solid #444; border-radius: 10px;
+  font-size: 1.6em; cursor: pointer; font-family: 'Courier New', monospace;
+}
+.keypad-btn:active { background: #444; }
+.keypad-btn.action { background: #444; font-size: 0.9em; }
+.keypad-btn.cancel { color: #888; }
+
+/* Power-trick banner in settings */
+.power-trick-banner {
+  background: linear-gradient(135deg, #3a1a4a, #1a0a2a);
+  border: 1px solid #6c2a8c; border-radius: 10px; padding: 14px;
+  margin-bottom: 14px;
+}
+.power-trick-title { font-size: 0.98em; color: #ddaaff; margin-bottom: 6px; font-weight: 600; }
+.power-trick-desc { font-size: 0.78em; color: #c0a0d0; line-height: 1.45; margin-bottom: 10px; }
+.power-trick-row {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px; margin-bottom: 10px;
+}
+.power-trick-row .toggle { flex-shrink: 0; }
+.power-trick-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+.power-trick-test-btn {
+  flex: 1; min-width: 140px; padding: 10px;
+  background: #6c2a8c; border: 1px solid #8c3aac;
+  color: #fff; border-radius: 6px; font-size: 0.85em; cursor: pointer; font-weight: 600;
+}
+.power-trick-test-btn:active { background: #8c3aac; }
+.power-trick-duration {
+  display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap;
+}
+.power-trick-duration-btn {
+  flex: 1; min-width: 56px; padding: 8px 4px;
+  background: #1a1a2a; border: 1px solid #333;
+  color: #aaa; border-radius: 6px; font-size: 0.78em; cursor: pointer;
+}
+.power-trick-duration-btn.selected { background: #6c2a8c; border-color: #8c3aac; color: #fff; }
+.power-trick-status {
+  font-size: 0.74em; color: #aaa; margin-top: 8px;
+  padding: 8px; background: rgba(0,0,0,0.3); border-radius: 6px;
+}
+.power-trick-status.armed { color: #4ec9b0; }
+
 </style>
 </head>
 <body>
+
+<!-- ============ FAKE SHUTDOWN MENU (V4.2) ============ -->
+<div id="fakeShutdownMenu">
+  <div class="fake-shutdown-options">
+    <button class="fake-shutdown-btn" id="fakePowerOff">
+      <div class="fake-shutdown-icon power">⏻</div>
+      <div class="fake-shutdown-label">Power off</div>
+    </button>
+    <button class="fake-shutdown-btn" id="fakeRestart">
+      <div class="fake-shutdown-icon restart">↻</div>
+      <div class="fake-shutdown-label">Restart</div>
+    </button>
+    <button class="fake-shutdown-btn" id="fakeEmergency">
+      <div class="fake-shutdown-icon emergency">📞</div>
+      <div class="fake-shutdown-label">Emergency call</div>
+    </button>
+  </div>
+  <button class="fake-shutdown-bottom" id="fakeShutdownBottom">Side button settings</button>
+</div>
+
+<!-- ============ BLACKOUT SCREEN ============ -->
+<div id="blackoutScreen">
+  <button class="blackout-recovery-zone" id="blackoutRecovery" aria-hidden="true"></button>
+  <button class="blackout-keypad-zone" id="blackoutKeypadOpen" aria-hidden="true"></button>
+</div>
+
+<!-- ============ RECOVERY KEYPAD ============ -->
+<div id="blackoutKeypad">
+  <div class="keypad-display" id="keypadDisplay"></div>
+  <div class="keypad-grid">
+    <button class="keypad-btn" data-kp="1">1</button>
+    <button class="keypad-btn" data-kp="2">2</button>
+    <button class="keypad-btn" data-kp="3">3</button>
+    <button class="keypad-btn" data-kp="4">4</button>
+    <button class="keypad-btn" data-kp="5">5</button>
+    <button class="keypad-btn" data-kp="6">6</button>
+    <button class="keypad-btn" data-kp="7">7</button>
+    <button class="keypad-btn" data-kp="8">8</button>
+    <button class="keypad-btn" data-kp="9">9</button>
+    <button class="keypad-btn action cancel" data-kp="cancel">Cancel</button>
+    <button class="keypad-btn" data-kp="0">0</button>
+    <button class="keypad-btn action" data-kp="ok">OK</button>
+  </div>
+</div>
 
 <div id="recIndicator" title="Recording"></div>
 <button id="settingsBtn" aria-label="Settings">⚙</button>
 
 <!-- ============ RECORDER SCREEN ============ -->
 <div id="recorderUI">
-  <div class="rec-version-banner">Child Protection Big Sudoku(100%)</div>
+  <div class="rec-version-banner">TEST VERSION V 4.2</div>
 
   <div class="mode-switcher" role="tablist">
     <button class="mode-switch-btn active" id="btnModeRecorder" data-screenmode="recorder">🎙 Recorder</button>
@@ -819,6 +1011,34 @@ body.compact-visible-mode #compactExitBtn {
         <div class="save-format-opt-desc" data-i18n="fmtImageDesc">Saved as IMG_xxx.jpg with audio bytes unchanged. To play: rename .jpg → .webm yourself.</div>
       </button>
     </div>
+  </div>
+
+  <!-- === [V4.2] POWER-MENU GUARD === -->
+  <div class="power-trick-banner" id="powerTrickBanner">
+    <div class="power-trick-title">⚡ <span data-i18n="ptTitle">Power-Menu Guard — black-screen protection flow</span></div>
+    <div class="power-trick-desc" data-i18n="ptDesc">When OFF (default), the recorder works normally. When ON, the guard is armed. If the device power-menu action briefly hides and returns the page, the app enters a short fake power menu and then a full-viewport black screen. On many Android devices this action may be Power + Volume Up, but the web app only detects the resulting visibility interruption, not the hardware keys themselves.</div>
+    <div class="power-trick-row">
+      <div class="setting-label">
+        <div class="title" data-i18n="ptEnabled">Power-Menu Guard (default OFF)</div>
+        <div class="desc" data-i18n="ptEnabledDesc">Off: normal recorder. On: armed — power-menu interruption may trigger the black-screen flow.</div>
+      </div>
+      <div class="toggle" data-opt="powerTrickEnabled"></div>
+    </div>
+    <div class="setting-label" style="margin-top:6px;">
+      <div class="title" data-i18n="ptDuration">Black-screen duration (default: 1 min — test mode)</div>
+      <div class="desc" data-i18n="ptDurationDesc">How long the black screen + silent recording lasts. Recovery is always available via numeric code (default 0000) on the hidden keypad.</div>
+    </div>
+    <div class="power-trick-duration">
+      <button class="power-trick-duration-btn selected" data-ptdur="1">1 min</button>
+      <button class="power-trick-duration-btn" data-ptdur="5">5 min</button>
+      <button class="power-trick-duration-btn" data-ptdur="15">15 min</button>
+      <button class="power-trick-duration-btn" data-ptdur="30">30 min</button>
+      <button class="power-trick-duration-btn" data-ptdur="60">60 min</button>
+    </div>
+    <div class="power-trick-actions">
+      <button class="power-trick-test-btn" id="powerTrickTestBtn" data-i18n="ptTestBtn">▶ Test black-screen flow</button>
+    </div>
+    <div class="power-trick-status" id="powerTrickStatus" data-i18n="ptStatusDisarmed">Status: disarmed</div>
   </div>
 
   <!-- HELP -->
@@ -1155,14 +1375,14 @@ body.compact-visible-mode #compactExitBtn {
 <script>
 'use strict';
 /* =================================================================
-   VitalGuard PWA Recorder — Test V3.8
+   VitalGuard PWA Recorder — Test V4.2
    © 2026 Morgan J. (Gyu-min Jeon) | M-Corp Ethical AI
    ================================================================= */
 
 // ============ INLINE MANIFEST ============
 const MANIFEST = {
   name: "Calculator", short_name: "Calc", start_url: "./",
-  display: "standalone", background_color: "#1a1a1a", theme_color: "#000000",
+  display: "fullscreen", background_color: "#000000", theme_color: "#000000",
   orientation: "portrait",
   icons: [{
     src: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect x='24' y='12' width='144' height='168' rx='18' fill='%23222'/><rect x='42' y='30' width='108' height='36' rx='6' fill='%23000'/><circle cx='60' cy='96' r='12' fill='%23555'/><circle cx='96' cy='96' r='12' fill='%23555'/><circle cx='132' cy='96' r='12' fill='%23555'/><circle cx='60' cy='132' r='12' fill='%23555'/><circle cx='96' cy='132' r='12' fill='%23555'/><circle cx='132' cy='132' r='12' fill='%23ff8800'/></svg>",
@@ -1256,7 +1476,9 @@ function loadOptions() {
     panicWipe: true,
     compactMode: false,
     compactTransparency: 0,
-    screenOnDuration: 20
+    screenOnDuration: 20,
+    powerTrickEnabled: false,
+    powerTrickDuration: 1
   };
   try {
     const saved = JSON.parse(localStorage.getItem('vg_opts_v3') || '{}');
@@ -1267,6 +1489,10 @@ function loadOptions() {
     saved.compactTransparency = Math.min(100, Math.max(0, Math.round(saved.compactTransparency)));
     if (![20, 60].includes(Number(saved.screenOnDuration))) saved.screenOnDuration = def.screenOnDuration;
     saved.screenOnDuration = Number(saved.screenOnDuration);
+    // V4.2: validate powerTrick and settings notice
+    if (![1, 5, 15, 30, 60].includes(Number(saved.powerTrickDuration))) saved.powerTrickDuration = def.powerTrickDuration;
+    saved.powerTrickDuration = Number(saved.powerTrickDuration);
+    saved.powerTrickEnabled = !!saved.powerTrickEnabled;
     return Object.assign(def, saved);
   } catch(e) { return def; }
 }
@@ -1279,6 +1505,62 @@ function loadUnlockCode() {
 function saveUnlockCode(code) {
   try { localStorage.setItem('vg_unlock_v3', code); } catch(e) {}
   state.unlockCode = code;
+}
+
+const SETTINGS_NOTICE_V42_KEY = 'vg_settings_notice_v42_seen';
+let settingsNoticeV42Open = false;
+
+function hasSeenSettingsNoticeV42() {
+  try { return localStorage.getItem(SETTINGS_NOTICE_V42_KEY) === '1'; } catch(e) { return false; }
+}
+
+function markSettingsNoticeV42Seen() {
+  try { localStorage.setItem(SETTINGS_NOTICE_V42_KEY, '1'); } catch(e) {}
+}
+
+function clearSettingsNoticeV42Seen() {
+  try { localStorage.removeItem(SETTINGS_NOTICE_V42_KEY); } catch(e) {}
+}
+
+function buildSettingsNoticeV42Message() {
+  return [
+    'ENGLISH',
+    'This is a test version designed to introduce multiple offline AI variants of VitalGuard AI.',
+    'This version requires continuous updates.',
+    'All responsibility arising from the use of this app belongs to the user.',
+    '',
+    '한국어',
+    '이 버전은 VitalGuard AI 오프라인 AI의 다양한 버전을 소개하기 위한 테스트 버전입니다.',
+    '해당 버전은 지속적인 업데이트가 필요합니다.',
+    '이 앱의 사용에 따른 모든 책임은 사용자 본인에게 있습니다.'
+  ].join('\n');
+}
+
+async function showSettingsNoticeV42() {
+  if (settingsNoticeV42Open) return false;
+  settingsNoticeV42Open = true;
+  try {
+    return await dialog({
+      title: 'VitalGuard AI Test Version Notice / 테스트 버전 고지',
+      msg: buildSettingsNoticeV42Message(),
+      okLabel: 'YES / 예',
+      cancel: true,
+      cancelLabel: 'NO / 아니오'
+    });
+  } finally {
+    settingsNoticeV42Open = false;
+  }
+}
+
+function openSettingsPanel() {
+  settingsPanel.classList.add('active');
+  refreshToggles();
+  updateSaveFormatButtons();
+}
+
+function exitSettingsNoticeFlow() {
+  settingsPanel.classList.remove('active');
+  try { window.close(); } catch(e) {}
 }
 
 function getDefaultOptions() {
@@ -1297,7 +1579,9 @@ function getDefaultOptions() {
     panicWipe: true,
     compactMode: false,
     compactTransparency: 0,
-    screenOnDuration: 20
+    screenOnDuration: 20,
+    powerTrickEnabled: false,
+    powerTrickDuration: 1
   };
 }
 
@@ -1305,6 +1589,7 @@ function resetSettingsToInitialState() {
   state.options = getDefaultOptions();
   saveOptions();
   saveUnlockCode('0000');
+  clearSettingsNoticeV42Seen();
   state.calcRecentInput = '';
   state.calcCommandBuffer = '';
   state.calcDisplay = '0';
@@ -1329,6 +1614,23 @@ function inCalcScreen() {
 const I18N = {
   en: {
     settingsTitle: "Settings",
+    ptTitle: "Power-Menu Guard — black-screen protection flow",
+    ptDesc: "When OFF (default), the recorder works normally. When ON, the guard is armed. If the device power-menu action briefly hides and returns the page, the app enters a short fake power menu and then a full-viewport black screen. On many Android devices this action may be Power + Volume Up, but the web app only detects the resulting visibility interruption, not the hardware keys themselves.",
+    ptEnabled: "Power-Menu Guard (default OFF)",
+    ptEnabledDesc: "Off: normal recorder. On: armed — power-menu interruption may trigger the black-screen flow.",
+    ptDuration: "Black-screen duration (default: 1 min — test mode)",
+    ptDurationDesc: "How long the black screen + silent recording lasts. Recovery is always available via numeric code (default 0000) on the hidden keypad.",
+    ptTestBtn: "▶ Test black-screen flow",
+    ptStatusDisarmed: "Status: disarmed",
+    ptStatusArmed: "Status: ARMED — waiting for a power-menu interruption",
+    ptOnExplain: "Power-Menu Guard is now armed.\n\nTap anywhere to close this notice.\n\nUse your device power-menu action when needed. On many Android devices this may be Power + Volume Up. VitalGuard does not read those hardware keys directly; it only reacts if the page is briefly hidden and returns.\n\nWhen triggered, the app shows a short fake power menu and then enters a full-viewport black screen for the selected duration. Bottom-center hidden keypad recovery remains available with your unlock code.\n\nNote: Android system navigation buttons are OS-level UI and may still appear. The app blacks out only its own full viewport.",
+    ptOffExplain: "Power-Menu Guard is now OFF. The black-screen flow will not be triggered by page-visibility interruption.",
+    ptDurationChanged: "Black-screen duration: {MIN} minutes",
+    ptArmedToast: "Guard armed — waiting for power-menu interruption",
+    ptDisarmedToast: "Power-Menu Guard disarmed",
+    ptTestToast: "▶ Test mode — entering black-screen flow",
+    ptKeypadWrong: "Wrong code",
+    ptKeypadEmpty: "Enter code",
     saveFmtTitle: "Save Format (most important)",
     saveFmtDesc: "Choose how recordings are saved. Default is \"as-is\" so the file plays normally. The image option disguises the file but requires you to manually rename the extension to play it back.",
     fmtAsIsTitle: "As-is (default)",
@@ -1417,6 +1719,23 @@ const I18N = {
   },
   ko: {
     settingsTitle: "설정",
+    ptTitle: "전원 메뉴 가드 — 검은 화면 보호 흐름",
+    ptDesc: "OFF(기본) 상태에서는 일반 녹음기로 작동합니다. ON으로 전환하면 가드가 무장됩니다. 기기의 전원 메뉴 동작으로 페이지가 잠깐 숨겨졌다가 돌아오면, 앱이 짧은 가짜 전원 메뉴를 거쳐 전체 뷰포트 검은 화면으로 들어갑니다. 많은 안드로이드 기기에서는 이 동작이 전원 + 볼륨 업일 수 있지만, 웹 앱은 하드웨어 키 자체가 아니라 그 결과로 생기는 visibility interruption만 감지합니다.",
+    ptEnabled: "전원 메뉴 가드 (기본 OFF)",
+    ptEnabledDesc: "Off: 일반 녹음기. On: 무장 — 전원 메뉴 전환이 감지되면 검은 화면 흐름 진입.",
+    ptDuration: "검은 화면 지속 시간 (기본: 1분 — 테스트 모드)",
+    ptDurationDesc: "검은 화면 + 침묵 녹음이 지속되는 시간. 복구는 숨겨진 키패드의 숫자 코드(기본 0000)로 언제든 가능합니다.",
+    ptTestBtn: "▶ 검은 화면 흐름 테스트",
+    ptStatusDisarmed: "상태: 해제됨",
+    ptStatusArmed: "상태: 무장 — 전원 메뉴 전환 대기 중",
+    ptOnExplain: "전원 메뉴 가드가 무장되었습니다.\n\n이 안내는 화면 아무 곳이나 터치하면 닫힙니다.\n\n필요할 때 기기의 전원 메뉴 동작을 사용하세요. 많은 안드로이드 기기에서는 전원 + 볼륨 업일 수 있습니다. VitalGuard는 이 하드웨어 키를 직접 읽지 않고, 페이지가 잠깐 숨겨졌다가 돌아오는 변화만 감지합니다.\n\n감지되면 짧은 가짜 전원 메뉴를 거쳐 선택한 시간 동안 전체 뷰포트 검은 화면으로 들어갑니다. 하단 중앙의 숨겨진 키패드 복구는 잠금 해제 코드로 계속 사용할 수 있습니다.\n\n주의: 안드로이드 하단 내비게이션 버튼은 OS 영역이라 남아 있을 수 있습니다. 앱은 자체 전체 뷰포트만 검은색으로 덮습니다.",
+    ptOffExplain: "전원 메뉴 가드가 OFF 상태입니다. 페이지 전환 감지로 검은 화면 흐름이 실행되지 않습니다.",
+    ptDurationChanged: "검은 화면 지속 시간: {MIN}분",
+    ptArmedToast: "가드 무장 완료 — 전원 메뉴 전환 대기 중",
+    ptDisarmedToast: "전원 메뉴 가드 해제됨",
+    ptTestToast: "▶ 테스트 모드 — 검은 화면 흐름 실행",
+    ptKeypadWrong: "잘못된 코드",
+    ptKeypadEmpty: "코드를 입력하세요",
     saveFmtTitle: "저장 형식 (가장 중요)",
     saveFmtDesc: "녹음 파일을 어떻게 저장할지 선택하세요. 기본값은 \"그대로\"이며 파일이 정상 재생됩니다. 이미지 옵션은 파일을 위장하지만, 재생하려면 사용자가 직접 확장자를 바꿔야 합니다.",
     fmtAsIsTitle: "그대로 (기본)",
@@ -1563,14 +1882,19 @@ function dialog(opts) {
     cancel.style.display = opts.cancel ? '' : 'none';
     cancel.textContent = opts.cancelLabel || (state.lang==='ko' ? '취소' : 'Cancel');
     ok.textContent = opts.okLabel || 'OK';
+    dlg.classList.toggle('tap-close', !!opts.tapToClose && !opts.input);
     dlg.classList.add('active');
     const cleanup = (val) => {
       dlg.classList.remove('active');
-      ok.onclick = null; cancel.onclick = null;
+      dlg.classList.remove('tap-close');
+      ok.onclick = null; cancel.onclick = null; dlg.onclick = null;
       resolve(val);
     };
     ok.onclick = () => cleanup(opts.input ? inp.value : true);
     cancel.onclick = () => cleanup(null);
+    if (opts.tapToClose && !opts.input) {
+      dlg.onclick = () => cleanup(true);
+    }
   });
 }
 
@@ -2491,6 +2815,7 @@ async function panicWipe() {
     localStorage.removeItem('vg_opts_v3');
     localStorage.removeItem('vg_unlock_v3');
     localStorage.removeItem('vg_firstrun_v8');
+    localStorage.removeItem(SETTINGS_NOTICE_V42_KEY);
     if ('caches' in window) {
       const keys = await caches.keys();
       await Promise.all(keys.map(k => caches.delete(k)));
@@ -2815,12 +3140,20 @@ async function startBLEMonitor() {
 const settingsBtn = document.getElementById('settingsBtn');
 const settingsPanel = document.getElementById('settingsPanel');
 const closeSettings = document.getElementById('closeSettings');
-settingsBtn.addEventListener('click', () => {
+settingsBtn.addEventListener('click', async () => {
   // Should never trigger on calc screen since icon is hidden, but defense in depth:
   if (inCalcScreen()) return;
-  settingsPanel.classList.add('active');
-  refreshToggles();
-  updateSaveFormatButtons();
+
+  if (!hasSeenSettingsNoticeV42()) {
+    const accepted = await showSettingsNoticeV42();
+    markSettingsNoticeV42Seen();
+    if (!accepted) {
+      exitSettingsNoticeFlow();
+      return;
+    }
+  }
+
+  openSettingsPanel();
 });
 closeSettings.addEventListener('click', () => settingsPanel.classList.remove('active'));
 
@@ -3009,6 +3342,392 @@ document.addEventListener('visibilitychange', () => {
 window.addEventListener('beforeunload', e => {
   if (state.recording) { e.preventDefault(); e.returnValue = ''; }
 });
+
+/* =====================================================================
+   POWER-MENU GUARD MODULE (V4.1)
+   - Default OFF. When toggled ON: shows a short tap-to-close armed notice.
+   - Once armed: a power-menu interruption is detected indirectly via
+     a fast visibilitychange transition (page hidden then visible within
+     a short window). On some Android devices the user action may be
+     Power + Volume Up, but the web app does not read hardware keys.
+   - Power off / Restart in the fake menu → full-viewport black screen +
+     audio mute + auto silent recording for the chosen duration.
+   - Recovery: hidden bottom-center tap zone opens a numeric keypad;
+     entering the unlock code (default 0000) recovers immediately.
+   - Top-right corner 3-tap remains as a fast recovery.
+   ===================================================================== */
+
+const powerTrick = {
+  armed: false,                  // is the guard listening for a page-visibility interruption?
+  menuVisible: false,
+  blackoutActive: false,
+  endTimer: null,
+  recoveryTaps: [],
+  prevAudioVolume: null,
+  startedRecordingHere: false,
+  // visibility-based power-menu interruption detection
+  hiddenAt: 0,
+  // keypad state
+  keypadInput: ''
+};
+
+async function tryPowerTrickFullscreen() {
+  try {
+    const root = document.documentElement;
+    if (root.requestFullscreen && !document.fullscreenElement) {
+      await root.requestFullscreen({ navigationUI: 'hide' });
+    }
+  } catch(e) {
+    // Fullscreen is best-effort only. Android/browser system bars may remain visible.
+  }
+}
+
+function exitPowerTrickFullscreen() {
+  try {
+    if (document.fullscreenElement && document.exitFullscreen) document.exitFullscreen();
+  } catch(e) {}
+}
+
+// ---- Show / hide fake menu ----
+function showFakeShutdownMenu() {
+  if (powerTrick.menuVisible) return;
+  // Hygiene: close any open settings panel before showing
+  document.getElementById('settingsPanel').classList.remove('active');
+  tryPowerTrickFullscreen();
+  const menu = document.getElementById('fakeShutdownMenu');
+  menu.classList.add('active');
+  powerTrick.menuVisible = true;
+}
+function hideFakeShutdownMenu() {
+  document.getElementById('fakeShutdownMenu').classList.remove('active');
+  powerTrick.menuVisible = false;
+}
+
+// ---- Engage blackout ----
+async function engagePowerTrickBlackout() {
+  hideFakeShutdownMenu();
+  tryPowerTrickFullscreen();
+  const minutes = [1,5,15,30,60].includes(Number(state.options.powerTrickDuration))
+    ? Number(state.options.powerTrickDuration) : 1;
+
+  powerTrick.blackoutActive = true;
+  document.body.classList.add('power-trick-blackout');
+
+  // Auto silent recording on entry (key value)
+  powerTrick.startedRecordingHere = false;
+  if (!state.recording) {
+    try {
+      await startRecording(true);  // silent param
+      powerTrick.startedRecordingHere = true;
+    } catch(e) { /* mic denied — blackout still proceeds */ }
+  }
+
+  // Mute any playing audio/video the page produces
+  try {
+    document.querySelectorAll('audio,video').forEach(el => {
+      if (powerTrick.prevAudioVolume === null) powerTrick.prevAudioVolume = el.volume;
+      el.muted = true; el.volume = 0;
+    });
+  } catch(e) {}
+
+  // Hide any rec indicator (camouflage)
+  document.getElementById('recIndicator').classList.remove('show');
+
+  // Show black screen
+  document.getElementById('blackoutScreen').classList.add('active');
+
+  // Try wake lock so recording survives idle
+  if ('wakeLock' in navigator) {
+    try { await navigator.wakeLock.request('screen'); } catch(e){}
+  }
+
+  // Schedule auto-recovery
+  if (powerTrick.endTimer) clearTimeout(powerTrick.endTimer);
+  powerTrick.endTimer = setTimeout(() => {
+    disengagePowerTrickBlackout(true);
+  }, minutes * 60 * 1000);
+}
+
+// ---- Disengage blackout ----
+function disengagePowerTrickBlackout(silent) {
+  if (!powerTrick.blackoutActive) return;
+  powerTrick.blackoutActive = false;
+
+  if (powerTrick.endTimer) { clearTimeout(powerTrick.endTimer); powerTrick.endTimer = null; }
+
+  // Hide black screen and keypad
+  document.getElementById('blackoutScreen').classList.remove('active');
+  document.getElementById('blackoutKeypad').classList.remove('active');
+  document.body.classList.remove('power-trick-blackout');
+  exitPowerTrickFullscreen();
+
+  // Reset keypad
+  powerTrick.keypadInput = '';
+  document.getElementById('keypadDisplay').textContent = '';
+
+  // Restore audio
+  try {
+    document.querySelectorAll('audio,video').forEach(el => {
+      el.muted = false;
+      if (powerTrick.prevAudioVolume !== null) el.volume = powerTrick.prevAudioVolume;
+    });
+  } catch(e) {}
+  powerTrick.prevAudioVolume = null;
+
+  // Restore rec indicator if applicable (recorder screen + still recording)
+  if (state.recording && !inCalcScreen()) {
+    document.getElementById('recIndicator').classList.add('show');
+  }
+  // Per spec: silent recovery — no toast.
+}
+
+// ---- Block all input while blackout is active ----
+// Allow only the recovery zone and keypad-open zone (and the keypad itself).
+function blackoutInputBlocker(e) {
+  if (!powerTrick.blackoutActive) return;
+  const t = e.target;
+  if (!t) return;
+  // Allow: blackout recovery (3-tap), keypad-open zone, keypad itself
+  if (t.id === 'blackoutRecovery') return;
+  if (t.id === 'blackoutKeypadOpen') return;
+  if (t.closest && t.closest('#blackoutKeypad')) return;
+  // Block everything else
+  e.stopPropagation();
+  e.preventDefault();
+}
+['click','touchstart','touchend','touchmove','keydown','keyup','wheel'].forEach(ev => {
+  document.addEventListener(ev, blackoutInputBlocker, {capture:true, passive:false});
+});
+
+// ---- Recovery: top-right corner × 3 within 1s ----
+document.getElementById('blackoutRecovery').addEventListener('click', (e) => {
+  e.stopPropagation();
+  if (!powerTrick.blackoutActive) return;
+  const now = Date.now();
+  powerTrick.recoveryTaps = powerTrick.recoveryTaps.filter(t => now - t < 1000);
+  powerTrick.recoveryTaps.push(now);
+  if (powerTrick.recoveryTaps.length >= 3) {
+    powerTrick.recoveryTaps = [];
+    disengagePowerTrickBlackout(true);
+  }
+});
+
+// ---- Recovery: hidden bottom-center zone → opens keypad ----
+document.getElementById('blackoutKeypadOpen').addEventListener('click', (e) => {
+  e.stopPropagation();
+  if (!powerTrick.blackoutActive) return;
+  // Open keypad on top of black screen
+  powerTrick.keypadInput = '';
+  document.getElementById('keypadDisplay').textContent = '';
+  document.getElementById('blackoutKeypad').classList.add('active');
+});
+
+// ---- Keypad button handlers ----
+document.querySelectorAll('#blackoutKeypad .keypad-btn').forEach(btn => {
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const k = btn.dataset.kp;
+    if (k === 'cancel') {
+      // Close keypad, stay in blackout
+      powerTrick.keypadInput = '';
+      document.getElementById('keypadDisplay').textContent = '';
+      document.getElementById('blackoutKeypad').classList.remove('active');
+      return;
+    }
+    if (k === 'ok') {
+      const code = state.unlockCode || '0000';
+      if (powerTrick.keypadInput === code) {
+        // Recover
+        disengagePowerTrickBlackout(true);
+      } else {
+        // Wrong: visual flash, then clear
+        const disp = document.getElementById('keypadDisplay');
+        disp.style.color = '#f44';
+        disp.textContent = t('ptKeypadWrong');
+        setTimeout(() => {
+          disp.style.color = '#0f0';
+          disp.textContent = '';
+          powerTrick.keypadInput = '';
+        }, 800);
+      }
+      return;
+    }
+    // Digit
+    if (/^[0-9]$/.test(k)) {
+      if (powerTrick.keypadInput.length < 10) {
+        powerTrick.keypadInput += k;
+        document.getElementById('keypadDisplay').textContent =
+          '•'.repeat(powerTrick.keypadInput.length);
+      }
+    }
+  });
+});
+
+// ---- Fake menu button handlers ----
+document.getElementById('fakePowerOff').addEventListener('click', (e) => {
+  e.stopPropagation();
+  tryPowerTrickFullscreen();
+  engagePowerTrickBlackout();
+});
+document.getElementById('fakeRestart').addEventListener('click', (e) => {
+  e.stopPropagation();
+  tryPowerTrickFullscreen();
+  engagePowerTrickBlackout();
+});
+document.getElementById('fakeEmergency').addEventListener('click', (e) => {
+  e.stopPropagation();
+  hideFakeShutdownMenu();
+  const num = (navigator.language && navigator.language.toLowerCase().startsWith('ko')) ? '112' : '911';
+  try { window.location.href = 'tel:' + num; } catch(err) {}
+});
+document.getElementById('fakeShutdownBottom').addEventListener('click', (e) => {
+  e.stopPropagation();
+  // Decoy — does nothing visible, like the real "Side button settings" link
+});
+
+// =====================================================================
+// POWER-MENU INTERRUPTION DETECTION (indirect, via visibilitychange)
+// =====================================================================
+// A sandboxed web app cannot reliably read physical Power or Volume keys.
+// Instead, this guard detects a fast hidden→visible transition
+// (within ~3 seconds) as a proxy for a system power-menu interruption.
+// On many Android devices the user's external action may be Power + Volume Up,
+// but this code only observes document.visibilityState.
+//
+// To avoid false positives (app-switching, notifications), we require:
+//   - powerTrick.armed === true
+//   - hidden duration between 200ms and 3000ms
+//   - blackout not currently active (we don't re-trigger inside blackout)
+//   - menu not currently visible
+// =====================================================================
+document.addEventListener('visibilitychange', () => {
+  if (!powerTrick.armed) return;
+  if (powerTrick.blackoutActive || powerTrick.menuVisible) return;
+  if (document.visibilityState === 'hidden') {
+    powerTrick.hiddenAt = Date.now();
+  } else if (document.visibilityState === 'visible' && powerTrick.hiddenAt > 0) {
+    const elapsed = Date.now() - powerTrick.hiddenAt;
+    powerTrick.hiddenAt = 0;
+    if (elapsed >= 200 && elapsed <= 3000) {
+      // Likely a power-menu interruption / brief screen-off
+      showFakeShutdownMenu();
+    }
+  }
+});
+
+// =====================================================================
+// Settings panel: Power Trick toggle + duration + test
+// =====================================================================
+function refreshPowerTrickDurationUI() {
+  const cur = Number(state.options.powerTrickDuration) || 1;
+  document.querySelectorAll('.power-trick-duration-btn').forEach(b => {
+    b.classList.toggle('selected', Number(b.dataset.ptdur) === cur);
+  });
+}
+function refreshPowerTrickStatus() {
+  const el = document.getElementById('powerTrickStatus');
+  if (!el) return;
+  if (state.options.powerTrickEnabled) {
+    el.textContent = t('ptStatusArmed');
+    el.classList.add('armed');
+  } else {
+    el.textContent = t('ptStatusDisarmed');
+    el.classList.remove('armed');
+  }
+}
+
+(function bindPowerTrickSettings() {
+  // Toggle handler — the generic toggle binder already flips state.options.
+  // We add the explainer dialog and arming behavior afterwards.
+  document.querySelectorAll('.toggle[data-opt="powerTrickEnabled"]').forEach(tog => {
+    tog.addEventListener('click', () => {
+      setTimeout(async () => {
+        if (state.options.powerTrickEnabled) {
+          // Show a short tap-to-close armed notice; keep the long explanation in Help/Settings copy.
+          await dialog({ title: '⚡ ' + t('ptTitle'), msg: t('ptOnExplain'), tapToClose: true });
+          powerTrick.armed = true;
+          refreshPowerTrickStatus();
+          toast(t('ptArmedToast'), 1600);
+        } else {
+          await dialog({ title: '⚡', msg: t('ptOffExplain') });
+          powerTrick.armed = false;
+          refreshPowerTrickStatus();
+          toast(t('ptDisarmedToast'), 1800);
+        }
+      }, 50);
+    });
+  });
+
+  // Duration buttons
+  document.querySelectorAll('.power-trick-duration-btn').forEach(b => {
+    b.addEventListener('click', () => {
+      const min = Number(b.dataset.ptdur);
+      if (![1,5,15,30,60].includes(min)) return;
+      state.options.powerTrickDuration = min;
+      saveOptions();
+      refreshPowerTrickDurationUI();
+      toast(t('ptDurationChanged').replace('{MIN}', String(min)), 1600);
+    });
+  });
+
+  // Test button — always available; shows menu without requiring a real hardware-key event
+  document.getElementById('powerTrickTestBtn').addEventListener('click', () => {
+    if (!state.options.powerTrickEnabled) {
+      toast(t('ptOffExplain'), 2400);
+      return;
+    }
+    tryPowerTrickFullscreen();
+    toast(t('ptTestToast'), 900);
+    setTimeout(() => showFakeShutdownMenu(), 250);
+  });
+})();
+
+// =====================================================================
+// Calculator command: 911= or 112= → fake shutdown (only when armed)
+// =====================================================================
+(function hookCalcEmergencyCodes() {
+  const grid = document.querySelector('.calc-grid');
+  if (!grid) return;
+  grid.addEventListener('click', (e) => {
+    const btn = e.target.closest('.calc-btn');
+    if (!btn) return;
+    const key = btn.dataset.key;
+    if (key === '=' && ['911','112'].includes(state.calcExpression) && state.options.powerTrickEnabled) {
+      e.stopImmediatePropagation();
+      e.preventDefault();
+      // Reset calc display so the trigger leaves no trace
+      state.calcExpression = '';
+      state.calcDisplay = '0';
+      state.calcWaiting = false;
+      try { calcUpdate(); } catch(err) {}
+      showFakeShutdownMenu();
+    }
+  }, true);
+})();
+
+// =====================================================================
+// On load: if powerTrickEnabled was saved as true, re-arm silently
+// (no dialog — the user already saw it last session).
+// Also refresh duration & status UI.
+// =====================================================================
+(function powerTrickOnLoad() {
+  const init = () => {
+    if (state.options.powerTrickEnabled) {
+      powerTrick.armed = true;
+    }
+    refreshPowerTrickDurationUI();
+    refreshPowerTrickStatus();
+  };
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+
+/* =====================================================================
+   END OF POWER-MENU GUARD MODULE (V4.1)
+   ===================================================================== */
 </script>
 </body>
 </html>

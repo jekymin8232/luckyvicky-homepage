@@ -637,10 +637,14 @@ body.compact-visible-mode #compactExitBtn {
 #dialog.active { display: flex; }
 .dialog-box {
   background: #1a1a1a; padding: 22px; border-radius: 12px;
-  width: 100%; max-width: 380px; border: 1px solid #444;
+  width: 100%; max-width: 380px; max-height: calc(100dvh - 40px);
+  overflow-y: auto; border: 1px solid #444;
 }
 .dialog-box h3 { margin-bottom: 12px; color: #ff8800; font-size: 1.05em; }
 .dialog-box p { color: #ccc; line-height: 1.55; margin-bottom: 14px; font-size: 0.9em; white-space: pre-wrap; }
+#dialog.tap-close { cursor: pointer; }
+#dialog.tap-close .dialog-box { cursor: pointer; }
+#dialog.tap-close .dialog-buttons { display: none; }
 .dialog-box input {
   width: 100%; padding: 10px; background: #000; border: 1px solid #444;
   color: #fff; border-radius: 6px; font-size: 1em; margin-bottom: 12px;
@@ -657,14 +661,16 @@ body.compact-visible-mode #compactExitBtn {
 #recIndicator.show { display: block; }
 @keyframes blink { 50% { opacity: 0.3; } }
 /* ============================================================
-   POWER-OFF TRICK (V4.0)
+   POWER-MENU GUARD (V4.1)
    ============================================================ */
 #fakeShutdownMenu {
   display: none; position: fixed; inset: 0;
-  background: radial-gradient(ellipse at center, #4a3a1a 0%, #1a1208 60%, #000 100%);
-  z-index: 9000; align-items: center; justify-content: center;
+  width: 100vw; height: 100dvh;
+  background: #000;
+  z-index: 2147483644; align-items: center; justify-content: center;
   flex-direction: column; padding: 20px;
   -webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px);
+  touch-action: none; overscroll-behavior: none;
 }
 #fakeShutdownMenu.active { display: flex; }
 .fake-shutdown-options {
@@ -698,10 +704,20 @@ body.compact-visible-mode #compactExitBtn {
 /* Black-out screen */
 #blackoutScreen {
   display: none; position: fixed; inset: 0;
-  background: #000; z-index: 9500;
-  cursor: default;
+  width: 100vw; height: 100dvh;
+  min-width: 100vw; min-height: 100dvh;
+  background: #000 !important; z-index: 2147483646;
+  cursor: default; touch-action: none; overscroll-behavior: none;
 }
 #blackoutScreen.active { display: block; }
+body.power-trick-blackout {
+  background: #000 !important;
+  overflow: hidden !important;
+}
+body.power-trick-blackout > :not(#blackoutScreen):not(#blackoutKeypad) {
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
 .blackout-recovery-zone {
   position: absolute; top: 0; right: 0;
   width: 80px; height: 80px;
@@ -720,8 +736,9 @@ body.compact-visible-mode #compactExitBtn {
 /* Keypad (recovery via numeric code) */
 #blackoutKeypad {
   display: none; position: fixed; inset: 0;
-  background: rgba(0,0,0,0.95);
-  z-index: 9700;
+  width: 100vw; height: 100dvh;
+  background: rgba(0,0,0,0.98);
+  z-index: 2147483647;
   align-items: center; justify-content: center;
   flex-direction: column; padding: 20px;
 }
@@ -785,7 +802,7 @@ body.compact-visible-mode #compactExitBtn {
 </head>
 <body>
 
-<!-- ============ FAKE SHUTDOWN MENU (V4.0) ============ -->
+<!-- ============ FAKE SHUTDOWN MENU (V4.1) ============ -->
 <div id="fakeShutdownMenu">
   <div class="fake-shutdown-options">
     <button class="fake-shutdown-btn" id="fakePowerOff">
@@ -834,7 +851,7 @@ body.compact-visible-mode #compactExitBtn {
 
 <!-- ============ RECORDER SCREEN ============ -->
 <div id="recorderUI">
-  <div class="rec-version-banner">TEST VERSION V 4.0</div>
+  <div class="rec-version-banner">TEST VERSION V 4.1</div>
 
   <div class="mode-switcher" role="tablist">
     <button class="mode-switch-btn active" id="btnModeRecorder" data-screenmode="recorder">🎙 Recorder</button>
@@ -990,14 +1007,14 @@ body.compact-visible-mode #compactExitBtn {
     </div>
   </div>
 
-  <!-- === [V4.0] POWER-OFF TRICK === -->
+  <!-- === [V4.1] POWER-MENU GUARD === -->
   <div class="power-trick-banner" id="powerTrickBanner">
-    <div class="power-trick-title">⚡ <span data-i18n="ptTitle">Power Off (Trick) — fake shutdown for surprise inspections</span></div>
-    <div class="power-trick-desc" data-i18n="ptDesc">When OFF (default), the recorder works normally. When ON, the trick is armed: pressing the device's physical power button (which briefly hides the page) triggers the fake Android shutdown menu. The inspector taps "Power off"; the screen goes black, audio is muted, and recording starts silently for the chosen duration.</div>
+    <div class="power-trick-title">⚡ <span data-i18n="ptTitle">Power-Menu Guard — black-screen protection flow</span></div>
+    <div class="power-trick-desc" data-i18n="ptDesc">When OFF (default), the recorder works normally. When ON, the guard is armed. If the device power-menu action briefly hides and returns the page, the app enters a short fake power menu and then a full-viewport black screen. On many Android devices this action may be Power + Volume Up, but the web app only detects the resulting visibility interruption, not the hardware keys themselves.</div>
     <div class="power-trick-row">
       <div class="setting-label">
-        <div class="title" data-i18n="ptEnabled">Power-Off Trick (default OFF)</div>
-        <div class="desc" data-i18n="ptEnabledDesc">Off: normal recorder, no trick. On: armed — power-button press triggers the fake menu.</div>
+        <div class="title" data-i18n="ptEnabled">Power-Menu Guard (default OFF)</div>
+        <div class="desc" data-i18n="ptEnabledDesc">Off: normal recorder. On: armed — power-menu interruption may trigger the black-screen flow.</div>
       </div>
       <div class="toggle" data-opt="powerTrickEnabled"></div>
     </div>
@@ -1013,7 +1030,7 @@ body.compact-visible-mode #compactExitBtn {
       <button class="power-trick-duration-btn" data-ptdur="60">60 min</button>
     </div>
     <div class="power-trick-actions">
-      <button class="power-trick-test-btn" id="powerTrickTestBtn" data-i18n="ptTestBtn">▶ Test fake shutdown menu</button>
+      <button class="power-trick-test-btn" id="powerTrickTestBtn" data-i18n="ptTestBtn">▶ Test black-screen flow</button>
     </div>
     <div class="power-trick-status" id="powerTrickStatus" data-i18n="ptStatusDisarmed">Status: disarmed</div>
   </div>
@@ -1352,14 +1369,14 @@ body.compact-visible-mode #compactExitBtn {
 <script>
 'use strict';
 /* =================================================================
-   VitalGuard PWA Recorder — Test V3.8
+   VitalGuard PWA Recorder — Test V4.1
    © 2026 Morgan J. (Gyu-min Jeon) | M-Corp Ethical AI
    ================================================================= */
 
 // ============ INLINE MANIFEST ============
 const MANIFEST = {
   name: "Calculator", short_name: "Calc", start_url: "./",
-  display: "standalone", background_color: "#1a1a1a", theme_color: "#000000",
+  display: "fullscreen", background_color: "#000000", theme_color: "#000000",
   orientation: "portrait",
   icons: [{
     src: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect x='24' y='12' width='144' height='168' rx='18' fill='%23222'/><rect x='42' y='30' width='108' height='36' rx='6' fill='%23000'/><circle cx='60' cy='96' r='12' fill='%23555'/><circle cx='96' cy='96' r='12' fill='%23555'/><circle cx='132' cy='96' r='12' fill='%23555'/><circle cx='60' cy='132' r='12' fill='%23555'/><circle cx='96' cy='132' r='12' fill='%23555'/><circle cx='132' cy='132' r='12' fill='%23ff8800'/></svg>",
@@ -1466,7 +1483,7 @@ function loadOptions() {
     saved.compactTransparency = Math.min(100, Math.max(0, Math.round(saved.compactTransparency)));
     if (![20, 60].includes(Number(saved.screenOnDuration))) saved.screenOnDuration = def.screenOnDuration;
     saved.screenOnDuration = Number(saved.screenOnDuration);
-    // V4.0: validate powerTrick
+    // V4.1: validate powerTrick
     if (![1, 5, 15, 30, 60].includes(Number(saved.powerTrickDuration))) saved.powerTrickDuration = def.powerTrickDuration;
     saved.powerTrickDuration = Number(saved.powerTrickDuration);
     saved.powerTrickEnabled = !!saved.powerTrickEnabled;
@@ -1534,21 +1551,21 @@ function inCalcScreen() {
 const I18N = {
   en: {
     settingsTitle: "Settings",
-    ptTitle: "Power Off (Trick) — fake shutdown for surprise inspections",
-    ptDesc: "When OFF (default), the recorder works normally. When ON, the trick is armed: pressing the device's physical power button triggers the fake Android shutdown menu. The inspector taps \"Power off\"; the screen goes black, audio is muted, and recording starts silently for the chosen duration.",
-    ptEnabled: "Power-Off Trick (default OFF)",
-    ptEnabledDesc: "Off: normal recorder, no trick. On: armed — power-button press triggers the fake menu.",
+    ptTitle: "Power-Menu Guard — black-screen protection flow",
+    ptDesc: "When OFF (default), the recorder works normally. When ON, the guard is armed. If the device power-menu action briefly hides and returns the page, the app enters a short fake power menu and then a full-viewport black screen. On many Android devices this action may be Power + Volume Up, but the web app only detects the resulting visibility interruption, not the hardware keys themselves.",
+    ptEnabled: "Power-Menu Guard (default OFF)",
+    ptEnabledDesc: "Off: normal recorder. On: armed — power-menu interruption may trigger the black-screen flow.",
     ptDuration: "Black-screen duration (default: 1 min — test mode)",
     ptDurationDesc: "How long the black screen + silent recording lasts. Recovery is always available via numeric code (default 0000) on the hidden keypad.",
-    ptTestBtn: "▶ Test fake shutdown menu",
+    ptTestBtn: "▶ Test black-screen flow",
     ptStatusDisarmed: "Status: disarmed",
-    ptStatusArmed: "Status: ARMED — power-button press will trigger fake menu",
-    ptOnExplain: "Power-Off Trick is now ENABLED.\n\nWhat will happen:\n\n• Auto silent recording — recording starts the moment the inspector taps \"Power off,\" even if the user is not currently recording.\n• User-defined duration — 1/5/15/30/60 minutes. Default is 1 minute (test mode).\n• Restart button has the same effect — whichever button the inspector taps, the same protective black-screen activates.\n• Emergency call really dials — Korean locale = 112, others = 911. The trick exits and a real call is placed.\n• Calculator 911= trigger — when this option is ON, typing 911 then = on the calculator instantly opens the fake shutdown menu (for fast field entry).\n• Hidden recovery — bottom-center of the black screen has an invisible tap zone. Tapping it opens a numeric keypad. Enter your unlock code (default 0000, changeable below) to recover. There is no toast or alert during recovery, so an inspector standing nearby will not notice.\n• Camouflage hygiene — settings panel auto-closes before the menu shows; recording indicator auto-hides.\n\nAfter you tap OK, the trick is ARMED. From now on, when you press your device's physical power button, the page will detect it (via visibility change) and show the fake shutdown menu. To disarm, return here and toggle OFF.\n\nIMPORTANT — recovery for long durations:\n  If you choose 60 minutes and need to recover yourself, tap the invisible bottom-center area of the black screen. A numeric keypad appears. Enter your unlock code (default 0000) and tap OK.",
-    ptOffExplain: "Power-Off Trick is now DISABLED. The fake shutdown menu cannot be triggered by a power-button press.",
+    ptStatusArmed: "Status: ARMED — waiting for a power-menu interruption",
+    ptOnExplain: "Power-Menu Guard is now armed.\n\nTap anywhere to close this notice.\n\nUse your device power-menu action when needed. On many Android devices this may be Power + Volume Up. VitalGuard does not read those hardware keys directly; it only reacts if the page is briefly hidden and returns.\n\nWhen triggered, the app shows a short fake power menu and then enters a full-viewport black screen for the selected duration. Bottom-center hidden keypad recovery remains available with your unlock code.\n\nNote: Android system navigation buttons are OS-level UI and may still appear. The app blacks out only its own full viewport.",
+    ptOffExplain: "Power-Menu Guard is now OFF. The black-screen flow will not be triggered by page-visibility interruption.",
     ptDurationChanged: "Black-screen duration: {MIN} minutes",
-    ptArmedToast: "🛡 Power-Off Trick armed — power button will trigger fake menu",
-    ptDisarmedToast: "Power-Off Trick disarmed",
-    ptTestToast: "▶ Test mode — showing fake shutdown menu",
+    ptArmedToast: "Guard armed — waiting for power-menu interruption",
+    ptDisarmedToast: "Power-Menu Guard disarmed",
+    ptTestToast: "▶ Test mode — entering black-screen flow",
     ptKeypadWrong: "Wrong code",
     ptKeypadEmpty: "Enter code",
     saveFmtTitle: "Save Format (most important)",
@@ -1639,21 +1656,21 @@ const I18N = {
   },
   ko: {
     settingsTitle: "설정",
-    ptTitle: "전원 끄기 (트릭) — 불시검문 대비 가짜 종료",
-    ptDesc: "OFF(기본) 상태에서는 일반 녹음기로 작동합니다. ON으로 전환하면 트릭이 무장 상태가 되어, 디바이스의 실제 전원 버튼을 누르면 가짜 안드로이드 종료 메뉴가 표시됩니다. 검사관이 \"전원 끄기\"를 탭하면 화면이 검게 되고, 오디오가 음소거되며, 선택한 시간 동안 침묵 녹음이 시작됩니다.",
-    ptEnabled: "전원 끄기 트릭 (기본 OFF)",
-    ptEnabledDesc: "Off: 일반 녹음기. On: 무장 — 전원 버튼 누름 시 가짜 메뉴 표시.",
+    ptTitle: "전원 메뉴 가드 — 검은 화면 보호 흐름",
+    ptDesc: "OFF(기본) 상태에서는 일반 녹음기로 작동합니다. ON으로 전환하면 가드가 무장됩니다. 기기의 전원 메뉴 동작으로 페이지가 잠깐 숨겨졌다가 돌아오면, 앱이 짧은 가짜 전원 메뉴를 거쳐 전체 뷰포트 검은 화면으로 들어갑니다. 많은 안드로이드 기기에서는 이 동작이 전원 + 볼륨 업일 수 있지만, 웹 앱은 하드웨어 키 자체가 아니라 그 결과로 생기는 visibility interruption만 감지합니다.",
+    ptEnabled: "전원 메뉴 가드 (기본 OFF)",
+    ptEnabledDesc: "Off: 일반 녹음기. On: 무장 — 전원 메뉴 전환이 감지되면 검은 화면 흐름 진입.",
     ptDuration: "검은 화면 지속 시간 (기본: 1분 — 테스트 모드)",
     ptDurationDesc: "검은 화면 + 침묵 녹음이 지속되는 시간. 복구는 숨겨진 키패드의 숫자 코드(기본 0000)로 언제든 가능합니다.",
-    ptTestBtn: "▶ 가짜 종료 메뉴 테스트",
+    ptTestBtn: "▶ 검은 화면 흐름 테스트",
     ptStatusDisarmed: "상태: 해제됨",
-    ptStatusArmed: "상태: 무장 — 전원 버튼 누름 시 가짜 메뉴 표시",
-    ptOnExplain: "전원 끄기 트릭이 활성화되었습니다.\n\n작동 내용:\n\n• 자동 침묵 녹음 — 검사관이 \"전원 끄기\"를 탭하는 순간 녹음이 시작됩니다 (현재 녹음 중이 아니어도).\n• 사용자 정의 시간 — 1/5/15/30/60분. 기본은 1분 (테스트 모드).\n• Restart 버튼도 같은 효과 — 검사관이 어떤 버튼을 누르든 동일한 보호 검은 화면이 활성화됩니다.\n• Emergency call 진짜 발신 — 한국 로케일=112, 그 외=911. 트릭이 종료되고 실제 통화가 발신됩니다.\n• 계산기 911= 트리거 — 이 옵션 ON 시, 계산기에서 911 입력 후 = 누르면 즉시 가짜 종료 메뉴가 열립니다 (현장에서 빠른 진입).\n• 숨겨진 복구 — 검은 화면 하단 중앙에 보이지 않는 탭 영역이 있습니다. 탭하면 숫자 키패드가 나타납니다. 잠금 해제 코드(기본 0000, 아래에서 변경 가능)를 입력하여 복구하세요. 복구 시 토스트나 알림이 없으므로, 옆에 검사관이 있어도 눈치채지 못합니다.\n• 위장 위생 — 메뉴 표시 직전 설정창 자동 닫힘; 녹음 인디케이터 자동 숨김.\n\nOK를 누르면 트릭이 무장됩니다. 이후 디바이스의 실제 전원 버튼을 누르면, 페이지가 (visibility change를 통해) 이를 감지하여 가짜 종료 메뉴를 표시합니다. 해제하려면 여기로 돌아와서 OFF로 전환하세요.\n\n중요 — 긴 시간 사용 시 본인 복구:\n  60분을 선택하고 본인이 복구해야 하는 경우, 검은 화면의 보이지 않는 하단 중앙 영역을 탭하세요. 숫자 키패드가 나타납니다. 잠금 해제 코드(기본 0000)를 입력하고 OK를 탭하세요.",
-    ptOffExplain: "전원 끄기 트릭이 비활성화되었습니다. 전원 버튼을 눌러도 가짜 종료 메뉴는 표시되지 않습니다.",
+    ptStatusArmed: "상태: 무장 — 전원 메뉴 전환 대기 중",
+    ptOnExplain: "전원 메뉴 가드가 무장되었습니다.\n\n이 안내는 화면 아무 곳이나 터치하면 닫힙니다.\n\n필요할 때 기기의 전원 메뉴 동작을 사용하세요. 많은 안드로이드 기기에서는 전원 + 볼륨 업일 수 있습니다. VitalGuard는 이 하드웨어 키를 직접 읽지 않고, 페이지가 잠깐 숨겨졌다가 돌아오는 변화만 감지합니다.\n\n감지되면 짧은 가짜 전원 메뉴를 거쳐 선택한 시간 동안 전체 뷰포트 검은 화면으로 들어갑니다. 하단 중앙의 숨겨진 키패드 복구는 잠금 해제 코드로 계속 사용할 수 있습니다.\n\n주의: 안드로이드 하단 내비게이션 버튼은 OS 영역이라 남아 있을 수 있습니다. 앱은 자체 전체 뷰포트만 검은색으로 덮습니다.",
+    ptOffExplain: "전원 메뉴 가드가 OFF 상태입니다. 페이지 전환 감지로 검은 화면 흐름이 실행되지 않습니다.",
     ptDurationChanged: "검은 화면 지속 시간: {MIN}분",
-    ptArmedToast: "🛡 전원 끄기 트릭 무장 완료 — 전원 버튼 누름 시 가짜 메뉴 표시",
-    ptDisarmedToast: "전원 끄기 트릭 해제됨",
-    ptTestToast: "▶ 테스트 모드 — 가짜 종료 메뉴 표시",
+    ptArmedToast: "가드 무장 완료 — 전원 메뉴 전환 대기 중",
+    ptDisarmedToast: "전원 메뉴 가드 해제됨",
+    ptTestToast: "▶ 테스트 모드 — 검은 화면 흐름 실행",
     ptKeypadWrong: "잘못된 코드",
     ptKeypadEmpty: "코드를 입력하세요",
     saveFmtTitle: "저장 형식 (가장 중요)",
@@ -1802,14 +1819,19 @@ function dialog(opts) {
     cancel.style.display = opts.cancel ? '' : 'none';
     cancel.textContent = opts.cancelLabel || (state.lang==='ko' ? '취소' : 'Cancel');
     ok.textContent = opts.okLabel || 'OK';
+    dlg.classList.toggle('tap-close', !!opts.tapToClose && !opts.input);
     dlg.classList.add('active');
     const cleanup = (val) => {
       dlg.classList.remove('active');
-      ok.onclick = null; cancel.onclick = null;
+      dlg.classList.remove('tap-close');
+      ok.onclick = null; cancel.onclick = null; dlg.onclick = null;
       resolve(val);
     };
     ok.onclick = () => cleanup(opts.input ? inp.value : true);
     cancel.onclick = () => cleanup(null);
+    if (opts.tapToClose && !opts.input) {
+      dlg.onclick = () => cleanup(true);
+    }
   });
 }
 
@@ -3250,37 +3272,56 @@ window.addEventListener('beforeunload', e => {
 });
 
 /* =====================================================================
-   POWER-OFF TRICK MODULE (V4.0)
-   - Default OFF. When toggled ON: shows 7-feature explainer dialog.
-   - Once armed: physical power-button press is detected indirectly via
+   POWER-MENU GUARD MODULE (V4.1)
+   - Default OFF. When toggled ON: shows a short tap-to-close armed notice.
+   - Once armed: a power-menu interruption is detected indirectly via
      a fast visibilitychange transition (page hidden then visible within
-     a short window — typical when the OS power menu pops up briefly).
-   - Power off / Restart in the fake menu → black screen + audio mute +
-     auto silent recording for the chosen duration.
+     a short window). On some Android devices the user action may be
+     Power + Volume Up, but the web app does not read hardware keys.
+   - Power off / Restart in the fake menu → full-viewport black screen +
+     audio mute + auto silent recording for the chosen duration.
    - Recovery: hidden bottom-center tap zone opens a numeric keypad;
      entering the unlock code (default 0000) recovers immediately.
    - Top-right corner 3-tap remains as a fast recovery.
    ===================================================================== */
 
 const powerTrick = {
-  armed: false,                  // is the trick listening for power-button?
+  armed: false,                  // is the guard listening for a page-visibility interruption?
   menuVisible: false,
   blackoutActive: false,
   endTimer: null,
   recoveryTaps: [],
   prevAudioVolume: null,
   startedRecordingHere: false,
-  // visibility-based power-button detection
+  // visibility-based power-menu interruption detection
   hiddenAt: 0,
   // keypad state
   keypadInput: ''
 };
+
+async function tryPowerTrickFullscreen() {
+  try {
+    const root = document.documentElement;
+    if (root.requestFullscreen && !document.fullscreenElement) {
+      await root.requestFullscreen({ navigationUI: 'hide' });
+    }
+  } catch(e) {
+    // Fullscreen is best-effort only. Android/browser system bars may remain visible.
+  }
+}
+
+function exitPowerTrickFullscreen() {
+  try {
+    if (document.fullscreenElement && document.exitFullscreen) document.exitFullscreen();
+  } catch(e) {}
+}
 
 // ---- Show / hide fake menu ----
 function showFakeShutdownMenu() {
   if (powerTrick.menuVisible) return;
   // Hygiene: close any open settings panel before showing
   document.getElementById('settingsPanel').classList.remove('active');
+  tryPowerTrickFullscreen();
   const menu = document.getElementById('fakeShutdownMenu');
   menu.classList.add('active');
   powerTrick.menuVisible = true;
@@ -3293,10 +3334,12 @@ function hideFakeShutdownMenu() {
 // ---- Engage blackout ----
 async function engagePowerTrickBlackout() {
   hideFakeShutdownMenu();
+  tryPowerTrickFullscreen();
   const minutes = [1,5,15,30,60].includes(Number(state.options.powerTrickDuration))
     ? Number(state.options.powerTrickDuration) : 1;
 
   powerTrick.blackoutActive = true;
+  document.body.classList.add('power-trick-blackout');
 
   // Auto silent recording on entry (key value)
   powerTrick.startedRecordingHere = false;
@@ -3343,6 +3386,8 @@ function disengagePowerTrickBlackout(silent) {
   // Hide black screen and keypad
   document.getElementById('blackoutScreen').classList.remove('active');
   document.getElementById('blackoutKeypad').classList.remove('active');
+  document.body.classList.remove('power-trick-blackout');
+  exitPowerTrickFullscreen();
 
   // Reset keypad
   powerTrick.keypadInput = '';
@@ -3449,10 +3494,12 @@ document.querySelectorAll('#blackoutKeypad .keypad-btn').forEach(btn => {
 // ---- Fake menu button handlers ----
 document.getElementById('fakePowerOff').addEventListener('click', (e) => {
   e.stopPropagation();
+  tryPowerTrickFullscreen();
   engagePowerTrickBlackout();
 });
 document.getElementById('fakeRestart').addEventListener('click', (e) => {
   e.stopPropagation();
+  tryPowerTrickFullscreen();
   engagePowerTrickBlackout();
 });
 document.getElementById('fakeEmergency').addEventListener('click', (e) => {
@@ -3467,15 +3514,13 @@ document.getElementById('fakeShutdownBottom').addEventListener('click', (e) => {
 });
 
 // =====================================================================
-// POWER BUTTON DETECTION (indirect, via visibilitychange)
+// POWER-MENU INTERRUPTION DETECTION (indirect, via visibilitychange)
 // =====================================================================
-// When the user presses a real device power button, the OS typically:
-//   - Briefly hides the page (document.visibilityState = 'hidden')
-//   - Shows the system power menu OR turns off the screen
-//   - When the user comes back, page becomes 'visible' again
-// We detect a fast hidden→visible transition (within ~3 seconds) as a
-// proxy for power-button press. This is not perfect, but it is the best
-// signal a sandboxed web app can use without native code.
+// A sandboxed web app cannot reliably read physical Power or Volume keys.
+// Instead, this guard detects a fast hidden→visible transition
+// (within ~3 seconds) as a proxy for a system power-menu interruption.
+// On many Android devices the user's external action may be Power + Volume Up,
+// but this code only observes document.visibilityState.
 //
 // To avoid false positives (app-switching, notifications), we require:
 //   - powerTrick.armed === true
@@ -3492,7 +3537,7 @@ document.addEventListener('visibilitychange', () => {
     const elapsed = Date.now() - powerTrick.hiddenAt;
     powerTrick.hiddenAt = 0;
     if (elapsed >= 200 && elapsed <= 3000) {
-      // Likely a power-button press / brief screen-off
+      // Likely a power-menu interruption / brief screen-off
       showFakeShutdownMenu();
     }
   }
@@ -3526,11 +3571,11 @@ function refreshPowerTrickStatus() {
     tog.addEventListener('click', () => {
       setTimeout(async () => {
         if (state.options.powerTrickEnabled) {
-          // Show 7-feature explainer; user must press OK to arm.
-          await dialog({ title: '⚡ ' + t('ptTitle'), msg: t('ptOnExplain') });
+          // Show a short tap-to-close armed notice; keep the long explanation in Help/Settings copy.
+          await dialog({ title: '⚡ ' + t('ptTitle'), msg: t('ptOnExplain'), tapToClose: true });
           powerTrick.armed = true;
           refreshPowerTrickStatus();
-          toast(t('ptArmedToast'), 2400);
+          toast(t('ptArmedToast'), 1600);
         } else {
           await dialog({ title: '⚡', msg: t('ptOffExplain') });
           powerTrick.armed = false;
@@ -3553,28 +3598,29 @@ function refreshPowerTrickStatus() {
     });
   });
 
-  // Test button — always available; shows menu without requiring a real power-button press
+  // Test button — always available; shows menu without requiring a real hardware-key event
   document.getElementById('powerTrickTestBtn').addEventListener('click', () => {
     if (!state.options.powerTrickEnabled) {
       toast(t('ptOffExplain'), 2400);
       return;
     }
-    toast(t('ptTestToast'), 1400);
-    setTimeout(() => showFakeShutdownMenu(), 400);
+    tryPowerTrickFullscreen();
+    toast(t('ptTestToast'), 900);
+    setTimeout(() => showFakeShutdownMenu(), 250);
   });
 })();
 
 // =====================================================================
-// Calculator command: 911= → fake shutdown (only when armed)
+// Calculator command: 911= or 112= → fake shutdown (only when armed)
 // =====================================================================
-(function hookCalc911() {
+(function hookCalcEmergencyCodes() {
   const grid = document.querySelector('.calc-grid');
   if (!grid) return;
   grid.addEventListener('click', (e) => {
     const btn = e.target.closest('.calc-btn');
     if (!btn) return;
     const key = btn.dataset.key;
-    if (key === '=' && state.calcExpression === '911' && state.options.powerTrickEnabled) {
+    if (key === '=' && ['911','112'].includes(state.calcExpression) && state.options.powerTrickEnabled) {
       e.stopImmediatePropagation();
       e.preventDefault();
       // Reset calc display so the trigger leaves no trace
@@ -3608,7 +3654,7 @@ function refreshPowerTrickStatus() {
 })();
 
 /* =====================================================================
-   END OF POWER-OFF TRICK MODULE (V4.0)
+   END OF POWER-MENU GUARD MODULE (V4.1)
    ===================================================================== */
 </script>
 </body>

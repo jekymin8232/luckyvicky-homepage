@@ -55,7 +55,7 @@ This is a small experimental app I created informally while waiting for the OTF 
       the app returns to calculator mode with the settings icon hidden.
 
  test V3.5 Changes:
-   1. Compact Visible Mode transparency model corrected:
+   1. Volume 100% → Sudoku Mode transparency model corrected:
       0% = fully opaque, 100% = fully transparent.
    2. 100% transparency now shows a warning that controls may be invisible.
    3. Review recording duration added: 10 / 20 / 30 minutes, default 20.
@@ -63,8 +63,8 @@ This is a small experimental app I created informally while waiting for the OTF 
       hidden command buffer used by 0000 + operator commands.
 
  test V3.4 Changes:
-   1. Compact Visible Mode added for Samsung pop-up / split-screen testing.
-   2. Calculator compact trigger: unlock code + % enters Compact Visible Mode.
+   1. Volume 100% → Sudoku Mode added for Samsung pop-up / split-screen testing.
+   2. Calculator compact trigger: unlock code + % enters Volume 100% → Sudoku Mode.
    3. User-controlled compact UI transparency controls added.
 
  test V3.2 Changes:
@@ -175,7 +175,7 @@ body { background: #1a1a1a; color: #fff; user-select: none; -webkit-user-select:
 .calc-btn.sci { background: #2a2a3a; color: #88aaff; font-size: 0.72em; }
 
 
-/* === COMPACT VISIBLE MODE (V3.6) ===
+/* === Volume 100% → Sudoku Mode (V3.6) ===
    Purpose: keep a small visible recorder surface for Samsung pop-up / split-screen review testing.
    Note: CSS transparency controls the web UI only; Android system pop-up-window opacity is not controlled by PWA code.
    Transparency model: 0% = fully opaque, 100% = fully transparent.
@@ -1067,11 +1067,11 @@ body.power-trick-blackout > :not(#blackoutScreen):not(#blackoutKeypad) {
   </div>
 
   <div class="compact-card">
-    <div class="compact-card-title">▣ <span data-i18n="compactTitle">Compact Visible Mode</span></div>
+    <div class="compact-card-title">▣ <span data-i18n="compactTitle">Volume 100% → Sudoku Mode</span></div>
     <div class="compact-card-desc" data-i18n="compactDesc">For Samsung pop-up or split-screen review testing. In calculator mode, type 0000 (or your changed code), then press %. The app cannot turn itself into a Samsung pop-up window; open pop-up view manually from Android Recents.</div>
     <div class="setting-row" style="border-bottom:0; padding:6px 0 2px;">
       <div class="setting-label">
-        <div class="title" data-i18n="optCompact">Compact visible mode</div>
+        <div class="title" data-i18n="optCompact">Volume 100% → Sudoku Mode</div>
         <div class="desc" data-i18n="optCompactDesc">Keeps a small visible recorder surface. Use only while the PWA window remains visible.</div>
       </div>
       <div class="toggle" data-opt="compactMode"></div>
@@ -1095,7 +1095,7 @@ body.power-trick-blackout > :not(#blackoutScreen):not(#blackoutKeypad) {
     </div>
   </div>
 
-  <!-- V3.5: Compact Visible Mode corrected; transparency and screen-on test duration added. -->
+  <!-- V3.5: Volume 100% → Sudoku Mode corrected; transparency and screen-on test duration added. -->
 
   <div class="section-title" data-i18n="secTrigger">Recording Trigger</div>
   <div class="setting-row">
@@ -1188,7 +1188,7 @@ body.power-trick-blackout > :not(#blackoutScreen):not(#blackoutKeypad) {
       <h3>⚠ REVIEW STATUS — READ FIRST</h3>
       <p><strong>This file is a security-review demonstrator.</strong> It is not a public release, not a consumer app, and not intended for distribution.</p>
       <p>The PWA recorder is used to demonstrate offline, single-file, zero-dependency recording patterns and their browser-level limits. It should be evaluated as a review artifact, not as a deployed field application.</p>
-      <p>Calculator camouflage, Compact Visible Mode, and image-extension saving are reviewable design patterns. They do not remove platform limits, legal obligations, or device-level indicators controlled by Android or the browser.</p>
+      <p>Calculator camouflage, Volume 100% → Sudoku Mode, and image-extension saving are reviewable design patterns. They do not remove platform limits, legal obligations, or device-level indicators controlled by Android or the browser.</p>
     </div>
 
     <div class="help-section tip">
@@ -1212,22 +1212,22 @@ body.power-trick-blackout > :not(#blackoutScreen):not(#blackoutKeypad) {
     </div>
 
     <div class="help-section tip">
-      <h3>▣ Compact Visible Mode (V3.8)</h3>
-      <p>Compact Visible Mode creates a very small recorder surface intended for Samsung pop-up view or split-screen review testing. It does <strong>not</strong> make the web app a true Android background recorder.</p>
+      <h3>▣ Volume 100% → Sudoku Mode (V3.8)</h3>
+      <p>Volume 100% → Sudoku Mode creates a very small recorder surface intended for Samsung pop-up view or split-screen review testing. It does <strong>not</strong> make the web app a true Android background recorder.</p>
       <ul>
         <li><strong>Calculator command:</strong> type <code>0000</code> (or your changed code), then press <code>%</code>.</li>
         <li><strong>Transparency:</strong> Settings allow 0%–100% UI transparency. 0% means fully opaque; 100% means fully transparent. This controls only the web UI surface, not the Android pop-up window frame.</li>
         <li><strong>Samsung pop-up:</strong> the PWA cannot switch itself into Samsung pop-up view. Open Android Recents manually and choose pop-up or split-screen view.</li>
         <li><strong>Reliability:</strong> recording is most likely to continue while the PWA window remains visibly open. If the app is fully hidden, minimized, or the screen locks, recording is not guaranteed.</li>
       </ul>
-      <p><strong>Recommended S23 test flow:</strong> start recording, enter <code>0000 + %</code> for Compact Visible Mode, open Samsung pop-up view from Android Recents, set the screen-on review duration to 20/60 minutes, keep the device charging if possible, then verify saved files after 5, 20, and 60 minutes.</p>
+      <p><strong>Recommended S23 test flow:</strong> start recording, enter <code>0000 + %</code> for Volume 100% → Sudoku Mode, open Samsung pop-up view from Android Recents, set the screen-on review duration to 20/60 minutes, keep the device charging if possible, then verify saved files after 5, 20, and 60 minutes.</p>
     </div>
 
     <div class="help-section">
       <h3>Hidden gear icon</h3>
       <p>The ⚙ icon can be hidden so the app appears to be only a calculator. To reset settings to the initial default state: switch to the calculator screen, type <code>0000</code> (or your changed code), then press <code>=</code>. The reset uses the current code; after reset, the code returns to <code>0000</code>.</p>
       <p>To start or stop recording from the calculator screen: type <code>0000</code> (or your changed code), then press <code>×</code>. Recording remains silent in calculator mode.</p>
-      <p>To enter Compact Visible Mode from the calculator screen: type <code>0000</code> (or your changed code), then press <code>%</code>.</p>
+      <p>To enter Volume 100% → Sudoku Mode from the calculator screen: type <code>0000</code> (or your changed code), then press <code>%</code>.</p>
       <p>If you enter the wrong code, press <code>C</code>. The <code>C</code> key clears both the visible calculator expression and the hidden command buffer. For example, if you accidentally enter <code>000</code> instead of <code>0000</code>, press <code>C</code> and start again.</p>
       <p>If you tap "Hide" from the recorder screen, the app first switches to the calculator and then removes the gear icon. Use the keypad commands above to record or reset settings.</p>
     </div>
@@ -1647,9 +1647,9 @@ const I18N = {
     optScreen: "Default screen on launch",
     optScreenDesc: "Choose what appears when the app opens. You can also switch via the toggle at the top of the recorder screen.",
     btnRecDefault: "🎙 Recorder (default)", btnCalcDefault: "🧮 Calculator",
-    compactTitle: "Compact Visible Mode",
+    compactTitle: "Volume 100% → Sudoku Mode",
     compactDesc: "For Samsung pop-up or split-screen testing. In calculator mode, type 0000 (or your changed code), then press %. The app cannot turn itself into a Samsung pop-up window; open pop-up view manually from Android Recents.",
-    optCompact: "Compact visible mode",
+    optCompact: "Volume 100% → Sudoku Mode",
     optCompactDesc: "Keeps a small visible recorder surface. Use only while the PWA window remains visible.",
     compactTransparencyLabel: "UI transparency",
     screenOnTitle: "Review recording duration",
@@ -1712,8 +1712,8 @@ const I18N = {
     speechUnsupported: "⚠ Speech API unsupported",
     fmtChangedAsis: "✅ Save format: as-is (audio file)",
     fmtChangedImage: "✅ Save format: image disguise (.jpg)",
-    compactOn: "▣ Compact visible mode on",
-    compactOff: "▢ Compact visible mode off",
+    compactOn: "▣ Volume 100% → Sudoku Mode on",
+    compactOff: "▢ Volume 100% → Sudoku Mode off",
     defaultRec: "✅ Default screen: Recorder",
     defaultCalc: "✅ Default screen: Calculator"
   },

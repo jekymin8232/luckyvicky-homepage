@@ -1,54 +1,53 @@
-I know my strengths and weaknesses with clarity.
-The vanilla code I design reflects the hardships I’ve lived through. Anyone can write code. But true design is something you only arrive at after enduring a life shaped by constraint and scarcity.
-In the end, the only person I can truly rely on is myself. A designer is always alone, but that is where true safety lies.
+## I’m just a blacksmith forging tools
 
-## Nothing in this world is truly free. What appears to be free often comes with a very high cost. 
+<img width="358" height="237" alt="1" src="https://github.com/user-attachments/assets/1ed6d48d-46cc-4ede-8736-9496dec6280b" />
 
-**Paying a fair price is what truly defines open source. This is a longer-term goal, but I plan to build a team and develop any necessary libraries in-house — essentially, to build and use our own wheels.**
+## If you underpay the blacksmith, you’ll only get cheap tools.
 
-**Do not reinvent the wheel. The real wheel is the browser. Chrome and Safari are robust platforms built by thousands of brilliant engineers. It is unfortunate to use them merely as conduits for libraries and external API calls.**
+**The following 10 principles are non-negotiable in my AI design philosophy:**
+1. Hallucinations must be minimized.
+2. Transparency must be fully guaranteed.
+3. AI must remain free or extremely affordable, even in low-income environments.
+4. Data exploitation must be completely eliminated.
+5. AI must operate reliably in low-resource environments.
+6. Legal liability risks (including GDPR-related risks) must be minimized as much as possible.
+7. The system must be open-source and customizable by anyone.
+8. Simplicity, standardization, and modularity must be prioritized.
+9. The system must be accessible and understandable to non-specialists.
+10. The AI must not collect unnecessary data, and if any data is stored, users must be able to delete it easily at any time.
 
-Open source is not “free.” The misconception that it is leads many developers and organizations to rely on it without recognizing the underlying risks. In reality, most libraries are built and maintained by individuals, often with limited support and resources.
+## I am a white-box AI architect. “I deeply respect open-source culture.”
 
-When that work is expected to be done for free, maintainers become vulnerable to burnout. And burnout is not an exception—it is a predictable outcome. Once a maintainer steps away or hands over control to others without proper continuity and oversight, the integrity of the library can deteriorate. At that point, security is no longer guaranteed.
+**The AI I develop is not designed for the wealthy. It is designed for the socially vulnerable, the poor, and those most in need.**
 
-In that sense, the issue is not the concept of open source itself, but the structural assumption that it can be sustained without adequate support. That assumption is what ultimately makes many libraries more exposed to security risks.
+The AI I develop is not a black-box AI designed to replace human jobs. It is a white-box AI designed to create jobs and opportunities for people living in poverty.
 
-## [Unnecessary expenses] Using libraries means accepting dependency.
-Open-source projects often face structural challenges in achieving long-term sustainability. For this reason, I am actively working toward a self-sustaining model.
-I see OTF’s support not as a dependency, but as a catalytic seed that can unlock matched funding and accelerate the project’s path toward independence.
+White-box AI is built through the contributions of many individuals, allowing fair and legitimate compensation to be distributed to those in need. Even something as simple as typing “Hello, World!” can become a meaningful contribution that enables people in low-income environments to receive legal payment for their work.
 
-Even in the worst situations, lives must be saved. Relying on libraries and external APIs can slow down responsiveness. Anyone should be able to fix the code on the spot—this is only possible with vanilla code.
-Using external libraries introduces dependency on third-party maintainers, which can create risks in long-term maintenance, security auditing, and update compatibility.
-In critical environments, minimizing such dependencies can significantly improve reliability and auditability.
+**White-box AI can evolve into a large-scale ESG ethical certification system.** 
 
->**I sincerely ask that you read “[Must Read] Korea FOSS Brief for OSTIF.md.”**
->
->We’ve outlined a way to break free from supply chain attacks—meaning risks from libraries and external APIs. At the very least, any libraries we rely on for life-critical systems must be secured against these threats.
->
->Open-source projects are inherently difficult to sustain independently. 
-> However, passing a security audit can open a viable path toward self-sufficiency.
-> 
-> **This “Pet Safety Leash” UI serves as a neutral demo skin for everyday usability testing.**
-> Beneath that surface, however, it is an **Offline Bluetooth Swarm Network** designed for disaster response in zero-infrastructure environments.
-> When both internet access and grid power fail during wildfires, floods, hurricanes, or similar crises, nearby devices can self-organize and continue operating locally.
-> There is no cloud dependency, no reliance on cell towers, and no account system by design. Instead, it enables local coordination, SOS relay, and operational continuity across nearby nodes.
-> **An early-warning system and life-saving mesh combined**—an infrastructure-independent resilience layer deployable on ordinary smartphones.
+In other words, when wealthy individuals or organizations donate to white-box AI initiatives, they can receive ESG ethical certification reports documenting their humanitarian and social contributions. At the same time, people living in low-income environments can contribute to the white-box AI ecosystem and receive fair and legitimate compensation for their work.
 
-# VitalGuard AI - Infrastructure-Independent Survival Framework (v4.2)
+Fair compensation is not just about money — it can also restore dignity, strengthen self-esteem, and give people a meaningful sense of purpose and participation in society.
 
-VitalGuard AI is a **single-file, offline-first continuity demo** that has been **technically reviewed** and designed **with GDPR compliance in mind**. It keeps **local decision support** available when **power and connectivity are disrupted**, with **no accounts, no cloud dependency, and no telemetry by design**.
+**Massive data centers are often an inefficient use of resources.** They consume enormous amounts of money just to maintain infrastructure and server operations. If even a fraction of that investment were redirected toward building white-box AI, tens of thousands of people living in poverty could directly benefit from it.
 
-**UI languages (7):** English · 한국어 · العربية (RTL) · 日本語 · Français · 繁體中文 (台灣) · Español
+All academic contributions worldwide are provided completely free of charge. If these contributions are recognized as meaningful ethical and humanitarian work, I believe that a public nomination for the Nobel Peace Prize would also be justified. Moral authority can help save even more lives. 
 
-**Format:** One self-contained HTML file with no build system and no external JS/CSS libraries.
+I have also already developed a refugee self-sufficiency model — **[McorpAi.org](https://mcorpai.org/)** — an AI system designed to help refugees achieve self-reliance within refugee camps themselves, without requiring relocation to other countries. A sovereign AI system that refugees can directly operate means that refugee communities themselves can become self-sustaining.
 
-South Korea operates specialized public institutions, such as KOTRA, to attract foreign investment. By leveraging public funding from U.S. institutions and aligning it with partnerships involving South Korean local governments, there is strong potential to secure mutually beneficial matching funds.
+> **This “Pet Safety Leash” UI is a neutral demo skin for everyday usability testing.**  
+> Under the hood, it is an **Offline Bluetooth Swarm Network** built for zero‑infrastructure disaster response.  
+> When internet and grid power collapse to zero—wildfires, floods, hurricanes—devices self‑organize and keep operating.  
+> No cloud. No cell towers. No accounts: local coordination, SOS relay, and continuity across nearby nodes.  
+> **Early‑warning system + life‑saving mesh**—an infrastructure‑independent resilience layer, deployable from ordinary phones.
 
-I am providing the official evidence regarding the strategic and institutional framework for this initiative:
+# VitalGuard AI - Infrastructure-Independent Survival Framework
 
-🔗 **[Official English Press Release] South Korea’s AI Strategy – Ministry of Science and ICT (MSIT)**  
-https://www.msit.go.kr/eng/bbs/view.do?sCode=eng&mId=4&mPid=2&bbsSeqNo=42&nttSeqNo=1071
+VitalGuard AI is a **single-file, offline-first** continuity demo that keeps **local decision support** available when **power and connectivity are disrupted** - with **no accounts, no cloud dependency, and no telemetry by design**.
+**UI languages (7):** English · 한국어 · العربية (RTL) · 日本語 · Français · 繁體中文(台灣) · Español
+
+**Format:** one self-contained HTML file (no build system; no external JS/CSS libraries)
 
 ---
 
@@ -68,7 +67,7 @@ https://www.msit.go.kr/eng/bbs/view.do?sCode=eng&mId=4&mPid=2&bbsSeqNo=42&nttSeq
 
 ## Release integrity (recommended for restricted environments)
 
-**SHA-256 (approved artifact):** `7c22c0d182473f424597fa132b3fd1f408b0d5f1d191aabf849bbfaad2cf12cb`  
+**SHA-256 (approved artifact):** `f37502a9f511c856d4c6d720b93cac202214ff23e01280d7f69eabf33bdd3721`  
 **File size:** 412572 bytes (~402.9 KiB)
 
 Integrity verification commands:

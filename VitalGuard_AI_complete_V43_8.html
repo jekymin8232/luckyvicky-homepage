@@ -1,21 +1,142 @@
+<!--
+Apache 2.0
+In the production version, all comments can be removed, and the application can be refactored or redesigned as needed to meet specific requirements.
+
+Even when conventional infrastructure becomes unavailable, offline AI may provide useful capabilities in disrupted environments.
+
+Potential use cases include communication outages, natural-disaster scenarios, remote or disconnected regions, 
+and other situations where access to centralized services is limited. This architecture also underwent an initial review by the Government of Luxembourg in November 2025.
+
+Copyright © 2026 Morgan J. (Gyu-min Jeon) | https://mcorpai.org/ | VitalGuardAI.com V4.3.8
+
+E-mail: contact@mcorpai.org
+
+Official Website: mcorpai.org
+Detailed Project Information: mcorpai.com
+
+"Given enough eyeballs, all bugs are shallow."
+— Eric S. Raymond
+
+============================================
+Reference Material
+https://mcorpai.net   [miniGit · Size 186KB]
+============================================
+
+miniGit is a zero-dependency, memory-only research prototype designed to explore offline source-management approaches for users operating in privacy-sensitive or high-risk environments.
+
+Implemented as a single file under 200 KB, miniGit operates entirely offline and executes locally within the browser.
+
+Key capabilities include:
+
+* Local source-code review and diffing
+* Cryptographic hash verification
+* Static suspicious-code scanning
+* Offline file transfer using Bluetooth and Ultrasonic FSK communication
+
+miniGit does not require a server, user account, or remote repository.
+
+All snapshots and histories are maintained in memory only. Closing the browser tab destroys the active session data. 
+When used with Incognito or Private Browsing modes, the tool is intended to minimize local persistence.
+
+Note: miniGit is a research prototype and should not be considered a forensic-erasure tool or a guarantee of anonymity.
+
+This reference project demonstrates how lightweight source-management functionality can be implemented without external dependencies.
+
+For reference only: https://mcorpai.net
+
+This material is provided solely for reference and is not part of the audit scope.
+
+The referenced project is included only as an example of the architecture's flexibility and its potential to support different design approaches, extensions, and future implementations.
+
+No review, validation, or assessment of the referenced project is requested as part of this audit.
+
+
+As dependencies increase, code size and complexity tend to increase as well, and the amount of code that must be reviewed also grows. 
+This does not necessarily mean that vulnerabilities increase, but it can expand the potential attack surface and increase the burden of verification.
+
+In particular, activists operating in high-risk environments and ordinary users often lack the ability to perform professional security audits.
+For this reason, a structure that is as simple and transparent as possible is important.
+
+This project is designed with no external dependencies and adopts a single-file architecture, allowing anyone to more easily inspect both the code and the file itself.
+
+In addition, by publishing the file size and cryptographic hash values (such as SHA-256) of distributed releases, 
+users can verify whether the file they received matches the original distributed version.
+
+For example, the sample file provided at mcorpai.net is approximately 190,149 bytes in size. Because it is very small, 
+changes can be more easily identified through file-size comparison and hash verification.
+
+Of course, a small file size alone does not guarantee security. 
+However, minimizing code size and eliminating external dependencies can help improve verifiability and reduce supply-chain risks.
+
+=======================================================================================================
+https://mcorpai.net/ — Proof-of-Concept (PoC) and Early MVP for Fully Offline Ultrasonic Communication
+=======================================================================================================
+
+To the best of my knowledge, this may be among the first implementations of a fully offline, 
+zero-dependency communication architecture that enables nearby users to exchange simple messages through ultrasonic acoustic signaling without relying on cellular networks, 
+Wi-Fi infrastructure, cloud services, external libraries, or centralized servers.
+
+From a security perspective, the approach differs fundamentally from conventional wireless communication systems. Technologies such as Bluetooth, Wi-Fi, 
+and cellular networks inherently generate radio-frequency (RF) emissions and associated metadata that can potentially be monitored, correlated, or analyzed by third parties. 
+Ultrasonic communication, by contrast, operates through short-range acoustic transmission and does not require the emission of conventional RF communication signals for message delivery.
+
+The primary objective is not anonymity, which no technology can guarantee, but rather metadata minimization, attack-surface reduction, and infrastructure independence. 
+By eliminating external dependencies and centralized communication channels, the architecture reduces reliance on third-party services while minimizing opportunities 
+for large-scale data collection and network-based monitoring.
+
+The implementation is intentionally designed as a self-contained, single-file architecture with zero external dependencies. This improves transparency, auditability, 
+software supply-chain resilience, and long-term maintainability. Security researchers can inspect the entire codebase without requiring package managers, external frameworks, 
+remote APIs, or third-party runtime components.
+
+In high-risk environments where communication infrastructure may be disrupted, censored, monitored, or completely unavailable, 
+ultrasonic signaling can provide an alternative low-infrastructure communication channel for short-range message exchange. This design philosophy prioritizes offline survivability, 
+operational resilience, and user autonomy under adverse conditions.
+
+While further peer review and security analysis are encouraged, 
+the architecture demonstrates that meaningful local communication capabilities can be implemented with an extremely small trust base, minimal external assumptions, 
+and a substantially reduced attack surface compared with conventional network-dependent systems.
+
+=================================================================================================================================
+For activists operating in high-risk environments, even their own homes may not provide a guaranteed level of safety or security.
+=================================================================================================================================
+
+Unlike conventional RF-based communications, ultrasonic signaling has inherently limited propagation characteristics. 
+Radio-frequency transmissions can penetrate walls and travel from hundreds of meters to several kilometers, potentially allowing signals to be collected by distant monitoring systems. 
+In contrast, ultrasonic signals experience significant attenuation in air and typically operate only over short ranges, 
+often within a few meters to several meters depending on environmental conditions.
+
+Due to these physical properties, ultrasonic communication generally has a much smaller collection footprint. Signals are less likely to propagate through walls, 
+and interception often requires an observer to be physically close to the communicating devices. 
+This creates a favorable asymmetry in collection costs, 
+where obtaining the signal may require substantially greater proximity and effort compared to many conventional wireless technologies.
+
+In the current prototype, messages are transmitted using compact numeric signaling formats rather than human-readable text, 
+and the signaling scheme can be freely customized by the user. Consequently, even if a transmission is detected, the meaning of the transmitted data may not be immediately apparent. 
+Interpretation may require knowledge of the user-defined encoding method, shared context, protocol-specific information, or access to the communicating endpoints.
+
+This technology may be especially applicable in secure safe houses, protected facilities, 
+and other controlled environments where highly localized communication is required. In such settings,
+minimizing long-range signal exposure and reducing dependence on conventional communication infrastructure can be important operational considerations.
+
+While no communication method can guarantee complete security, ultrasonic communication may provide an additional low-profile, 
+RF-independent channel that can be valuable in high-risk environments where minimizing long-range signal exposure is desirable.
+
+-->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="license" content="Apache-2.0">
 <meta name="spdx-license-identifier" content="Apache-2.0">
-<!-- CSP Note: V4.3.8-END remains single-file and zero-dependency, but the main script is nonce-authorized.
-     Inline event attributes were removed and replaced by strict data-vg-on* action dispatch.
-     connect-src 'none' blocks network egress; worker-src 'none' disables Blob/Worker execution by default.
-     Hosted deployments should also send CSP, Permissions-Policy, X-Content-Type-Options, and frame-ancestors as HTTP response headers. -->
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'none'; img-src 'self' data: blob:; media-src 'self' data: blob:; font-src 'self' data:; script-src 'self' 'nonce-vg43end'; script-src-elem 'self' 'nonce-vg43end'; script-src-attr 'none'; style-src 'self' 'unsafe-inline'; worker-src 'none'; manifest-src 'self' blob:; object-src 'none'; frame-src 'none'; child-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'none'; navigate-to 'self' blob: data:; trusted-types vitalguard-html; require-trusted-types-for 'script'">
 <meta name="referrer" content="no-referrer">
 <meta http-equiv="X-Content-Type-Options" content="nosniff">
 <meta http-equiv="Permissions-Policy" content="geolocation=(self), microphone=(self), bluetooth=(self), accelerometer=(self), gyroscope=(self), magnetometer=(self), camera=(), payment=(), usb=()">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
 <meta name="theme-color" content="#c0392b">
-<title>VitalGuard AI v4.3.8-END — Audit-Hardened Offline Survival Framework</title>
-<meta name="security-hardening" content="V4.3.8-END: nonce CSP, script-src-attr none, no inline event attributes, no exposed original network handles, encrypted backup default, bounded import, redacted diagnostics, no service worker by default">
+<title>VitalGuardAI.com v4.3.8 — Audit-Hardened Offline Survival Framework</title>
+<meta name="security-hardening" content="v4.3.8: nonce CSP, script-src-attr none, no inline event attributes, no exposed original network handles, encrypted backup default, bounded import, redacted diagnostics, no service worker by default">
 <link rel="manifest" id="pwa-manifest">
 <style>
 :root{--bg-primary:#0d1117;--bg-secondary:#161b22;--bg-card:#1c2333;--bg-elevated:#21283b;--text-primary:#e6edf3;--text-secondary:#8b949e;--text-muted:#6e7681;--accent-red:#c0392b;--accent-green:#2ecc71;--accent-yellow:#f1c40f;--accent-orange:#e67e22;--accent-blue:#3498db;--zone-safe:#2ecc71;--zone-caution:#f1c40f;--zone-warning:#e67e22;--zone-danger:#e74c3c;--zone-lost:#9b59b6;--border-color:#30363d;--radius-sm:8px;--radius-md:12px;--radius-lg:20px;--shadow-soft:0 2px 12px rgba(0,0,0,.3);--tr-fast:.15s ease;--tr-norm:.3s ease;--font-body:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;--font-mono:'Courier New',Courier,monospace}
@@ -219,7 +340,7 @@ body{font-family:var(--font-body);background:var(--bg-primary);color:var(--text-
   <!-- INSTALL BANNER (APP INSTALL) -->
   <div id="installBanner" class="install-banner">
     <div>
-      <strong id="i18n_install_title">Install VitalGuard AI</strong><br>
+      <strong id="i18n_install_title">Install VitalGuardAI.com</strong><br>
       <span id="i18n_install_sub" style="color:var(--text-secondary)">Works better as an installed app — faster launch, more reliable Bluetooth behavior.</span>
     </div>
     <div style="display:flex;gap:6px;flex-shrink:0">
@@ -230,7 +351,7 @@ body{font-family:var(--font-body);background:var(--bg-primary);color:var(--text-
 
   <header class="header">
     <div class="header-logo">🛡️</div>
-    <div class="header-title" id="i18n_app_title">VitalGuard AI</div>
+    <div class="header-title" id="i18n_app_title">VitalGuardAI.com</div>
     <div class="header-sub" id="i18n_app_sub">v4.3.8 — Infrastructure‑Independent Survival Framework | McorpAI</div>
     <div class="header-mission" id="i18n_app_mission">Runs fully offline. No cloud. No telemetry. GDPR‑friendly by design.</div>
     <div class="header-disclaimer" id="i18n_app_disclaimer">Demo skin: “Pet Safety Leash” using Bluetooth proximity (not GPS). Built to keep working when networks fail.</div>
@@ -288,7 +409,7 @@ body{font-family:var(--font-body);background:var(--bg-primary);color:var(--text-
       </div>
 <div class="section-title" id="i18n_hero_title">🛡️ Infrastructure‑Independent Survival Framework</div>
       <div id="i18n_hero_body" style="font-size:.82rem;color:var(--text-secondary);line-height:1.6">
-        VitalGuard AI v4.3.8 is a single‑file, offline‑first continuity toolkit combining Bluetooth beacon proximity and lightweight on‑device logic—designed to operate during outages and off‑grid deployments, with data kept on‑device by default (no cloud retention unless you export).
+        VitalGuardAI.com v4.3.8 is a single‑file, offline‑first continuity toolkit combining Bluetooth beacon proximity and lightweight on‑device logic—designed to operate during outages and off‑grid deployments, with data kept on‑device by default (no cloud retention unless you export).
       </div>
       <div class="small" id="i18n_contact_line" style="margin-top:10px;opacity:.85;text-align:center">Contact: contact@mcorpai.org • mcorpai.org </div>
       <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:10px">
@@ -693,7 +814,7 @@ body{font-family:var(--font-body);background:var(--bg-primary);color:var(--text-
 <script nonce="vg43end">
 
 /* ============================================================
-   VitalGuard AI v4.3.8
+   VitalGuardAI.com v4.3.8
    - Merged: V20 feature richness + V35 engine hardening + V38 UI ideas
    - Vanilla HTML/CSS/JS, single-file, offline-first.
    - License: Apache-2.0 (permissive FOSS; no field-of-use restrictions)
@@ -719,7 +840,7 @@ var Sanitizer = window.Sanitizer || {
 };
 window.Sanitizer = Sanitizer;
 
-/* ----------------------------- V4.3.8-END ACTION DISPATCHER -----------------------------
+/* ----------------------------- v4.3.8 ACTION DISPATCHER -----------------------------
    Replaces inline event attributes with data-vg-on* tokens.
    Executes only a single allowlisted first-party method call; never eval/new Function. */
 const VitalGuardActionPolicy = (function(){
@@ -1277,7 +1398,7 @@ const Toast = {
 
 /* ----------------------------- I18N (7 Languages) ----------------------------- */
 /*
-  VitalGuard AI is intended to be shown to non-technical audiences (diplomats, NGOs, universities, companies).
+  VitalGuardAI.com is intended to be shown to non-technical audiences (diplomats, NGOs, universities, companies).
   This tiny i18n layer keeps everything in a single offline HTML file (no libraries, no network).
 */
 const I18N = (function(){
@@ -1287,7 +1408,7 @@ const I18N = (function(){
 
   const STR = {
     en: {
-      app_title: 'VitalGuard AI',
+      app_title: 'VitalGuardAI.com',
       app_sub: 'v4.3.8 — Infrastructure‑Independent Survival Framework | McorpAI',
       app_mission: 'Runs fully offline. No cloud. No telemetry. GDPR‑friendly by design.',
       app_disclaimer: 'Demo skin: “Pet Safety Leash” using Bluetooth proximity (not GPS). Built to keep working when networks fail.',
@@ -1297,12 +1418,12 @@ const I18N = (function(){
       help_title: 'Help',
       legal_title: 'About',
       tips_title: '📋 Demo Guide & Field Notes',
-      install_title: 'Install VitalGuard AI',
+      install_title: 'Install VitalGuardAI.com',
       empty_text: 'No demo tags registered yet.<br>Add a cheap BLE key‑finder tag to run the offline proximity demo.',
       empty_btn: '+ Add Demo Tag',
       hook_html: '<p><strong>This “Pet Safety Leash” UI is a neutral demo skin for everyday usability testing.</strong></p><p>Under the hood, it is an <strong>Offline Bluetooth Swarm Network</strong> built for zero‑infrastructure disaster response.</p><p>When internet and grid power collapse to zero—wildfires, floods, hurricanes—devices self‑organize and keep operating.</p><p>No cloud. No cell towers. No accounts: local coordination, SOS relay, and continuity across nearby nodes.</p><p><strong>Early‑warning system + life‑saving mesh</strong>—an infrastructure‑independent resilience layer, deployable from ordinary phones.</p><div class="vg-hook-langs" dir="ltr">UI languages (7): English · 한국어 · العربية (RTL) · 日本語 · Français · 繁體中文(台灣) · Español</div>',
       hero_title: '🛡️ Infrastructure‑Independent Survival Framework',
-      hero_body: 'VitalGuard AI v4.3.8 is a single‑file, offline‑first continuity toolkit combining Bluetooth beacon proximity and lightweight on‑device logic—designed to operate during outages and off‑grid deployments, with data kept on‑device by default (no cloud retention unless you export).',
+      hero_body: 'VitalGuardAI.com v4.3.8 is a single‑file, offline‑first continuity toolkit combining Bluetooth beacon proximity and lightweight on‑device logic—designed to operate during outages and off‑grid deployments, with data kept on‑device by default (no cloud retention unless you export).',
       hero_pillars_html: '<p><strong>Infrastructure‑Independent Survival Framework</strong> — designed for continuity during outages and off‑grid deployments.</p><p>• <strong>Extreme S&amp;R (Avalanche/Landslide)</strong>: Bluetooth beacon proximity to guide a radar‑like life‑locator workflow when responders are off‑grid.</p><p>• <strong>Upcycling E‑Waste (ESG &amp; SDGs)</strong>: repurpose retired smartphones into offline relief nodes.</p><p>• <strong>Off‑Grid Agriculture &amp; Asset Protection</strong>: practical patterns for livestock and asset safety where coverage is unavailable.</p><p>• <strong>Arabic &amp; Global Ready</strong>: built‑in multilingual UI (7 languages) including Arabic (RTL).</p>',
       badge_offline: '100% Offline',
       badge_gdpr: 'GDPR‑friendly',
@@ -1319,7 +1440,7 @@ const I18N = (function(){
       install_dismiss: 'Not now'
     },
     ko: {
-      app_title: 'VitalGuard AI',
+      app_title: 'VitalGuardAI.com',
       app_sub: 'v4.3.8 — 인프라 독립형 생존 프레임워크 | McorpAI',
       app_mission: '완전 오프라인. 클라우드 없음. 추적(텔레메트리) 없음. GDPR 친화 설계.',
       app_disclaimer: '데모 스킨: “강아지 안전 목줄(Pet Safety Leash)” — 블루투스 근접( GPS 아님 ). 네트워크가 끊겨도 동작하도록 설계.',
@@ -1329,12 +1450,12 @@ const I18N = (function(){
       help_title: '사용법',
       legal_title: '소개',
       tips_title: '📋 데모 가이드 & 필드 노트',
-      install_title: 'VitalGuard AI 설치',
+      install_title: 'VitalGuardAI.com 설치',
       empty_text: '등록된 데모 태그가 없습니다.<br>저가 BLE 키파인더 태그를 추가해 오프라인 근접 데모를 실행하세요.',
       empty_btn: '+ 데모 태그 추가',
       hook_html: '<p><strong>지금 보시는 “반려동물 안전 목줄” UI는 일상적 사용성 테스트를 위한 중립적인 데모 스킨입니다.</strong></p><p>내부적으로는 <strong>오프라인 블루투스 군집망(Offline Bluetooth Swarm Network)</strong>—무인프라 재난 대응을 위해 설계된 프레임워크입니다.</p><p>인터넷과 전력망이 0으로 붕괴되는 산불·홍수·허리케인 상황에서도, 기기들이 스스로 군집을 이루어 작동을 지속합니다.</p><p>클라우드도, 기지국도, 계정도 없습니다: 현장 로컬 조정, SOS 릴레이, 인접 노드 간 연속성을 제공합니다.</p><p><strong>조기경보 + 인명구조 메쉬</strong>—일반 스마트폰만으로 배치 가능한, 인프라 독립형 회복탄력성 레이어입니다.</p><div class="vg-hook-langs" dir="ltr">UI languages (7): English · 한국어 · العربية (RTL) · 日本語 · Français · 繁體中文(台灣) · Español</div>',
       hero_title: '🛡️ 인프라 독립형 생존 프레임워크',
-      hero_body: 'VitalGuard AI v4.3.8는 단일 HTML 파일 기반의 오프라인 연속성 도구로, BLE 비콘 근접도와 온디바이스 경량 로직을 결합해 전력·통신 장애 및 오프그리드 환경에서도 작동하도록 설계되었습니다. 데이터는 기기에만 보관됩니다.',
+      hero_body: 'VitalGuardAI.com v4.3.8는 단일 HTML 파일 기반의 오프라인 연속성 도구로, BLE 비콘 근접도와 온디바이스 경량 로직을 결합해 전력·통신 장애 및 오프그리드 환경에서도 작동하도록 설계되었습니다. 데이터는 기기에만 보관됩니다.',
       hero_pillars_html: '<p><strong>인프라 독립형 생존 프레임워크</strong> — 전력·통신 장애 및 오프그리드 환경에서도 연속성을 확보합니다.</p><p>• <strong>극한 수색·구조(눈사태/산사태)</strong>: BLE 비콘 근접도와 온디바이스 로직으로, 구조대가 오프라인에서도 단계적으로 위치를 좁혀갈 수 있도록 지원합니다.</p><p>• <strong>폐스마트폰 업사이클링(ESG/SDGs)</strong>: 방치된 기기를 ‘오프라인 구호 노드’로 재탄생시킵니다.</p><p>• <strong>오프그리드 목축·자산 보호</strong>: 초원/사막 등 무커버리지 환경에서 가축·자산 안전 패턴을 제공합니다.</p><p>• <strong>Arabic 포함 7개국어</strong>: 아랍어(RTL)까지 내장되어 즉시 배포 가능합니다.</p>',
       badge_offline: '완전 오프라인',
       badge_gdpr: 'GDPR 친화',
@@ -1351,7 +1472,7 @@ const I18N = (function(){
       install_dismiss: '나중에'
     },
     ar: {
-      app_title: 'VitalGuard AI',
+      app_title: 'VitalGuardAI.com',
       app_sub: 'v4.3.8 — إطار بقاء مستقل عن البنية التحتية | McorpAI',
       app_mission: 'يعمل دون اتصال بالكامل. لا سحابة. لا تتبع. مصمم ليكون متوافقًا مع GDPR.',
       app_disclaimer: 'واجهة العرض: «مقود أمان للحيوانات الأليفة» عبر قرب Bluetooth (ليس GPS). مصمم للعمل حتى عند انقطاع الشبكات.',
@@ -1361,12 +1482,12 @@ const I18N = (function(){
       help_title: 'مساعدة',
       legal_title: 'حول',
       tips_title: '📋 دليل العرض وملاحظات ميدانية',
-      install_title: 'تثبيت VitalGuard AI',
+      install_title: 'تثبيت VitalGuardAI.com',
       empty_text: 'لا توجد علامات مسجّلة للعرض بعد.<br>أضف علامة BLE رخيصة (مُعَثِّر مفاتيح) لتشغيل عرض القرب دون اتصال.',
       empty_btn: '+ إضافة علامة للعرض',
       hook_html: '<p><strong>واجهة «مقود أمان للحيوانات الأليفة» التي تراها الآن هي غلاف تجريبي محايد لاختبارات سهولة الاستخدام اليومية.</strong></p><p>تحت الغطاء، هو <strong>شبكة سرب Bluetooth غير متصلة (Offline Bluetooth Swarm Network)</strong> صُمِّمت للاستجابة للكوارث دون بنية تحتية.</p><p>عندما ينهار الإنترنت وشبكة الكهرباء تمامًا—حرائق الغابات، الفيضانات، الأعاصير—تتشكّل الأجهزة كسرب ذاتيًا وتواصل العمل.</p><p>لا سحابة. لا أبراج خلوية. لا حسابات: تنسيق محلي، ترحيل نداءات الاستغاثة، واستمرارية عبر العقد القريبة.</p><p><strong>نظام إنذار مبكر + شبكة إنقاذ للأرواح</strong>—طبقة صمود مستقلة عن البنية التحتية، قابلة للنشر عبر هواتف عادية.</p><div class="vg-hook-langs" dir="ltr">UI languages (7): English · 한국어 · العربية (RTL) · 日本語 · Français · 繁體中文(台灣) · Español</div>',
       hero_title: '🛡️ إطار بقاء مستقل عن البنية التحتية',
-      hero_body: 'VitalGuard AI v4.3.8 أداة استمرارية ضمن ملف واحد تعمل دون اتصال، تجمع بين قرب منارة Bluetooth ومنطق خفيف على الجهاز—لتعمل أثناء الانقطاعات وفي البيئات خارج الشبكة، مع حفظ البيانات على الجهاز (بدون احتفاظ سحابي إلا عند التصدير).',
+      hero_body: 'VitalGuardAI.com v4.3.8 أداة استمرارية ضمن ملف واحد تعمل دون اتصال، تجمع بين قرب منارة Bluetooth ومنطق خفيف على الجهاز—لتعمل أثناء الانقطاعات وفي البيئات خارج الشبكة، مع حفظ البيانات على الجهاز (بدون احتفاظ سحابي إلا عند التصدير).',
       hero_pillars_html: '<p><strong>إطار بقاء مستقل عن البنية التحتية</strong> — للاستمرارية أثناء الانقطاعات وعمليات النشر خارج الشبكة.</p><p>• <strong>البحث والإنقاذ في الظروف القاسية (انهيارات ثلجية/انزلاقات أرضية)</strong>: قرب منارات BLE لدعم سير عمل تحديد موقع يشبه الرادار عند العمل خارج الشبكة.</p><p>• <strong>إعادة توظيف النفايات الإلكترونية (ESG/SDGs)</strong>: تحويل الهواتف المتقاعدة إلى عقد إغاثة تعمل دون اتصال.</p><p>• <strong>زراعة خارج الشبكة وحماية الأصول</strong>: أنماط عملية لسلامة الماشية والأصول حيث لا توجد تغطية.</p><p>• <strong>جاهز للعربية والعالم</strong>: واجهة متعددة اللغات (7 لغات) بما في ذلك العربية (RTL).</p>',
       badge_offline: 'دون اتصال 100%',
       badge_gdpr: 'صديق لـ GDPR',
@@ -1383,7 +1504,7 @@ const I18N = (function(){
       install_dismiss: 'ليس الآن'
     },
     ja: {
-      app_title: 'VitalGuard AI',
+      app_title: 'VitalGuardAI.com',
       app_sub: 'v4.3.8 — インフラ非依存サバイバル・フレームワーク | McorpAI',
       app_mission: '完全オフライン。クラウドなし。テレメトリーなし。GDPRに配慮した設計。',
       app_disclaimer: 'デモ用スキン：「ペット安全リード」— Bluetooth近接（GPSではありません）。ネットワーク障害時でも動作する設計。',
@@ -1393,12 +1514,12 @@ const I18N = (function(){
       help_title: '使い方',
       legal_title: '概要',
       tips_title: '📋 デモガイド & フィールドノート',
-      install_title: 'VitalGuard AI をインストール',
+      install_title: 'VitalGuardAI.com をインストール',
       empty_text: 'デモ用タグがまだ登録されていません。<br>安価なBLEキーファインダーを追加してオフライン近接デモを開始してください。',
       empty_btn: '+ デモタグを追加',
       hook_html: '<p><strong>いま表示されている「ペット用セーフティリード」UIは、日常のユーザビリティ検証のための中立的なデモスキンです。</strong></p><p>内部的には、ゼロ・インフラの災害対応に向けて設計された <strong>オフラインBluetoothスワーム・ネットワーク</strong> です。</p><p>インターネットと電力網が完全に途絶する—山火事、洪水、ハリケーン—状況でも、端末が自律的に群れを形成して動作し続けます。</p><p>クラウドなし。基地局なし。アカウントなし：ローカル協調、SOS中継、近接ノード間の継続性を実現します。</p><p><strong>早期警戒 + 生命救助メッシュ</strong>—一般的なスマートフォンから展開できる、インフラ非依存のレジリエンス層です。</p><div class="vg-hook-langs" dir="ltr">UI languages (7): English · 한국어 · العربية (RTL) · 日本語 · Français · 繁體中文(台灣) · Español</div>',
       hero_title: '🛡️ インフラ非依存サバイバル・フレームワーク',
-      hero_body: 'VitalGuard AI v4.3.8 は単一 HTML ファイルのオフライン継続性ツールです。BLE ビーコン近接と軽量なオンデバイス・ロジックを組み合わせ、停電や通信障害、オフグリッド環境でも動作するよう設計されています。データは端末内にのみ保持されます。',
+      hero_body: 'VitalGuardAI.com v4.3.8 は単一 HTML ファイルのオフライン継続性ツールです。BLE ビーコン近接と軽量なオンデバイス・ロジックを組み合わせ、停電や通信障害、オフグリッド環境でも動作するよう設計されています。データは端末内にのみ保持されます。',
       hero_pillars_html: '<p><strong>インフラ非依存サバイバル・フレームワーク</strong> — 停電・通信障害やオフグリッド配備でも継続運用できる設計です。</p><p>• <strong>極限の捜索救助（雪崩/土砂崩れ）</strong>: BLE ビーコン近接により、オフグリッド環境でも段階的に位置を絞り込むワークフローを支援します。</p><p>• <strong>E‑Waste のアップサイクル（ESG/SDGs）</strong>: 退役したスマホをオフライン救援ノードとして再利用します。</p><p>• <strong>オフグリッド農業＆資産保護</strong>: 電波の届かない環境での家畜・資産の安全パターンを提供します。</p><p>• <strong>アラビア語を含む 7 言語</strong>: アラビア語（RTL）を含む多言語 UI を内蔵しています。</p>',
       badge_offline: '完全オフライン',
       badge_gdpr: 'GDPR配慮',
@@ -1415,7 +1536,7 @@ const I18N = (function(){
       install_dismiss: '今はしない'
     },
     fr: {
-      app_title: 'VitalGuard AI',
+      app_title: 'VitalGuardAI.com',
       app_sub: 'v4.3.8 — Cadre de survie indépendant de l’infrastructure | McorpAI',
       app_mission: 'Fonctionne entièrement hors ligne. Pas de cloud. Pas de télémétrie. Conçu pour être compatible RGPD.',
       app_disclaimer: 'Habillage de démo : « Laisse de sécurité pour animaux » via la proximité Bluetooth (pas GPS). Conçu pour fonctionner même quand les réseaux tombent.',
@@ -1425,12 +1546,12 @@ const I18N = (function(){
       help_title: 'Aide',
       legal_title: 'À propos',
       tips_title: '📋 Guide de démo & notes terrain',
-      install_title: 'Installer VitalGuard AI',
+      install_title: 'Installer VitalGuardAI.com',
       empty_text: 'Aucune balise de démo enregistrée.<br>Ajoutez une balise BLE bon marché (porte‑clés anti‑perte) pour lancer la démo de proximité hors ligne.',
       empty_btn: '+ Ajouter une balise',
       hook_html: '<p><strong>L’interface « Pet Safety Leash » que vous voyez est une interface de démonstration neutre pour des tests d’utilisabilité au quotidien.</strong></p><p>Sous le capot, c’est un <strong>Bluetooth Swarm Network hors ligne</strong> conçu pour la réponse aux catastrophes sans aucune infrastructure.</p><p>Quand Internet et le réseau électrique tombent à zéro—incendies, inondations, ouragans—les appareils s’auto‑organisent et continuent d’opérer.</p><p>Pas de cloud. Pas d’antennes. Pas de comptes : coordination locale, relais SOS et continuité entre nœuds à proximité.</p><p><strong>Alerte précoce + maillage de sauvetage</strong>—une couche de résilience indépendante des infrastructures, déployable depuis des téléphones ordinaires.</p><div class="vg-hook-langs" dir="ltr">UI languages (7): English · 한국어 · العربية (RTL) · 日本語 · Français · 繁體中文(台灣) · Español</div>',
       hero_title: '🛡️ Cadre de survie indépendant de l’infrastructure',
-      hero_body: 'VitalGuard AI v4.3.8 est un outil de continuité hors‑ligne en fichier unique, combinant la proximité de balises Bluetooth et une logique légère sur l’appareil—conçu pour fonctionner pendant les pannes et les déploiements hors‑réseau, avec des données conservées localement (pas de rétention dans le cloud sauf export).',
+      hero_body: 'VitalGuardAI.com v4.3.8 est un outil de continuité hors‑ligne en fichier unique, combinant la proximité de balises Bluetooth et une logique légère sur l’appareil—conçu pour fonctionner pendant les pannes et les déploiements hors‑réseau, avec des données conservées localement (pas de rétention dans le cloud sauf export).',
       hero_pillars_html: '<p><strong>Cadre de survie indépendant de l’infrastructure</strong> — pour assurer la continuité pendant les pannes et les déploiements hors‑réseau.</p><p>• <strong>S&amp;R extrême (avalanche/glissement de terrain)</strong> : proximité de balises BLE pour soutenir un workflow de localisation « type radar » en mode hors‑réseau.</p><p>• <strong>Upcycling des e‑déchets (ESG &amp; ODD)</strong> : réutiliser des smartphones retraités comme nœuds de secours hors‑ligne.</p><p>• <strong>Agriculture hors‑réseau &amp; protection des actifs</strong> : patterns pratiques pour le bétail et les actifs sans couverture.</p><p>• <strong>Arabe &amp; prêt pour le monde</strong> : UI multilingue intégrée (7 langues) dont l’arabe (RTL).</p>',
       badge_offline: '100% hors ligne',
       badge_gdpr: 'RGPD‑friendly',
@@ -1447,7 +1568,7 @@ const I18N = (function(){
       install_dismiss: 'Plus tard'
     },
     'zh-TW': {
-      app_title: 'VitalGuard AI',
+      app_title: 'VitalGuardAI.com',
       app_sub: 'v4.3.8 — 救命離線 AI 示範 | McorpAI',
       app_mission: '完全離線運作。無雲端。無追蹤。以 GDPR 友善為設計原則。',
       app_disclaimer: '示範外觀：「寵物安全牽繩」— 以藍牙近距離偵測（非 GPS）。為網路中斷情境而設計。',
@@ -1457,12 +1578,12 @@ const I18N = (function(){
       help_title: '說明',
       legal_title: '關於',
       tips_title: '📋 示範指南與現場筆記',
-      install_title: '安裝 VitalGuard AI',
+      install_title: '安裝 VitalGuardAI.com',
       empty_text: '尚未註冊任何示範標籤。<br>新增便宜的 BLE 防丟鑰匙圈標籤，即可開始離線近距離示範。',
       empty_btn: '+ 新增示範標籤',
       hook_html: '<p><strong>你現在看到的「Pet Safety Leash」介面，只是一個用於日常可用性測試的中立示範外觀。</strong></p><p>在底層，它是一個為零基礎設施災害應對而設計的 <strong>離線藍牙蜂群網路（Offline Bluetooth Swarm Network）</strong>。</p><p>當網際網路與電網完全崩潰—野火、洪水、颶風—裝置會自我組織成群並持續運作。</p><p>無雲端、無基地台、無帳號：本地協作、SOS 中繼，以及鄰近節點間的連續性。</p><p><strong>早期預警 + 救命網格</strong>—可由一般手機部署的、獨立於基礎設施的韌性層。</p><div class="vg-hook-langs" dir="ltr">UI languages (7): English · 한국어 · العربية (RTL) · 日本語 · Français · 繁體中文(台灣) · Español</div>',
       hero_title: '🛡️ 救命離線 AI 示範',
-      hero_body: 'VitalGuard AI 是「AI + 藍牙近距離」的離線示範：雲端不可用時仍能運作。沒有帳號、沒有雲端同步、沒有暗中上傳。除非你選擇匯出，所有資料都只留在你的裝置上。',
+      hero_body: 'VitalGuardAI.com 是「AI + 藍牙近距離」的離線示範：雲端不可用時仍能運作。沒有帳號、沒有雲端同步、沒有暗中上傳。除非你選擇匯出，所有資料都只留在你的裝置上。',
       badge_offline: '完全離線',
       badge_gdpr: 'GDPR 友善',
       badge_ble: 'BLE 近距離 + 協作',
@@ -1478,7 +1599,7 @@ const I18N = (function(){
       install_dismiss: '稍後'
     },
     es: {
-      app_title: 'VitalGuard AI',
+      app_title: 'VitalGuardAI.com',
       app_sub: 'v4.3.8 — Marco de supervivencia independiente de la infraestructura | McorpAI',
       app_mission: 'Funciona totalmente sin conexión. Sin nube. Sin telemetría. Diseñado para ser compatible con el GDPR.',
       app_disclaimer: 'Piel de demo: “Correa de seguridad para mascotas” usando proximidad Bluetooth (no GPS). Diseñado para funcionar cuando fallan las redes.',
@@ -1488,12 +1609,12 @@ const I18N = (function(){
       help_title: 'Ayuda',
       legal_title: 'Acerca de',
       tips_title: '📋 Guía de demo y notas de campo',
-      install_title: 'Instalar VitalGuard AI',
+      install_title: 'Instalar VitalGuardAI.com',
       empty_text: 'Aún no hay etiquetas registradas.<br>Agrega una etiqueta BLE barata (buscador de llaves) para iniciar la demo de proximidad sin conexión.',
       empty_btn: '+ Añadir etiqueta',
       hook_html: '<p><strong>La interfaz de «Pet Safety Leash» que está viendo es una interfaz de demostración neutra para pruebas de usabilidad cotidianas.</strong></p><p>Bajo el capó, es una <strong>red de enjambre Bluetooth sin conexión (Offline Bluetooth Swarm Network)</strong> diseñada para respuesta a desastres sin infraestructura.</p><p>Cuando Internet y la red eléctrica colapsan a cero—incendios, inundaciones, huracanes—los dispositivos se auto‑organizan y siguen operando.</p><p>Sin nube. Sin torres celulares. Sin cuentas: coordinación local, retransmisión de SOS y continuidad entre nodos cercanos.</p><p><strong>Alerta temprana + malla que salva vidas</strong>—una capa de resiliencia independiente de la infraestructura, desplegable desde teléfonos comunes.</p><div class="vg-hook-langs" dir="ltr">UI languages (7): English · 한국어 · العربية (RTL) · 日本語 · Français · 繁體中文(台灣) · Español</div>',
       hero_title: '🛡️ Marco de supervivencia independiente de la infraestructura',
-      hero_body: 'VitalGuard AI v4.3.8 es una herramienta de continuidad en un solo archivo y sin conexión, que combina proximidad de balizas Bluetooth y lógica ligera en el dispositivo—diseñada para funcionar durante interrupciones y despliegues fuera de red, con los datos guardados en el dispositivo (sin retención en la nube salvo exportación).',
+      hero_body: 'VitalGuardAI.com v4.3.8 es una herramienta de continuidad en un solo archivo y sin conexión, que combina proximidad de balizas Bluetooth y lógica ligera en el dispositivo—diseñada para funcionar durante interrupciones y despliegues fuera de red, con los datos guardados en el dispositivo (sin retención en la nube salvo exportación).',
       hero_pillars_html: '<p><strong>Marco de supervivencia independiente de la infraestructura</strong> — para continuidad durante interrupciones y despliegues fuera de red.</p><p>• <strong>B&amp;R extremo (avalancha/deslizamiento)</strong>: proximidad de balizas BLE para apoyar un flujo de localización «tipo radar» fuera de red.</p><p>• <strong>Upcycling de e‑waste (ESG &amp; ODS)</strong>: reutilizar smartphones retirados como nodos de ayuda sin conexión.</p><p>• <strong>Agricultura fuera de red &amp; protección de activos</strong>: patrones prácticos para ganado y activos sin cobertura.</p><p>• <strong>Árabe y listo para el mundo</strong>: UI multilingüe integrada (7 idiomas), incluido árabe (RTL).</p>',
       badge_offline: '100% sin conexión',
       badge_gdpr: 'Compatible GDPR',
@@ -1541,7 +1662,7 @@ const I18N = (function(){
           <div class="tip-title">When the network fails</div>
           <div class="tip-body">
             During wildfires, landslides, tsunamis, and mass evacuations, cloud apps can fail: no signal, no power, no accounts, no payments.
-            VitalGuard AI keeps a <strong>tiny offline “brain”</strong> on the device, so the demo still runs.
+            VitalGuardAI.com keeps a <strong>tiny offline “brain”</strong> on the device, so the demo still runs.
           </div>
         </div>
 
@@ -1602,7 +1723,7 @@ const I18N = (function(){
           <div class="tip-title">네트워크가 끊기면</div>
           <div class="tip-body">
             산불·산사태·쓰나미·대규모 대피 상황에서는 신호/전력/계정/결제가 모두 불안정해질 수 있습니다.
-            VitalGuard AI는 기기 안에 <strong>작은 오프라인 두뇌</strong>를 넣어 이런 상황에서도 데모가 계속 동작하도록 설계했습니다.
+            VitalGuardAI.com는 기기 안에 <strong>작은 오프라인 두뇌</strong>를 넣어 이런 상황에서도 데모가 계속 동작하도록 설계했습니다.
           </div>
         </div>
 
@@ -1663,7 +1784,7 @@ const I18N = (function(){
           <div class="tip-title">عندما تتعطل الشبكات</div>
           <div class="tip-body">
             أثناء الحرائق والانهيارات الأرضية وأمواج تسونامي وعمليات الإجلاء الكبيرة قد تفشل تطبيقات السحابة: لا إشارة، لا طاقة، لا حسابات.
-            VitalGuard AI يحتفظ بـ <strong>عقل صغير دون اتصال</strong> داخل الجهاز ليستمر العرض.
+            VitalGuardAI.com يحتفظ بـ <strong>عقل صغير دون اتصال</strong> داخل الجهاز ليستمر العرض.
           </div>
         </div>
 
@@ -1723,7 +1844,7 @@ const I18N = (function(){
           <div class="tip-title">ネットワークが落ちると</div>
           <div class="tip-body">
             山火事・土砂災害・津波・大規模避難では、電波/電力/アカウント/課金が成立しないことがあります。
-            VitalGuard AI は端末内に <strong>小さなオフライン脳</strong> を持ち、デモを継続できます。
+            VitalGuardAI.com は端末内に <strong>小さなオフライン脳</strong> を持ち、デモを継続できます。
           </div>
         </div>
 
@@ -1784,7 +1905,7 @@ const I18N = (function(){
           <div class="tip-title">Quand le réseau tombe</div>
           <div class="tip-body">
             Incendies, glissements de terrain, tsunamis, évacuations : les applis cloud peuvent échouer (signal/paiement/comptes).
-            VitalGuard AI garde un <strong>petit “cerveau”</strong> sur l’appareil pour continuer.
+            VitalGuardAI.com garde un <strong>petit “cerveau”</strong> sur l’appareil pour continuer.
           </div>
         </div>
 
@@ -1844,7 +1965,7 @@ const I18N = (function(){
           <div class="tip-title">當網路失效</div>
           <div class="tip-body">
             山火、土石流、海嘯、大規模撤離時，雲端 App 可能失效（無訊號/無電/無帳號/無付款）。
-            VitalGuard AI 把 <strong>小型離線大腦</strong> 放在裝置內，所以示範仍能運作。
+            VitalGuardAI.com 把 <strong>小型離線大腦</strong> 放在裝置內，所以示範仍能運作。
           </div>
         </div>
 
@@ -1904,7 +2025,7 @@ const I18N = (function(){
           <div class="tip-title">Cuando falla la red</div>
           <div class="tip-body">
             Incendios, deslizamientos, tsunamis y evacuaciones: las apps en la nube pueden fallar (sin señal, sin energía, sin cuentas).
-            VitalGuard AI mantiene un <strong>pequeño “cerebro” offline</strong> en el dispositivo para seguir funcionando.
+            VitalGuardAI.com mantiene un <strong>pequeño “cerebro” offline</strong> en el dispositivo para seguir funcionando.
           </div>
         </div>
 
@@ -2007,7 +2128,7 @@ const I18N = (function(){
         <div class="tip-card info">
           <div class="tip-title">No data collection</div>
           <div class="tip-body">
-            VitalGuard AI does not send telemetry, analytics, or personal data to any server. Data stays on the device.
+            VitalGuardAI.com does not send telemetry, analytics, or personal data to any server. Data stays on the device.
             You can export/backup only by explicit user action, and you can erase everything at any time.
           </div>
         </div>
@@ -2088,7 +2209,7 @@ const I18N = (function(){
         <div class="tip-card info">
           <div class="tip-title">데이터 수집 없음</div>
           <div class="tip-body">
-            VitalGuard AI는 서버로 텔레메트리/분석/개인정보를 전송하지 않습니다. 모든 데이터는 기기에만 저장됩니다.
+            VitalGuardAI.com는 서버로 텔레메트리/분석/개인정보를 전송하지 않습니다. 모든 데이터는 기기에만 저장됩니다.
             백업/내보내기는 사용자가 버튼을 눌렀을 때만 수행되며, 언제든 전체 삭제가 가능합니다.
           </div>
         </div>
@@ -2167,7 +2288,7 @@ const I18N = (function(){
         <div class="tip-card info">
           <div class="tip-title">لا جمع للبيانات</div>
           <div class="tip-body">
-            لا يرسل VitalGuard AI أي تحليلات أو بيانات شخصية إلى خوادم. كل شيء يبقى على الجهاز.
+            لا يرسل VitalGuardAI.com أي تحليلات أو بيانات شخصية إلى خوادم. كل شيء يبقى على الجهاز.
             يمكن التصدير فقط عند ضغط المستخدم، ويمكن الحذف في أي وقت.
           </div>
         </div>
@@ -2245,7 +2366,7 @@ const I18N = (function(){
         <div class="tip-card info">
           <div class="tip-title">データ収集なし</div>
           <div class="tip-body">
-            VitalGuard AI はサーバーへテレメトリー/解析/個人情報を送信しません。データは端末内のみ。
+            VitalGuardAI.com はサーバーへテレメトリー/解析/個人情報を送信しません。データは端末内のみ。
             エクスポートはボタン操作時のみで、いつでも全消去できます。
           </div>
         </div>
@@ -2323,7 +2444,7 @@ const I18N = (function(){
         <div class="tip-card info">
           <div class="tip-title">Aucune collecte</div>
           <div class="tip-body">
-            VitalGuard AI n’envoie pas de télémétrie/analytics/données personnelles. Tout reste sur l’appareil.
+            VitalGuardAI.com n’envoie pas de télémétrie/analytics/données personnelles. Tout reste sur l’appareil.
             Export uniquement sur action explicite, suppression possible à tout moment.
           </div>
         </div>
@@ -2400,7 +2521,7 @@ const I18N = (function(){
         <div class="tip-card info">
           <div class="tip-title">不收集資料</div>
           <div class="tip-body">
-            VitalGuard AI 不會把任何分析或個資送到伺服器。資料只在本機。
+            VitalGuardAI.com 不會把任何分析或個資送到伺服器。資料只在本機。
             匯出僅在你按下按鈕時發生，且可隨時全部刪除。
           </div>
         </div>
@@ -2478,7 +2599,7 @@ const I18N = (function(){
         <div class="tip-card info">
           <div class="tip-title">Sin recopilación de datos</div>
           <div class="tip-body">
-            VitalGuard AI no envía analíticas ni datos personales a servidores. Todo queda en el dispositivo.
+            VitalGuardAI.com no envía analíticas ni datos personales a servidores. Todo queda en el dispositivo.
             Exportación solo con acción explícita, borrado disponible en cualquier momento.
           </div>
         </div>
@@ -2494,9 +2615,9 @@ const I18N = (function(){
 
     legal: {
       en: `
-        <h2 style="margin-bottom:10px">About VitalGuard AI</h2>
+        <h2 style="margin-bottom:10px">About VitalGuardAI.com</h2>
         <div class="highlight-box">
-          <p><strong>VitalGuard AI</strong> is a single‑file, offline‑only demonstration of a tiny on‑device AI engine paired with Bluetooth proximity sensing.</p>
+          <p><strong>VitalGuardAI.com</strong> is a single‑file, offline‑only demonstration of a tiny on‑device AI engine paired with Bluetooth proximity sensing.</p>
           <p style="margin-top:8px"><strong>Designed for outage conditions:</strong> no internet, no cloud, no accounts, no app store — still functional.</p>
         </div>
 
@@ -2565,9 +2686,9 @@ const I18N = (function(){
         </div>
       `,
       ko: `
-        <h2 style="margin-bottom:10px">VitalGuard AI 소개</h2>
+        <h2 style="margin-bottom:10px">VitalGuardAI.com 소개</h2>
         <div class="highlight-box">
-          <p><strong>VitalGuard AI</strong>는 “단일 HTML 파일” 안에서 동작하는 <strong>오프라인 AI 엔진 + 블루투스 근접</strong> 기술 시연입니다.</p>
+          <p><strong>VitalGuardAI.com</strong>는 “단일 HTML 파일” 안에서 동작하는 <strong>오프라인 AI 엔진 + 블루투스 근접</strong> 기술 시연입니다.</p>
           <p style="margin-top:8px"><strong>오프그리드(Off‑grid)·통신 장애(Outage) 조건</strong>—인터넷 없음, 클라우드 없음, 계정 없음, 앱스토어 없음—에서도 동작하도록 설계했습니다.</p>
         </div>
 
@@ -2636,9 +2757,9 @@ const I18N = (function(){
         </div>
       `,
       ar: `
-        <h2 style="margin-bottom:10px">حول VitalGuard AI</h2>
+        <h2 style="margin-bottom:10px">حول VitalGuardAI.com</h2>
         <div class="highlight-box">
-          <p><strong>VitalGuard AI</strong> هو عرض توضيحي داخل ملف HTML واحد لمحرك ذكاء اصطناعي صغير يعمل دون اتصال مع استشعار القرب عبر Bluetooth.</p>
+          <p><strong>VitalGuardAI.com</strong> هو عرض توضيحي داخل ملف HTML واحد لمحرك ذكاء اصطناعي صغير يعمل دون اتصال مع استشعار القرب عبر Bluetooth.</p>
           <p style="margin-top:8px"><strong>مصمم لظروف “الإغلاق/الانقطاع”:</strong> بدون إنترنت، بدون سحابة، بدون حسابات — ومع ذلك يعمل.</p>
         </div>
 
@@ -2691,9 +2812,9 @@ const I18N = (function(){
         <div class="tip-card danger"><div class="tip-title">تنبيه</div><div class="tip-body">هذا عرض تقني وليس جهازًا معتمدًا للسلامة الحرجة.</div></div>
       `,
       ja: `
-        <h2 style="margin-bottom:10px">VitalGuard AI について</h2>
+        <h2 style="margin-bottom:10px">VitalGuardAI.com について</h2>
         <div class="highlight-box">
-          <p><strong>VitalGuard AI</strong> は、1つのHTMLファイル内で動作する「小さなオフラインAIエンジン + Bluetooth近接」の技術デモです。</p>
+          <p><strong>VitalGuardAI.com</strong> は、1つのHTMLファイル内で動作する「小さなオフラインAIエンジン + Bluetooth近接」の技術デモです。</p>
           <p style="margin-top:8px"><strong>シャットダウン条件</strong>（ネットなし・クラウドなし・アカウントなし）でも動くことを目的に設計しています。</p>
         </div>
 
@@ -2740,9 +2861,9 @@ const I18N = (function(){
         <div class="tip-card danger"><div class="tip-title">免責</div><div class="tip-body">技術デモであり、生命安全の認証機器ではありません。</div></div>
       `,
       fr: `
-        <h2 style="margin-bottom:10px">À propos de VitalGuard AI</h2>
+        <h2 style="margin-bottom:10px">À propos de VitalGuardAI.com</h2>
         <div class="highlight-box">
-          <p><strong>VitalGuard AI</strong> est une démonstration “tout‑en‑un” (un seul fichier HTML) d’un petit moteur IA hors ligne couplé à la proximité Bluetooth.</p>
+          <p><strong>VitalGuardAI.com</strong> est une démonstration “tout‑en‑un” (un seul fichier HTML) d’un petit moteur IA hors ligne couplé à la proximité Bluetooth.</p>
           <p style="margin-top:8px"><strong>Conçu pour les scénarios de panne :</strong> pas d’internet, pas de cloud, pas de comptes — et pourtant fonctionnel.</p>
         </div>
 
@@ -2789,9 +2910,9 @@ const I18N = (function(){
         <div class="tip-card danger"><div class="tip-title">Avertissement</div><div class="tip-body">Démo technique, pas un dispositif certifié.</div></div>
       `,
       'zh-TW': `
-        <h2 style="margin-bottom:10px">關於 VitalGuard AI</h2>
+        <h2 style="margin-bottom:10px">關於 VitalGuardAI.com</h2>
         <div class="highlight-box">
-          <p><strong>VitalGuard AI</strong> 是單一 HTML 檔案的離線技術示範：小型 AI 引擎 + 藍牙近距離偵測。</p>
+          <p><strong>VitalGuardAI.com</strong> 是單一 HTML 檔案的離線技術示範：小型 AI 引擎 + 藍牙近距離偵測。</p>
           <p style="margin-top:8px"><strong>為「網路/電力中斷」情境而設計：</strong>沒網路、沒雲端、沒帳號也能運作。</p>
         </div>
 
@@ -2838,9 +2959,9 @@ const I18N = (function(){
         <div class="tip-card danger"><div class="tip-title">免責聲明</div><div class="tip-body">技術示範，非生命關鍵認證設備。</div></div>
       `,
       es: `
-        <h2 style="margin-bottom:10px">Acerca de VitalGuard AI</h2>
+        <h2 style="margin-bottom:10px">Acerca de VitalGuardAI.com</h2>
         <div class="highlight-box">
-          <p><strong>VitalGuard AI</strong> es una demostración en un solo archivo HTML de un pequeño motor de IA offline combinado con proximidad Bluetooth.</p>
+          <p><strong>VitalGuardAI.com</strong> es una demostración en un solo archivo HTML de un pequeño motor de IA offline combinado con proximidad Bluetooth.</p>
           <p style="margin-top:8px"><strong>Diseñado para interrupciones:</strong> sin internet, sin nube, sin cuentas — y aun así funciona.</p>
         </div>
 
@@ -5886,7 +6007,7 @@ const SOS = {
       m+='Coordinates: '+this.savedLocation.lat.toFixed(5)+', '+this.savedLocation.lon.toFixed(5)+'\n';
       m+='Map lookup: copy the coordinates manually into a trusted local/offline map app.\n';
     }
-    m+='\nSent via VitalGuard AI (mcorpai.org)\nNOT GPS — Bluetooth proximity only';
+    m+='\nSent via VitalGuardAI.com (mcorpai.org)\nNOT GPS — Bluetooth proximity only';
 
     VitalGuardCopyTextOnly(m, 'Lost pet alert');
   },
@@ -6121,7 +6242,7 @@ const Emergency = {
   },
 
   share(){
-    const text = `EMERGENCY\nName: ${this.data.name||'N/A'}\nPhone: ${this.data.phone||'N/A'}\nInfo: ${this.data.medical||''}\nSent via VitalGuard AI`;
+    const text = `EMERGENCY\nName: ${this.data.name||'N/A'}\nPhone: ${this.data.phone||'N/A'}\nInfo: ${this.data.medical||''}\nSent via VitalGuardAI.com`;
     VitalGuardCopyTextOnly(text, 'Emergency info');
   },
 
@@ -6624,7 +6745,7 @@ const Settings = {
   },
 
   async resetApp(){
-    if(!await ConfirmModal.ask('DELETE ALL VitalGuard AI DATA?',{title:'⚠ Reset',danger:true})) return;
+    if(!await ConfirmModal.ask('DELETE ALL VitalGuardAI.com DATA?',{title:'⚠ Reset',danger:true})) return;
     if(!await ConfirmModal.ask('Are you sure? This cannot be undone.',{title:'Final Confirmation',danger:true})) return;
     try{ await Security.fullWipe(); }catch(e){}
     location.reload();
@@ -6992,7 +7113,7 @@ const App = {
       }, 30000);
     }
 
-    Toast.show('VitalGuard AI v'+APP_VERSION+' ready');
+    Toast.show('VitalGuardAI.com v'+APP_VERSION+' ready');
   },
 
   initFirstRunBanner(){
@@ -7166,7 +7287,7 @@ const App = {
     // Notifications
     if(Settings.prefs.notifWanted && 'Notification' in window && Notification.permission==='granted'){
       try{
-        new Notification('VitalGuard AI: '+pet.name, {body:`${pet.zone.stable} — ~${pet.distMeters.toFixed(1)}m (approx)`});
+        new Notification('VitalGuardAI.com: '+pet.name, {body:`${pet.zone.stable} — ~${pet.distMeters.toFixed(1)}m (approx)`});
       }catch(e){}
     }
 
@@ -7374,8 +7495,8 @@ const App = {
   registerPWA(){
     const startUrl = location.href;
     const manifest = {
-      name: "VitalGuard AI v"+APP_VERSION,
-      short_name: "VitalGuard AI",
+      name: "VitalGuardAI.com v"+APP_VERSION,
+      short_name: "VitalGuardAI.com",
       start_url: startUrl,
       display: "standalone",
       background_color: "#0d1117",
@@ -8129,7 +8250,7 @@ const App = {
           <div class="tip-body">
             Use this if you experience bugs, tag confusion, or you want to hand the phone to a new owner.
             <br><br>
-            <strong>Reminder:</strong> VitalGuard AI stores data locally (IndexedDB/localStorage). No cloud sync.
+            <strong>Reminder:</strong> VitalGuardAI.com stores data locally (IndexedDB/localStorage). No cloud sync.
           </div>
         </div>
 
@@ -8869,7 +8990,7 @@ const App = {
   };
 
   /* ----------------------------- PATCH: Data import supports encrypted pack ----------------------------- */
-  // V4.3.8-END: legacy import wrapper disabled. All plain/encrypted imports are handled by VitalGuardHardenedImport with size/depth/schema limits.
+  // v4.3.8: legacy import wrapper disabled. All plain/encrypted imports are handled by VitalGuardHardenedImport with size/depth/schema limits.
 
 /* ----------------------------- V4.1 EXTRA PATCHES -----------------------------
    Goals:
@@ -10147,37 +10268,37 @@ V41UI.injectDetailAlertPrefs = function(pet){
       const self = this;
       try{
         if(typeof window.fetch === 'function'){
-          // V4.3.8-END: original API handle intentionally not exposed.
+          // v4.3.8: original API handle intentionally not exposed.
           window.fetch = function(){ self._deny('fetch'); return Promise.reject(new DOMException('VitalGuard zero-egress: fetch disabled', 'SecurityError')); };
         }
       }catch(_){}
       try{
         if(typeof window.XMLHttpRequest === 'function'){
-          // V4.3.8-END: original API handle intentionally not exposed.
+          // v4.3.8: original API handle intentionally not exposed.
           window.XMLHttpRequest = function(){ self._deny('XMLHttpRequest'); throw new DOMException('VitalGuard zero-egress: XHR disabled', 'SecurityError'); };
         }
       }catch(_){}
       try{
         if(typeof window.WebSocket === 'function'){
-          // V4.3.8-END: original API handle intentionally not exposed.
+          // v4.3.8: original API handle intentionally not exposed.
           window.WebSocket = function(){ self._deny('WebSocket'); throw new DOMException('VitalGuard zero-egress: WebSocket disabled', 'SecurityError'); };
         }
       }catch(_){}
       try{
         if(typeof window.EventSource === 'function'){
-          // V4.3.8-END: original API handle intentionally not exposed.
+          // v4.3.8: original API handle intentionally not exposed.
           window.EventSource = function(){ self._deny('EventSource'); throw new DOMException('VitalGuard zero-egress: EventSource disabled', 'SecurityError'); };
         }
       }catch(_){}
       try{
         if(navigator && typeof navigator.sendBeacon === 'function'){
-          // V4.3.8-END: original API handle intentionally not exposed.
+          // v4.3.8: original API handle intentionally not exposed.
           navigator.sendBeacon = function(){ self._deny('sendBeacon'); return false; };
         }
       }catch(_){}
       try{
         if(window.HTMLFormElement && HTMLFormElement.prototype && HTMLFormElement.prototype.submit){
-          // V4.3.8-END: original API handle intentionally not exposed.
+          // v4.3.8: original API handle intentionally not exposed.
           HTMLFormElement.prototype.submit = function(){ self._deny('form.submit'); throw new DOMException('VitalGuard zero-egress: form submit disabled', 'SecurityError'); };
         }
       }catch(_){}
@@ -10255,14 +10376,14 @@ V41UI.injectDetailAlertPrefs = function(pet){
         m+='Owner coordinates: '+Number(this.savedLocation.lat).toFixed(5)+', '+Number(this.savedLocation.lon).toFixed(5)+'\n';
         m+='Map lookup: copy coordinates manually into a trusted local/offline map app.\n';
       }
-      m+='\nSent via VitalGuard AI (mcorpai.org)\nNOT GPS — Bluetooth proximity only';
+      m+='\nSent via VitalGuardAI.com (mcorpai.org)\nNOT GPS — Bluetooth proximity only';
       copyOnly(m, 'Lost pet alert');
     };
   }catch(_){}
 
   try{
     Emergency.share = function(){
-      const text = `EMERGENCY\nName: ${this.data.name||'N/A'}\nPhone: ${this.data.phone||'N/A'}\nInfo: ${this.data.medical||''}\nSent via VitalGuard AI`;
+      const text = `EMERGENCY\nName: ${this.data.name||'N/A'}\nPhone: ${this.data.phone||'N/A'}\nInfo: ${this.data.medical||''}\nSent via VitalGuardAI.com`;
       copyOnly(text, 'Emergency info');
     };
   }catch(_){}
@@ -10295,7 +10416,7 @@ V41UI.injectDetailAlertPrefs = function(pet){
         }
         if(Settings.prefs.tts && prefs.tts) VoiceAnnouncer.speak(`${pet.name||'Pet'} ${zone.toLowerCase()}`);
         if(Settings.prefs.notifWanted && 'Notification' in window && Notification.permission==='granted'){
-          try{ new Notification('VitalGuard AI: '+(pet.name||'Pet'), {body:`${zone} — ~${Number(pet.distMeters||0).toFixed(1)}m (approx)`}); }catch(_){}
+          try{ new Notification('VitalGuardAI.com: '+(pet.name||'Pet'), {body:`${zone} — ~${Number(pet.distMeters||0).toFixed(1)}m (approx)`}); }catch(_){}
         }
       }catch(e){ try{ console.warn('V4.3.8 hardened triggerAlert failed:', e); }catch(_){} }
     };
@@ -10490,7 +10611,7 @@ V41UI.injectDetailAlertPrefs = function(pet){
 })();
 
 
-/* ----------------------------- V4.3.8-END FINAL AUDIT HARDENING ----------------------------- */
+/* ----------------------------- v4.3.8 FINAL AUDIT HARDENING ----------------------------- */
 (function(){
   'use strict';
   const AuditHardening = window.VitalGuardAuditHardening = {
@@ -10522,8 +10643,8 @@ V41UI.injectDetailAlertPrefs = function(pet){
   try{ DataManager.handleImport=window.VitalGuardHardenedImport; }catch(_){}
 
   function redactedSnapshot(raw){ let s; try{s=JSON.parse(JSON.stringify(raw||{}));}catch(_){s={};} if(s.env){s.env.ua='redacted';s.env.userAgent='redacted';} if(s.focusPetId) s.focusPetId='redacted'; if(Array.isArray(s.pets)) s.pets=s.pets.slice(0,20).map((p,i)=>({slot:i+1,zone:p.zone,rssi:p.rssi,dist:p.dist,confidence:p.confidence,lastSeenAgoMs:p.lastSeenAgoMs,signatureStrength:p.signatureStrength,ambiguousCount:p.ambiguousCount,batterySuspect:!!p.batterySuspect})); if(Array.isArray(s.errors)) s.errors=s.errors.slice(-12).map(e=>({t:Sanitizer.text(e&&e.t,40),kind:Sanitizer.text(e&&e.kind,40),msg:Sanitizer.text(e&&e.msg,180),where:'redacted'})); s.auditHardening=AuditHardening; return s; }
-  try{ const rawSnapshot=Diag.snapshot.bind(Diag); Diag.snapshot=function(){return redactedSnapshot(rawSnapshot());}; Diag.copy=function(){return VitalGuardCopyOnly(safeJson(this.snapshot()),'Redacted diagnostics');}; Diag.download=function(){ const blob=new Blob([safeJson(this.snapshot())],{type:'application/json'}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download='vitalguard-ai-v4.3.8-END-diagnostics-redacted-'+Date.now()+'.json'; a.click(); setTimeout(()=>URL.revokeObjectURL(url),1200); Toast.show('Redacted diagnostics downloaded'); };
-    Diag.render=function(){ const snap=this.snapshot(); const errs=(snap.errors||[]).slice(-12).reverse(); $('diag-body').innerHTML=`<div class="tip-card info"><div class="tip-title">Diagnostics Snapshot (V4.3.8-END Redacted)</div><div class="tip-body">Local-only diagnostics. Pet names, rescue IDs, focus IDs, user-agent, and error locations are redacted by default.</div></div><div style="display:flex;gap:8px;margin:10px 0"><button class="btn btn-secondary btn-sm" style="flex:1" data-vg-onclick="Diag.copy()">📋 Copy Redacted</button><button class="btn btn-secondary btn-sm" style="flex:1" data-vg-onclick="Diag.download()">⬇️ Download Redacted</button></div>${Capabilities.renderHTML()}<div class="card" style="margin-top:10px"><div class="section-title" style="font-size:.8rem;margin:0 0 8px">Recent Errors (redacted)</div>${errs.length?errs.map(e=>`<div style="border-top:1px solid var(--border-color);padding:10px 0;font-size:.72rem;color:var(--text-secondary);line-height:1.45"><div style="color:var(--text-muted)">${Sanitizer.escapeHTML(e.t)} · <span class="kbd">${Sanitizer.escapeHTML(e.kind)}</span></div><div><strong>${Sanitizer.escapeHTML(e.msg)}</strong></div></div>`).join(''):`<div style="font-size:.75rem;color:var(--text-muted);padding:6px 0">No errors captured.</div>`}<button class="btn btn-secondary btn-sm" style="margin-top:10px;width:100%" data-vg-onclick="ErrorShield.clear()">Clear Error Log</button></div><pre id="diag-pre" style="white-space:pre-wrap;background:var(--bg-elevated);padding:12px;border-radius:12px;border:1px solid var(--border-color);font-size:.72rem;color:var(--text-secondary);line-height:1.4;margin-top:10px">${Sanitizer.escapeHTML(safeJson(snap))}</pre><div class="tip-card warn"><div class="tip-title">Privacy Note</div><div class="tip-body">This snapshot stays local unless you manually export it. Network egress APIs are disabled and diagnostics are redacted.</div></div>`; };
+  try{ const rawSnapshot=Diag.snapshot.bind(Diag); Diag.snapshot=function(){return redactedSnapshot(rawSnapshot());}; Diag.copy=function(){return VitalGuardCopyOnly(safeJson(this.snapshot()),'Redacted diagnostics');}; Diag.download=function(){ const blob=new Blob([safeJson(this.snapshot())],{type:'application/json'}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download='vitalguard-ai-v4.3.8-diagnostics-redacted-'+Date.now()+'.json'; a.click(); setTimeout(()=>URL.revokeObjectURL(url),1200); Toast.show('Redacted diagnostics downloaded'); };
+    Diag.render=function(){ const snap=this.snapshot(); const errs=(snap.errors||[]).slice(-12).reverse(); $('diag-body').innerHTML=`<div class="tip-card info"><div class="tip-title">Diagnostics Snapshot (v4.3.8 Redacted)</div><div class="tip-body">Local-only diagnostics. Pet names, rescue IDs, focus IDs, user-agent, and error locations are redacted by default.</div></div><div style="display:flex;gap:8px;margin:10px 0"><button class="btn btn-secondary btn-sm" style="flex:1" data-vg-onclick="Diag.copy()">📋 Copy Redacted</button><button class="btn btn-secondary btn-sm" style="flex:1" data-vg-onclick="Diag.download()">⬇️ Download Redacted</button></div>${Capabilities.renderHTML()}<div class="card" style="margin-top:10px"><div class="section-title" style="font-size:.8rem;margin:0 0 8px">Recent Errors (redacted)</div>${errs.length?errs.map(e=>`<div style="border-top:1px solid var(--border-color);padding:10px 0;font-size:.72rem;color:var(--text-secondary);line-height:1.45"><div style="color:var(--text-muted)">${Sanitizer.escapeHTML(e.t)} · <span class="kbd">${Sanitizer.escapeHTML(e.kind)}</span></div><div><strong>${Sanitizer.escapeHTML(e.msg)}</strong></div></div>`).join(''):`<div style="font-size:.75rem;color:var(--text-muted);padding:6px 0">No errors captured.</div>`}<button class="btn btn-secondary btn-sm" style="margin-top:10px;width:100%" data-vg-onclick="ErrorShield.clear()">Clear Error Log</button></div><pre id="diag-pre" style="white-space:pre-wrap;background:var(--bg-elevated);padding:12px;border-radius:12px;border:1px solid var(--border-color);font-size:.72rem;color:var(--text-secondary);line-height:1.4;margin-top:10px">${Sanitizer.escapeHTML(safeJson(snap))}</pre><div class="tip-card warn"><div class="tip-title">Privacy Note</div><div class="tip-body">This snapshot stays local unless you manually export it. Network egress APIs are disabled and diagnostics are redacted.</div></div>`; };
   }catch(_){}
 })();
 
@@ -10553,7 +10674,7 @@ V41UI.injectDetailAlertPrefs = function(pet){
   }catch(e){ try{ console.error('[VitalGuard] guarded bootstrap failed:', e); }catch(_){} }
 })();
 
-/* --- END OF VITALGUARD AI v4.3.8 ----------------------------------------------- */
+/* --- END OF VitalGuardAI.com v4.3.8 ----------------------------------------------- */
 
 </script>
 </body>

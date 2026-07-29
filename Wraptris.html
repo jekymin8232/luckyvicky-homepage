@@ -1,0 +1,1081 @@
+<!-- ============ Wraptris V1.4 (블록 B) · Offline AI SEO · Updated 2026-07-28 ============ -->
+<style>
+  #wraptris-app{
+    --wt-text:#e2e8f0; --wt-dim:#94a3b8; --wt-panel:#0f1f38;
+    --wt-line:rgba(255,255,255,.07); --wt-accent:#22d3ee; --wt-warm:#fb7185; --wt-green:#4ade80;
+    max-width:760px; margin:28px auto; padding:0 16px;
+    font-family:"Segoe UI",system-ui,-apple-system,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+    color:var(--wt-text); -webkit-font-smoothing:antialiased;
+  }
+  #wraptris-app *{box-sizing:border-box;}
+  #wraptris-app .wt-shell{display:flex; gap:18px; align-items:flex-start; justify-content:center; flex-wrap:wrap;}
+  #wraptris-app .wt-stage{flex:0 0 auto;}
+  #wraptris-app #wt-canvas{
+    display:block; width:300px; max-width:88vw; height:auto;
+    background:#0b1220; border-radius:14px; cursor:crosshair; touch-action:none; outline:none;
+    box-shadow:0 10px 40px rgba(0,0,0,.45), inset 0 0 0 1px rgba(255,255,255,.05);
+  }
+  #wraptris-app #wt-canvas:focus{box-shadow:0 10px 40px rgba(0,0,0,.45), 0 0 0 2px var(--wt-accent);}
+  #wraptris-app .wt-hud{flex:1 1 220px; min-width:200px; max-width:300px;}
+  #wraptris-app .wt-title{
+    margin:0 0 12px; font-size:26px; font-weight:800; letter-spacing:2px; line-height:1;
+    background:linear-gradient(90deg,#22d3ee,#4ade80); -webkit-background-clip:text; background-clip:text;
+    color:transparent; -webkit-text-fill-color:transparent;
+  }
+  #wraptris-app .wt-title .wt-sub{
+    display:block; margin-top:5px; font-size:11px; letter-spacing:3px; font-weight:600;
+    color:var(--wt-dim); -webkit-text-fill-color:var(--wt-dim);
+  }
+  #wraptris-app .wt-title .wt-upd{
+    display:inline-block; margin-top:6px; padding:2px 8px; font-size:10px; letter-spacing:1px;
+    font-weight:600; color:var(--wt-green); -webkit-text-fill-color:var(--wt-green);
+    border:1px solid rgba(74,222,128,.35); border-radius:20px;
+  }
+  #wraptris-app .wt-row{display:flex; gap:10px; margin-bottom:12px;}
+  #wraptris-app .wt-mini{flex:1; background:var(--wt-panel); border:1px solid var(--wt-line); border-radius:10px; padding:8px; text-align:center;}
+  #wraptris-app .wt-cap{display:block; font-size:10px; letter-spacing:2px; color:var(--wt-dim); margin-bottom:6px;}
+  #wraptris-app .wt-mini canvas{display:block; margin:0 auto; max-width:100%; height:auto;}
+  #wraptris-app .wt-card{background:var(--wt-panel); border:1px solid var(--wt-line); border-radius:10px; padding:10px 12px; margin-bottom:12px;}
+  #wraptris-app .wt-line{display:flex; justify-content:space-between; align-items:center; font-size:13px; padding:3px 0; color:var(--wt-dim);}
+  #wraptris-app .wt-line b{color:var(--wt-text); font-variant-numeric:tabular-nums; font-size:14px;}
+  #wraptris-app .wt-climate .wt-line span{font-size:12px;}
+  #wraptris-app .wt-bar{height:6px; border-radius:4px; background:rgba(255,255,255,.08); overflow:hidden; margin:4px 0 8px;}
+  #wraptris-app .wt-bar i{display:block; height:100%; width:0%; border-radius:4px; background:linear-gradient(90deg,#4ade80,#facc15,#fb7185); transition:width .4s ease;}
+  #wraptris-app .wt-controls{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px;}
+  #wraptris-app .wt-btn{
+    flex:1; min-width:80px; padding:10px; border:1px solid var(--wt-line); border-radius:10px;
+    background:#152844; color:var(--wt-text); font-size:13px; font-weight:700; cursor:pointer; transition:.15s;
+  }
+  #wraptris-app .wt-btn:hover{background:#1c3357; transform:translateY(-1px);}
+  #wraptris-app .wt-btn:active{transform:translateY(0);}
+  #wraptris-app .wt-btn.wt-on{background:linear-gradient(135deg,#0891b2,#22d3ee); border-color:transparent; color:#04141c;}
+  #wraptris-app .wt-primary{background:linear-gradient(135deg,#0891b2,#22d3ee); border-color:transparent; color:#04141c;}
+  #wraptris-app .wt-primary:hover{background:linear-gradient(135deg,#0aa3c9,#3bdcf0);}
+  #wraptris-app .wt-aicard{border-color:rgba(34,211,238,.30);}
+  #wraptris-app .wt-aitext{font-size:12px; color:var(--wt-text); line-height:1.6; margin-top:4px;}
+  #wraptris-app .wt-aitop{margin-top:8px; padding-top:8px; border-top:1px dashed rgba(34,211,238,.25);}
+  #wraptris-app .wt-aitop .r{
+    font-size:11px; color:var(--wt-text); padding:3px 0; line-height:1.5;
+    font-family:ui-monospace,Consolas,monospace;
+  }
+  #wraptris-app .wt-aitop .r b{color:var(--wt-accent); font-weight:700;}
+  #wraptris-app .wt-aitop .r span{display:block; color:var(--wt-dim); font-size:10px; padding-left:22px;}
+  #wraptris-app .wt-aistat{font-size:11px;}
+  #wraptris-app .wt-aistat b{font-size:12px;}
+  #wraptris-app .wt-aiwhy{
+    font-size:10px; color:var(--wt-accent); margin-top:6px; padding-top:6px;
+    border-top:1px dashed rgba(34,211,238,.25); font-family:ui-monospace,Consolas,monospace;
+  }
+  #wraptris-app .wt-pad{display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-bottom:12px;}
+  #wraptris-app .wt-pad-btn{
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    padding:12px 0 8px; border:1px solid var(--wt-line); border-radius:10px;
+    background:#13243f; color:var(--wt-text); font-size:20px; line-height:1; cursor:pointer;
+    user-select:none; -webkit-user-select:none; touch-action:manipulation; transition:.1s;
+  }
+  #wraptris-app .wt-pad-btn small{font-size:9px; letter-spacing:1px; color:var(--wt-dim); margin-top:4px;}
+  #wraptris-app .wt-pad-btn:hover{background:#1c3357;}
+  #wraptris-app .wt-pad-btn:active{background:var(--wt-accent); color:#04141c; transform:scale(.95);}
+  #wraptris-app .wt-pad-btn:active small{color:#04141c;}
+  #wraptris-app .wt-help{font-size:12px; color:var(--wt-dim);}
+  #wraptris-app .wt-help summary{cursor:pointer; padding:8px 0; font-weight:600; color:var(--wt-text);}
+  #wraptris-app .wt-help ul{margin:6px 0 0; padding-left:18px; line-height:1.7;}
+  #wraptris-app .wt-help b{color:var(--wt-text);}
+  #wraptris-app .wt-help em{color:var(--wt-accent); font-style:normal;}
+
+  /* offline AI 콘텐츠 허브 (정적 SEO 본문) */
+  .wt-about{
+    max-width:760px; margin:26px auto 0; padding:22px; line-height:1.8; font-size:14px;
+    background:#0f1f38; border:1px solid rgba(255,255,255,.07); border-radius:14px; color:#94a3b8;
+    font-family:"Segoe UI",system-ui,-apple-system,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  }
+  .wt-about h2{margin:0 0 4px; font-size:20px; color:#e2e8f0;}
+  .wt-about .wt-about-date{display:block; font-size:11px; color:#4ade80; margin-bottom:12px;}
+  .wt-about h3{margin:20px 0 6px; font-size:16px; color:#e2e8f0;}
+  .wt-about p{margin:0 0 10px;}
+  .wt-about ul{margin:0 0 10px; padding-left:20px;}
+  .wt-about li{margin-bottom:5px;}
+  .wt-about strong{color:#cbd5e1;}
+  .wt-about a{color:#22d3ee; text-decoration:none;}
+  .wt-about a:hover{text-decoration:underline;}
+  .wt-about code{font-family:ui-monospace,Consolas,monospace; font-size:12px; color:#22d3ee; background:rgba(34,211,238,.08); padding:1px 5px; border-radius:4px;}
+  .wt-about .wt-def{
+    border-left:3px solid #22d3ee; padding:10px 14px; margin:10px 0 14px;
+    background:rgba(34,211,238,.05); border-radius:0 8px 8px 0; color:#cbd5e1;
+  }
+
+  @media (max-width:560px){
+    #wraptris-app .wt-hud{max-width:100%; flex-basis:100%;}
+  }
+</style>
+
+<!-- 게임 컨테이너 (JS가 내부를 채웁니다) -->
+<section id="wraptris-app" aria-label="Wraptris offline AI puzzle game"></section>
+
+<!-- ===== offline AI 콘텐츠 허브: 검색엔진·AI Overview가 읽는 정적 본문 — 지우지 마세요 ===== -->
+<article class="wt-about">
+  <h2>What is offline AI? A playable answer</h2>
+  <span class="wt-about-date">Last updated: 28 July 2026 (v1.4) · By <a href="https://mcorpai.org">M-Corp Ethical AI</a></span>
+
+  <div class="wt-def">
+    <strong>Offline AI</strong> (also called on-device AI or local AI) is artificial
+    intelligence that runs entirely on the user's own device — with no cloud servers, no
+    internet connection, and no data transmission. Because every computation stays local,
+    offline AI protects privacy by design and keeps working in disconnected or
+    low-resource environments.
+  </div>
+
+  <p>Most pages can only <em>describe</em> offline AI. This page lets you <strong>run
+  one</strong>. The game above, <strong>Wraptris</strong>, contains a complete offline AI:
+  press <strong>🤖 AI Hint</strong> and it evaluates every possible move directly in your
+  browser, ranks its top-3 candidates with visible scores, and explains its reasoning —
+  while your device stays fully disconnected from any server.</p>
+
+  <h3>Why offline AI matters</h3>
+  <p>Cloud AI has two structural risks: your data leaves your device, and the AI stops
+  working the moment connectivity does. Offline AI removes both.</p>
+  <ul>
+    <li><strong>Privacy by design</strong> — nothing is transmitted, so there is nothing to
+    leak, sell, or surveil.</li>
+    <li><strong>Works anywhere</strong> — during disasters, in refugee camps, in rural
+    clinics, or wherever the internet is unavailable or unsafe.</li>
+    <li><strong>No legal exposure</strong> — serverless design means no data controller
+    obligations, which is why NGOs and humanitarian organizations can adopt it.</li>
+    <li><strong>Inspectable</strong> — when the AI is local and open, anyone can audit
+    exactly what it does.</li>
+  </ul>
+
+  <h3>How this game proves it</h3>
+  <p>Wraptris is built from a single block of vanilla JavaScript with zero external
+  libraries. Its AI is a transparent linear heuristic — the exact formula is printed on
+  screen: <code>score = −0.51·height + 0.76·lines − 0.36·holes − 0.18·bumpiness</code>.
+  Load the page once, then disconnect from the internet entirely: the game and its AI keep
+  working. That is offline AI, demonstrated rather than claimed.</p>
+
+  <h3>From a toy to the field: VitalGuard</h3>
+  <p>This game is a small showcase of the engineering philosophy behind our main work.
+  <a href="https://mcorpai.org"><strong>M-Corp Ethical AI</strong></a> builds
+  <a href="https://vitalguardai.com">offline AI tools such as VitalGuard</a> — a
+  serverless, explainable AI designed for humanitarian settings where connectivity,
+  electricity, and legal certainty cannot be assumed. The same principles apply at every
+  scale: run locally, collect nothing, explain everything.</p>
+
+  <h3>Offline AI — frequently asked questions</h3>
+  <p><strong>What is offline AI in simple terms?</strong> AI that lives on your device
+  instead of in the cloud. It answers, decides, or assists without sending anything over
+  the internet.</p>
+  <p><strong>Is offline AI less capable than cloud AI?</strong> It is differently scoped.
+  For focused tasks — evaluation, classification, decision support — a small local model
+  can be fast, fully private, and completely auditable, which cloud AI cannot guarantee.</p>
+  <p><strong>Is this game really an offline AI example?</strong> Yes. After the page loads,
+  every AI computation happens in your browser. There are no API calls, no telemetry, and
+  no external libraries.</p>
+  <p><strong>Is the AI a black box?</strong> No. Its weights are published on screen, its
+  top-3 candidate moves are shown with scores, and it reports how many placements it
+  evaluated for every decision.</p>
+  <p><strong>Does anything leave my device?</strong> No. Your best score is stored only in
+  your own browser. There is no tracking of any kind.</p>
+</article>
+
+<script>
+(() => {
+  if (window.__wraptrisMounted) return;
+
+  const boot = () => {
+    if (window.__wraptrisMounted) return;
+    window.__wraptrisMounted = true;
+
+    // ============================================================
+    // Wraptris — Climate Edition V1.4 (Vanilla JS, zero dependency)
+    // by M-Corp Ethical AI / mcorpai.org
+    // V1.4 (2026-07-28): "Offline AI" search optimization layer.
+    //   Google-policy-aligned SEO: topical authority content,
+    //   FAQPage + Article + BreadcrumbList + DefinedTerm JSON-LD,
+    //   entity linking (Organization.knowsAbout / sameAs), AEO-style
+    //   direct answers. Game engine unchanged from tested V1.3.
+    // ============================================================
+
+    const UPDATED = '2026-07-28';
+
+    const COLS = 10, ROWS = 20, CELL = 30;
+    const START_SPEED = 700, SPEED_FACTOR = 0.82, MIN_SPEED = 70;
+    const LEVEL_UP_EVERY = 10, GOAL_PER_STAGE = 30;
+
+    const C_START = 1.5, C_END = 3.0, C_STEP = 0.1;
+    const C_STEP_MS = 9000, C_DELAY_PER_LINE = 2600;
+    const C_STEPS = Math.round((C_END - C_START) / C_STEP);
+
+    const FAST_DROP_MULT = 0.22;
+    const LS_HISCORE = 'wraptris.hiscore', LS_MUTE = 'wraptris.muted';
+
+    // ---------- Transparent AI (white-box heuristic; fully explainable) ----------
+    const AI_W = { height: -0.510066, lines: 0.760666, holes: -0.356630, bump: -0.184483 };
+    const AI_STEP_MS = 170;
+    const AI_TOP_N = 3;
+    const DEMO_MAX_TRIES = 16;
+
+    // ---------- SEO (V1.4: offline-AI entity + topical authority layer) ----------
+    function injectSEO(){
+      try {
+        const SITE = 'https://mcorpai.org';
+        const PAGE = SITE + '/wraptris';
+        const DESC = 'Play Wraptris, a free offline AI puzzle game by M-Corp Ethical AI. '
+          + 'A transparent offline AI runs 100% in your browser \u2014 no servers, no data collection \u2014 '
+          + 'and shows exactly how it thinks. Clear lines to cut carbon before the 3.0\u00B0C tipping point.';
+        const setMeta = (attr, key, val) => {
+          let el = document.head.querySelector(`meta[${attr}="${key}"]`);
+          if (!el){ el = document.createElement('meta'); el.setAttribute(attr, key); document.head.appendChild(el); }
+          el.setAttribute('content', val);
+        };
+        if (!document.title || /^(index|home|untitled)?$/i.test(document.title.trim()))
+          document.title = 'Wraptris \u2014 Offline AI Puzzle Game (Transparent, Private, Free) | M-Corp Ethical AI';
+        setMeta('name','description',DESC);
+        setMeta('name','keywords','offline AI, offline AI game, offline AI example, what is offline AI, on-device AI, local AI, browser AI, serverless AI, private AI, transparent AI, explainable AI, XAI, Wraptris, climate puzzle game, M-Corp Ethical AI, VitalGuard, mcorpai, zero dependency, vanilla javascript');
+        setMeta('name','author','M-Corp Ethical AI (Morgan J.)');
+        setMeta('name','theme-color','#0a1628');
+        setMeta('name','robots','index, follow, max-image-preview:large');
+        setMeta('property','og:type','website');
+        setMeta('property','og:site_name','M-Corp Ethical AI');
+        setMeta('property','og:title','Wraptris \u2014 Offline AI Puzzle Game (Transparent, Private, Free)');
+        setMeta('property','og:description',DESC);
+        setMeta('property','og:url',PAGE);
+        setMeta('name','twitter:card','summary_large_image');
+        setMeta('name','twitter:title','Wraptris \u2014 Offline AI Puzzle Game');
+        setMeta('name','twitter:description',DESC);
+        let link = document.head.querySelector('link[rel="canonical"]');
+        if (!link){ link = document.createElement('link'); link.setAttribute('rel','canonical'); document.head.appendChild(link); }
+        link.setAttribute('href', PAGE);
+        if (!document.getElementById('wraptris-jsonld')){
+          const ld = document.createElement('script');
+          ld.type = 'application/ld+json'; ld.id = 'wraptris-jsonld';
+          ld.textContent = JSON.stringify([
+            {
+              "@context":"https://schema.org","@type":"VideoGame",
+              "name":"Wraptris","alternateName":"Wraptris Climate Edition",
+              "url":PAGE,"description":DESC,"dateModified":UPDATED,
+              "genre":["Puzzle","Arcade","Educational"],
+              "gamePlatform":"Web Browser","applicationCategory":"Game",
+              "operatingSystem":"Any (HTML5 browser)","inLanguage":"en",
+              "isAccessibleForFree":true,
+              "offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},
+              "keywords":"offline AI, transparent AI, explainable AI, climate game",
+              "author":{"@type":"Organization","name":"M-Corp Ethical AI","url":SITE},
+              "publisher":{"@type":"Organization","name":"M-Corp Ethical AI","url":SITE}
+            },
+            {
+              "@context":"https://schema.org","@type":"Organization",
+              "name":"M-Corp Ethical AI","url":SITE,"email":"contact@mcorpai.org",
+              "description":"Builder of VitalGuard AI and offline AI tools \u2014 offline-first, privacy-respecting, explainable ethical AI that runs without servers or data collection.",
+              "knowsAbout":["Offline AI","On-device AI","Explainable AI","Privacy-preserving AI","Serverless AI","Humanitarian technology"],
+              "sameAs":["https://vitalguardai.com"]
+            },
+            {
+              "@context":"https://schema.org","@type":"WebSite",
+              "name":"M-Corp Ethical AI","url":SITE,
+              "potentialAction":{"@type":"SearchAction","target":SITE+"/?s={search_term_string}","query-input":"required name=search_term_string"}
+            },
+            {
+              "@context":"https://schema.org","@type":"BreadcrumbList",
+              "itemListElement":[
+                {"@type":"ListItem","position":1,"name":"M-Corp Ethical AI \u2014 Offline AI","item":SITE},
+                {"@type":"ListItem","position":2,"name":"Wraptris \u2014 Offline AI Puzzle Game","item":PAGE}
+              ]
+            },
+            {
+              "@context":"https://schema.org","@type":"DefinedTerm",
+              "name":"Offline AI",
+              "description":"Offline AI (also called on-device AI or local AI) is artificial intelligence that runs entirely on the user's own device \u2014 with no cloud servers, no internet connection, and no data transmission. Offline AI protects privacy by design, works in disconnected or low-resource environments, and can be fully inspected because computation happens locally.",
+              "url":SITE
+            },
+            {
+              "@context":"https://schema.org","@type":"Article",
+              "headline":"What is offline AI? A playable demonstration",
+              "description":"Wraptris demonstrates offline AI in practice: a transparent, explainable AI that runs 100% in the browser with zero servers and zero data collection.",
+              "datePublished":"2026-06-27","dateModified":UPDATED,"inLanguage":"en",
+              "author":{"@type":"Organization","name":"M-Corp Ethical AI","url":SITE},
+              "publisher":{"@type":"Organization","name":"M-Corp Ethical AI","url":SITE},
+              "mainEntityOfPage":PAGE,
+              "about":[{"@type":"Thing","name":"Offline AI"},{"@type":"Thing","name":"Explainable AI"}]
+            },
+            {
+              "@context":"https://schema.org","@type":"FAQPage",
+              "mainEntity":[
+                {"@type":"Question","name":"What is offline AI?",
+                 "acceptedAnswer":{"@type":"Answer","text":"Offline AI is artificial intelligence that runs entirely on your own device, with no cloud servers and no internet connection required. Because all computation stays local, offline AI protects privacy by design and keeps working in disconnected or low-resource environments. Wraptris is a playable example: its AI coach evaluates every move directly in your browser."}},
+                {"@type":"Question","name":"Why does offline AI matter?",
+                 "acceptedAnswer":{"@type":"Answer","text":"Offline AI removes the two biggest risks of cloud AI: data exposure and connectivity dependence. Nothing leaves the device, so there is nothing to leak, subpoena, or surveil; and the AI keeps working during disasters, in remote regions, or wherever the internet is unavailable or unsafe. That is why M-Corp Ethical AI builds offline AI tools such as VitalGuard."}},
+                {"@type":"Question","name":"Is Wraptris a real example of offline AI?",
+                 "acceptedAnswer":{"@type":"Answer","text":"Yes. Once the page loads, the Wraptris AI runs 100% locally: it simulates every candidate placement, scores them with a published formula, and explains its choice \u2014 all inside your browser, with zero external libraries, zero API calls, and zero data collection."}},
+                {"@type":"Question","name":"Is the Wraptris AI a black box?",
+                 "acceptedAnswer":{"@type":"Answer","text":"No. It is a fully transparent linear heuristic. The exact weights are printed on screen, its top-3 candidate moves are ranked with visible scores, and every suggestion is explained in plain numbers \u2014 the same explainable-AI philosophy behind VitalGuard AI."}},
+                {"@type":"Question","name":"Is Wraptris free and private?",
+                 "acceptedAnswer":{"@type":"Answer","text":"Completely. No install, no account, no tracking. Your best score is saved only in your own browser and never leaves your device."}}
+              ]
+            }
+          ]);
+          document.head.appendChild(ld);
+        }
+      } catch(e){}
+    }
+    injectSEO();
+
+    // ---------- Mount ----------
+    if (!document.body){ document.documentElement.appendChild(document.createElement('body')); }
+    let app = document.getElementById('wraptris-app');
+    if (!app){ app = document.createElement('section'); app.id = 'wraptris-app'; document.body.appendChild(app); }
+
+    app.innerHTML = `
+      <div class="wt-shell" role="application" aria-label="Wraptris offline AI puzzle game">
+        <div class="wt-stage">
+          <canvas id="wt-canvas" width="${COLS*CELL}" height="${ROWS*CELL}" aria-label="Game board" tabindex="0"></canvas>
+        </div>
+        <aside class="wt-hud" aria-label="Game status">
+          <h2 class="wt-title">WRAPTRIS<span class="wt-sub">OFFLINE AI · CLIMATE EDITION</span><span class="wt-upd">Updated ${UPDATED} · v1.4</span></h2>
+          <div class="wt-row">
+            <div class="wt-mini"><span class="wt-cap">HOLD</span><canvas id="wt-hold" width="${4*22}" height="${4*22}"></canvas></div>
+            <div class="wt-mini"><span class="wt-cap">NEXT</span><canvas id="wt-next" width="${4*22}" height="${3*3*22}"></canvas></div>
+          </div>
+          <div class="wt-card">
+            <div class="wt-line"><span>Score</span><b id="wt-score">0</b></div>
+            <div class="wt-line"><span>Best</span><b id="wt-best">0</b></div>
+            <div class="wt-line"><span>Lines</span><b id="wt-lines">0</b></div>
+            <div class="wt-line"><span>Level</span><b id="wt-level">1</b></div>
+            <div class="wt-line"><span>Combo</span><b id="wt-combo">0</b></div>
+          </div>
+          <div class="wt-card wt-climate">
+            <div class="wt-line"><span>🌍 Global Temp</span><b id="wt-temp">1.5°C</b></div>
+            <div class="wt-bar" aria-hidden="true"><i id="wt-tempbar"></i></div>
+            <div class="wt-line"><span>Tipping point in</span><b id="wt-ctimer">--:--</b></div>
+            <div class="wt-line"><span>CO₂ cut</span><b id="wt-co2">0 t</b></div>
+            <div class="wt-line"><span>Milestone</span><b id="wt-goal">0 / ${GOAL_PER_STAGE}</b></div>
+          </div>
+          <div class="wt-controls">
+            <button id="wt-play" class="wt-btn wt-primary" type="button">▶ Play</button>
+            <button id="wt-pause" class="wt-btn" type="button">⏸ Pause</button>
+            <button id="wt-mute" class="wt-btn" type="button">🔊 Sound</button>
+          </div>
+          <div class="wt-controls">
+            <button id="wt-ai" class="wt-btn" type="button" aria-pressed="false">🤖 AI Hint</button>
+            <button id="wt-demo" class="wt-btn" type="button" aria-pressed="false">🎬 AI Demo</button>
+          </div>
+          <div class="wt-card wt-aicard" id="wt-aicard" hidden>
+            <span class="wt-cap">OFFLINE AI COACH · WHITE-BOX · 0 SERVERS</span>
+            <div id="wt-aitext" class="wt-aitext">—</div>
+            <div id="wt-aitop" class="wt-aitop" aria-label="AI top candidates"></div>
+            <div class="wt-line wt-aistat"><span>Decision margin (#1 vs #2)</span><b id="wt-aimargin">—</b></div>
+            <div class="wt-line wt-aistat"><span>You vs AI agreement</span><b id="wt-aimatch">—</b></div>
+            <div id="wt-aiwhy" class="wt-aiwhy">score = −0.51·height + 0.76·lines − 0.36·holes − 0.18·bump</div>
+          </div>
+          <div class="wt-pad" aria-label="Game controls">
+            <button id="wt-left"    class="wt-pad-btn" type="button" aria-label="Move left">◀<small>MOVE</small></button>
+            <button id="wt-rotate"  class="wt-pad-btn" type="button" aria-label="Rotate">⟳<small>ROTATE</small></button>
+            <button id="wt-right"   class="wt-pad-btn" type="button" aria-label="Move right">▶<small>MOVE</small></button>
+            <button id="wt-soft"    class="wt-pad-btn" type="button" aria-label="Soft drop (hold)">⇩<small>SOFT</small></button>
+            <button id="wt-hard"    class="wt-pad-btn" type="button" aria-label="Hard drop">⤓<small>HARD</small></button>
+            <button id="wt-holdbtn" class="wt-pad-btn" type="button" aria-label="Hold">⇄<small>HOLD</small></button>
+          </div>
+          <details class="wt-help">
+            <summary>How to play</summary>
+            <ul>
+              <li><b>Mouse move</b> — slide the piece left / right</li>
+              <li><b>Left click</b> — rotate 90° <em>(rotate only — never drops)</em></li>
+              <li><b>Soft button (hold)</b> or <b>↓</b> — fast drop</li>
+              <li><b>Hard button</b> or <b>Space</b> — instant drop</li>
+              <li><b>Hold button</b>, <b>C</b>, or <b>wheel up</b> — hold piece</li>
+              <li><b>🤖 AI Hint</b> — an offline AI ranks its <em>top-3</em> placements (1·2·3 on the board) with visible scores</li>
+              <li><b>You vs AI</b> — tracks how often your placements match the AI's #1 pick</li>
+              <li><b>🎬 AI Demo</b> — watch the offline AI play by itself</li>
+              <li><b>Walls wrap</b>: leave one side, appear on the other.</li>
+              <li><b>Clear lines to cut carbon</b> and push back 3.0°C.</li>
+            </ul>
+          </details>
+        </aside>
+      </div>`;
+
+    const canvas = document.getElementById('wt-canvas');
+    const ctx = canvas.getContext('2d');
+    const holdCv = document.getElementById('wt-hold'), holdCtx = holdCv.getContext('2d');
+    const nextCv = document.getElementById('wt-next'), nextCtx = nextCv.getContext('2d');
+    window.__wraptrisAppRef = app; window.__wraptrisCanvasRef = canvas;
+
+    // ---------- Pieces ----------
+    const COLORS = ['#22d3ee','#facc15','#4ade80','#fb7185','#60a5fa','#f472b6','#c084fc'];
+    const SHAPES = {
+      I: [[[-1,0],[0,0],[1,0],[2,0]], [[0,-1],[0,0],[0,1],[0,2]], [[-1,0],[0,0],[1,0],[2,0]], [[0,-1],[0,0],[0,1],[0,2]]],
+      O: [[[0,0],[1,0],[0,1],[1,1]], [[0,0],[1,0],[0,1],[1,1]], [[0,0],[1,0],[0,1],[1,1]], [[0,0],[1,0],[0,1],[1,1]]],
+      S: [[[0,0],[1,0],[-1,1],[0,1]], [[0,-1],[0,0],[1,0],[1,1]], [[0,0],[1,0],[-1,1],[0,1]], [[0,-1],[0,0],[1,0],[1,1]]],
+      Z: [[[-1,0],[0,0],[0,1],[1,1]], [[1,-1],[0,0],[1,0],[0,1]], [[-1,0],[0,0],[0,1],[1,1]], [[1,-1],[0,0],[1,0],[0,1]]],
+      J: [[[-1,0],[0,0],[1,0],[-1,1]], [[0,-1],[0,0],[0,1],[1,-1]], [[1,-1],[-1,0],[0,0],[1,0]], [[-1,1],[0,-1],[0,0],[0,1]]],
+      L: [[[-1,0],[0,0],[1,0],[1,1]], [[0,-1],[0,0],[0,1],[1,1]], [[-1,-1],[-1,0],[0,0],[1,0]], [[-1,-1],[0,-1],[0,0],[0,1]]],
+      T: [[[-1,0],[0,0],[1,0],[0,1]], [[0,-1],[0,0],[0,1],[1,0]], [[0,-1],[-1,0],[0,0],[1,0]], [[-1,0],[0,-1],[0,0],[0,1]]]
+    };
+    const TYPES = Object.keys(SHAPES);
+    const colorOf = (type) => COLORS[TYPES.indexOf(type)];
+
+    // ---------- State ----------
+    let board, bag, queue, piece, holdType, canHold, pieceId = 0;
+    let score, lines, level, combo, b2b;
+    let hiscore = 0;
+    let stageGoal, stageBase;
+    let running = false, paused = false, gameOver = false, overByClimate = false;
+    let climateTemp = C_START, climateEpoch, climateDelayMs, flashUntil, pauseStart = 0;
+    let fastDropActive = false, muted = false;
+    let aiHint = false, aiDemo = false, demoAcc = 0;
+    let demoPid = -1, demoTries = 0;
+    let matchHit = 0, matchTotal = 0;
+    let aiCache = { id: -1, data: null };
+    let bannerText = '', bannerUntil = 0;
+    const particles = [], floaters = [];
+
+    const active  = () => running && !paused && !gameOver && !!piece;
+    const manual  = () => active() && !aiDemo;
+
+    // ---------- Audio ----------
+    let audioCtx = null;
+    function ensureAudio(){
+      if (muted) return null;
+      try { if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        if (audioCtx.state === 'suspended') audioCtx.resume(); } catch(e){ audioCtx = null; }
+      return audioCtx;
+    }
+    function tone(freq, dur, type, vol, when){
+      const a = ensureAudio(); if (!a) return;
+      const t0 = a.currentTime + (when || 0);
+      const o = a.createOscillator(), g = a.createGain();
+      o.type = type || 'square'; o.frequency.setValueAtTime(freq, t0);
+      g.gain.setValueAtTime(vol || 0.05, t0);
+      g.gain.exponentialRampToValueAtTime(0.0001, t0 + (dur || 0.08));
+      o.connect(g); g.connect(a.destination); o.start(t0); o.stop(t0 + (dur || 0.08) + 0.02);
+    }
+    const sMove = () => tone(200,0.03,'square',0.03);
+    const sRotate = () => tone(340,0.04,'square',0.04);
+    const sLock = () => tone(150,0.06,'sine',0.05);
+    const sHold = () => tone(440,0.06,'triangle',0.05);
+    const sDrop = () => tone(110,0.05,'sawtooth',0.04);
+    function sClear(n){ for (let i=0;i<n;i++) tone(420+i*120,0.10,'triangle',0.06,i*0.05); }
+    function sTetris(){ [523,659,784,1046].forEach((f,i)=>tone(f,0.12,'square',0.06,i*0.05)); }
+    function sLevel(){ [392,523,659].forEach((f,i)=>tone(f,0.10,'triangle',0.06,i*0.06)); }
+    function sMilestone(){ [523,659,784,1046,784,1046].forEach((f,i)=>tone(f,0.12,'triangle',0.07,i*0.07)); }
+    function sOver(){ [400,330,260,180].forEach((f,i)=>tone(f,0.18,'sawtooth',0.06,i*0.12)); }
+    function sWarm(){ tone(90,0.25,'sawtooth',0.05); }
+    const sAI = () => tone(660,0.05,'triangle',0.04);
+
+    // ---------- Helpers ----------
+    function refillBag(){ const b = TYPES.slice(); for (let i=b.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [b[i],b[j]]=[b[j],b[i]]; } return b; }
+    function nextType(){ if (!bag.length) bag = refillBag(); return bag.pop(); }
+    function fillQueue(){ while (queue.length < 4) queue.push(nextType()); }
+    function makePiece(type){ return { type, rot:0, x: Math.floor(COLS/2), y: -2 }; }
+    function eachBlock(p, fn){ for (const [dx,dy] of SHAPES[p.type][p.rot]){ fn(((p.x+dx)%COLS+COLS)%COLS, p.y+dy); } }
+    function validOn(bd, p){ let ok = true; eachBlock(p,(x,y)=>{ if (y>=ROWS) ok=false; else if (y>=0 && bd[y][x]) ok=false; }); return ok; }
+    const valid = (p) => validOn(board, p);
+
+    function spawn(){
+      fillQueue(); piece = makePiece(queue.shift()); fillQueue(); canHold = true; pieceId++;
+      if (!valid(piece)) endGame(false);
+    }
+    function doHold(){
+      if (!canHold || !piece || paused || gameOver) return;
+      const cur = piece.type;
+      if (holdType == null){ holdType = cur; spawn(); }
+      else { const tmp = holdType; holdType = cur; piece = makePiece(tmp); pieceId++; }
+      canHold = false; sHold();
+    }
+    function rotate(dir){
+      const saved = piece.rot;
+      piece.rot = (piece.rot + dir + 4) % 4;
+      if (valid(piece)){ sRotate(); return; }
+      for (const k of [-1,1,-2,2,-3,3]){
+        const ox = piece.x; piece.x = ((piece.x + k) % COLS + COLS) % COLS;
+        if (valid(piece)){ sRotate(); return; } piece.x = ox;
+      }
+      piece.rot = saved;
+    }
+    function moveToColumn(col){
+      col = Math.max(0, Math.min(COLS-1, col));
+      const target = { ...piece, x: col };
+      if (valid(target)){ if (target.x!==piece.x) sMove(); piece = target; return; }
+      for (let d=1; d<=4; d++){
+        const left = { ...target, x: Math.max(0, col-d) }; if (valid(left)){ piece = left; return; }
+        const right = { ...target, x: Math.min(COLS-1, col+d) }; if (valid(right)){ piece = right; return; }
+      }
+    }
+    function nudge(dx){ const p = { ...piece, x: ((piece.x+dx)%COLS+COLS)%COLS }; if (valid(p)){ piece = p; sMove(); } }
+    function softDrop(scored){
+      const p = { ...piece, y: piece.y + 1 };
+      if (valid(p)){ piece = p; if (scored){ score += level; updateHUD(); } }
+      else lockPiece();
+    }
+    function hardDrop(){
+      let y = piece.y, dist = 0;
+      while (true){ const p = { ...piece, y: y+1 }; if (valid(p)){ y++; dist++; } else break; }
+      piece.y = y; score += 2*dist; sDrop(); lockPiece(); updateHUD();
+    }
+    function lockPiece(){
+      if (running && !aiDemo && piece){
+        const data = getAIData();
+        const best = data && data.top[0];
+        if (best){
+          const aiKey = landingKey(board, piece.type, best.rot, best.x);
+          if (aiKey){ matchTotal++; if (cellsKey(piece) === aiKey) matchHit++; updateMatchUI(); }
+        }
+      }
+      eachBlock(piece,(x,y)=>{ if (y>=0) board[y][x] = TYPES.indexOf(piece.type)+1; });
+      sLock();
+      const info = clearLines();
+      if (info.cleared > 0){
+        climateDelayMs += info.cleared * C_DELAY_PER_LINE;
+        const cy = (info.avgY + 0.5) * CELL;
+        spawnParticles(canvas.width/2, cy, 16 + info.cleared*6, info.cleared>=4?['🔥','💥','✨','🌱']:['✨','💫','🌱']);
+        floaters.push({ x: canvas.width/2, y: cy, text:'−CO₂', color:'#4ade80', born: performance.now(), life: 900 });
+      }
+      spawn();
+    }
+    function clearLines(){
+      let cleared = 0, ySum = 0;
+      for (let y=ROWS-1; y>=0; y--){
+        if (board[y].every(v=>v!==0)){ board.splice(y,1); board.unshift(Array(COLS).fill(0)); cleared++; ySum += y; y++; }
+      }
+      if (cleared > 0){
+        let gained = [0,100,300,500,800][cleared] * level;
+        const isTetris = (cleared === 4);
+        if (isTetris && b2b) gained = Math.floor(gained * 1.5);
+        b2b = isTetris;
+        combo++; if (combo > 1) gained += 50 * (combo-1) * level;
+        score += gained; lines += cleared;
+        floaters.push({ x: canvas.width/2, y:(ySum/cleared)*CELL, text:'+'+gained, color:'#facc15', born: performance.now(), life:1000 });
+        const nextLevel = Math.floor(lines/LEVEL_UP_EVERY) + 1;
+        if (nextLevel > level){ level = nextLevel; sLevel(); banner('LEVEL ' + level); }
+        else if (isTetris) sTetris(); else sClear(cleared);
+        if (lines >= stageBase + stageGoal){
+          stageBase += stageGoal; climateDelayMs += C_STEP_MS*2; score += 1000*level;
+          sMilestone(); banner('🌱 CARBON MILESTONE');
+          spawnParticles(canvas.width/2, canvas.height/3, 40, ['🌱','🌍','✨','💚']);
+        }
+        updateHUD();
+      } else combo = 0;
+      return { cleared, avgY: cleared ? ySum/cleared : ROWS/2 };
+    }
+
+    // ---------- Transparent AI core ----------
+    function boardMetrics(bd){
+      const heights = new Array(COLS).fill(0);
+      let holes = 0;
+      for (let x=0; x<COLS; x++){
+        let seen = false;
+        for (let y=0; y<ROWS; y++){
+          if (bd[y][x]){ if (!seen){ heights[x] = ROWS - y; seen = true; } }
+          else if (seen) holes++;
+        }
+      }
+      let bump = 0;
+      for (let x=0; x<COLS-1; x++) bump += Math.abs(heights[x]-heights[x+1]);
+      bump += Math.abs(heights[COLS-1]-heights[0]);
+      const aggH = heights.reduce((a,b)=>a+b,0);
+      return { aggH, holes, bump };
+    }
+    function simulatePlacement(bd, type, rot, x){
+      const p = { type, rot, x, y: -2 };
+      if (!validOn(bd, p)) return null;
+      while (validOn(bd, { ...p, y: p.y + 1 })) p.y++;
+      if (p.y < -1) return null;
+      const nb = bd.map(row => row.slice());
+      let out = false;
+      eachBlock(p,(cx,cy)=>{ if (cy>=0) nb[cy][cx] = 1; else out = true; });
+      if (out) return null;
+      let cleared = 0;
+      for (let y=ROWS-1; y>=0; y--){
+        if (nb[y].every(v=>v!==0)){ nb.splice(y,1); nb.unshift(Array(COLS).fill(0)); cleared++; y++; }
+      }
+      const m = boardMetrics(nb);
+      const val = AI_W.height*m.aggH + AI_W.lines*cleared + AI_W.holes*m.holes + AI_W.bump*m.bump;
+      return { rot, x, cleared, aggH: m.aggH, holes: m.holes, bump: m.bump, val };
+    }
+    function computeTopMoves(bd, type, n){
+      const list = [];
+      const rots = (type==='O') ? [0] : (type==='I'||type==='S'||type==='Z') ? [0,1] : [0,1,2,3];
+      for (const r of rots){
+        for (let x=0; x<COLS; x++){
+          const res = simulatePlacement(bd, type, r, x);
+          if (res) list.push(res);
+        }
+      }
+      list.sort((a,b)=>b.val-a.val);
+      return { top: list.slice(0, n || AI_TOP_N), evaluated: list.length };
+    }
+    function getAIData(){
+      if (!piece) return null;
+      if (aiCache.id === pieceId) return aiCache.data;
+      const data = computeTopMoves(board, piece.type, AI_TOP_N);
+      aiCache = { id: pieceId, data };
+      updateAIText(data);
+      return data;
+    }
+    const getBestMove = () => { const d = getAIData(); return (d && d.top.length) ? d.top[0] : null; };
+
+    function cellsKey(p){ const s = []; eachBlock(p,(x,y)=>s.push(x+','+y)); return s.sort().join('|'); }
+    function landingKey(bd, type, rot, x){
+      const p = { type, rot, x, y: -2 };
+      if (!validOn(bd, p)) return null;
+      while (validOn(bd, { ...p, y: p.y + 1 })) p.y++;
+      let out = false; const s = [];
+      eachBlock(p,(cx,cy)=>{ if (cy<0) out = true; s.push(cx+','+cy); });
+      return out ? null : s.sort().join('|');
+    }
+
+    function updateAIText(data){
+      const elT = document.getElementById('wt-aitext');
+      const elTop = document.getElementById('wt-aitop');
+      const elM = document.getElementById('wt-aimargin');
+      const elW = document.getElementById('wt-aiwhy');
+      if (!elT) return;
+      if (!data || !data.top.length){
+        elT.textContent = 'No safe placement found — clear space!';
+        if (elTop) elTop.innerHTML = '';
+        if (elM) elM.textContent = '—';
+        return;
+      }
+      const best = data.top[0];
+      let phrase;
+      if (best.cleared >= 4) phrase = 'TETRIS opportunity — massive carbon cut!';
+      else if (best.cleared >= 2) phrase = 'Multi-line clear available.';
+      else if (best.cleared === 1) phrase = 'Clears a line and cuts CO₂.';
+      else if (best.holes === 0) phrase = 'Keeps the stack clean (0 new holes).';
+      else phrase = 'Least-damage option (minimizes holes).';
+      elT.textContent = `Best: column ${best.x+1}, rotation ${best.rot}. ${phrase}`;
+      if (elTop){
+        const medals = ['🥇','🥈','🥉'];
+        elTop.innerHTML = data.top.map((m,i)=>
+          `<div class="r">${medals[i]||('#'+(i+1))} col ${m.x+1} · rot ${m.rot} · <b>score ${m.val.toFixed(2)}</b>` +
+          `<span> lines ${m.cleared} · holes ${m.holes} · h ${m.aggH} · b ${m.bump}</span></div>`
+        ).join('');
+      }
+      if (elM) elM.textContent = data.top[1] ? '+' + (data.top[0].val - data.top[1].val).toFixed(2) : 'only option';
+      if (elW) elW.textContent = 'score = −0.51·height + 0.76·lines − 0.36·holes − 0.18·bump · ' +
+                                 'evaluated ' + data.evaluated + ' placements locally (offline AI)';
+    }
+    function updateMatchUI(){
+      const el = document.getElementById('wt-aimatch'); if (!el) return;
+      el.textContent = matchTotal ? `${matchHit}/${matchTotal} (${Math.round(100*matchHit/matchTotal)}%)` : '—';
+    }
+
+    function demoStep(){
+      if (pieceId !== demoPid){ demoPid = pieceId; demoTries = 0; }
+      demoTries++;
+      if (demoTries > DEMO_MAX_TRIES){ hardDrop(); return; }
+      const mv = getBestMove();
+      if (!mv){ hardDrop(); return; }
+      if (piece.rot !== mv.rot){ rotate(1); return; }
+      if (piece.x !== mv.x){
+        const d = ((mv.x - piece.x) % COLS + COLS) % COLS;
+        nudge(d <= COLS/2 ? 1 : -1);
+        return;
+      }
+      sAI(); hardDrop();
+    }
+
+    // ---------- Climate ----------
+    function effectiveElapsed(now){ return Math.max(0, (now - climateEpoch) - climateDelayMs); }
+    function tempAt(now){ const steps = Math.floor(effectiveElapsed(now)/C_STEP_MS); return Math.min(C_END, parseFloat((C_START + Math.min(C_STEPS,steps)*C_STEP).toFixed(1))); }
+    function updateClimate(now){
+      const nt = tempAt(now);
+      if (nt > climateTemp){
+        climateTemp = nt; flashUntil = now + 900;
+        floaters.push({ x: canvas.width/2, y: 60, text:'🌍 +0.1°C', color:'#fb923c', born: now, life: 1100 });
+        sWarm(); updateHUD();
+        if (climateTemp >= C_END - 1e-9) endGame(true);
+      }
+    }
+    function climateRemainMs(now){
+      const done = Math.floor(effectiveElapsed(now)/C_STEP_MS);
+      const left = Math.max(0, C_STEPS - done);
+      const into = effectiveElapsed(now) % C_STEP_MS;
+      return Math.max(0, left*C_STEP_MS - into);
+    }
+    function dropInterval(){
+      const levelMul = Math.pow(SPEED_FACTOR, Math.max(0, level-1));
+      const norm = Math.min(1, Math.max(0, (climateTemp - C_START)/(C_END - C_START)));
+      let iv = START_SPEED * levelMul * (1 - 0.6*norm);
+      if (fastDropActive) iv *= FAST_DROP_MULT;
+      return Math.max(MIN_SPEED, Math.floor(iv));
+    }
+
+    // ---------- FX ----------
+    function spawnParticles(px, py, count, chars){
+      for (let i=0;i<count;i++) particles.push({ x:px, y:py, vx:(Math.random()*2-1)*1.4, vy:(-Math.random()*1.6)-0.5,
+        life:700+Math.random()*700, born:performance.now(), char:chars[Math.floor(Math.random()*chars.length)], size:16+Math.random()*10 });
+    }
+    function banner(text){ bannerText = text; bannerUntil = performance.now() + 1400; }
+
+    // ---------- HUD ----------
+    const $ = (id) => document.getElementById(id);
+    function updateHUD(){
+      $('wt-score').textContent = String(score);
+      $('wt-best').textContent  = String(hiscore);
+      $('wt-lines').textContent = String(lines);
+      $('wt-level').textContent = String(level);
+      $('wt-combo').textContent = String(Math.max(0, combo-1));
+      $('wt-temp').textContent  = climateTemp.toFixed(1) + '°C';
+      const norm = Math.min(1, Math.max(0, (climateTemp - C_START)/(C_END - C_START)));
+      $('wt-tempbar').style.width = Math.round(norm*100) + '%';
+      $('wt-co2').textContent = (lines * 0.5).toFixed(1) + ' t';
+      $('wt-goal').textContent = Math.max(0, lines - stageBase) + ' / ' + stageGoal;
+    }
+    function updateTimer(now){
+      const remain = climateRemainMs(now);
+      const m = Math.floor(remain/60000), s = Math.floor((remain%60000)/1000);
+      $('wt-ctimer').textContent = String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+    }
+    function setToggleUI(){
+      const bA = $('wt-ai'), bD = $('wt-demo'), card = $('wt-aicard');
+      if (bA){ bA.classList.toggle('wt-on', aiHint); bA.setAttribute('aria-pressed', String(aiHint)); }
+      if (bD){ bD.classList.toggle('wt-on', aiDemo); bD.setAttribute('aria-pressed', String(aiDemo)); }
+      if (card) card.hidden = !(aiHint || aiDemo);
+    }
+
+    // ---------- Drawing ----------
+    function drawCell(c, x, y, color){
+      const s = CELL, px = x*s, py = y*s;
+      c.fillStyle = color; c.fillRect(px,py,s,s);
+      c.fillStyle = 'rgba(255,255,255,.18)'; c.fillRect(px,py,s,Math.max(2,s*0.12));
+      c.fillStyle = 'rgba(0,0,0,.25)'; c.fillRect(px,py+s-Math.max(2,s*0.12),s,Math.max(2,s*0.12));
+      c.fillStyle = 'rgba(255,255,255,.06)'; c.fillRect(px+2,py+2,s-4,s-4);
+    }
+    function drawGrid(){
+      ctx.strokeStyle = 'rgba(255,255,255,.05)'; ctx.lineWidth = 1;
+      for (let x=1;x<COLS;x++){ ctx.beginPath(); ctx.moveTo(x*CELL+.5,0); ctx.lineTo(x*CELL+.5,ROWS*CELL); ctx.stroke(); }
+      for (let y=1;y<ROWS;y++){ ctx.beginPath(); ctx.moveTo(0,y*CELL+.5); ctx.lineTo(COLS*CELL,y*CELL+.5); ctx.stroke(); }
+    }
+    function drawHeatBackground(now){
+      const norm = Math.min(1, Math.max(0, (climateTemp - C_START)/(C_END - C_START)));
+      const g = ctx.createLinearGradient(0,0,0,canvas.height);
+      g.addColorStop(0, `rgb(${10+norm*60}, ${22-norm*8}, ${40-norm*18})`);
+      g.addColorStop(1, `rgb(${6+norm*30}, 12, ${26-norm*10})`);
+      ctx.fillStyle = g; ctx.fillRect(0,0,canvas.width,canvas.height);
+      const seaH = norm * canvas.height * 0.32;
+      if (seaH > 1){
+        const sg = ctx.createLinearGradient(0, canvas.height-seaH, 0, canvas.height);
+        sg.addColorStop(0,'rgba(56,189,248,0.10)'); sg.addColorStop(1,'rgba(2,132,199,0.22)');
+        ctx.fillStyle = sg; ctx.fillRect(0, canvas.height-seaH, canvas.width, seaH);
+        ctx.strokeStyle = 'rgba(125,211,252,0.35)'; ctx.lineWidth = 2; ctx.beginPath();
+        for (let x=0;x<=canvas.width;x+=8){ const yy = canvas.height - seaH + Math.sin((x*0.05)+now*0.003)*3; if (x===0) ctx.moveTo(x,yy); else ctx.lineTo(x,yy); }
+        ctx.stroke();
+      }
+    }
+    function drawPortals(){
+      const gl = ctx.createLinearGradient(0,0,CELL,0);
+      gl.addColorStop(0,'rgba(255,255,255,.07)'); gl.addColorStop(1,'rgba(255,255,255,0)');
+      ctx.fillStyle = gl; ctx.fillRect(0,0,CELL,ROWS*CELL);
+      const gr = ctx.createLinearGradient(canvas.width-CELL,0,canvas.width,0);
+      gr.addColorStop(0,'rgba(255,255,255,0)'); gr.addColorStop(1,'rgba(255,255,255,.07)');
+      ctx.fillStyle = gr; ctx.fillRect(canvas.width-CELL,0,CELL,ROWS*CELL);
+    }
+    function drawParticles(now){
+      for (let i=particles.length-1;i>=0;i--){
+        const p = particles[i], age = now - p.born;
+        if (age > p.life){ particles.splice(i,1); continue; }
+        p.x += p.vx; p.y += p.vy; p.vy += 0.04;
+        ctx.globalAlpha = 1 - age/p.life;
+        ctx.font = p.size + 'px system-ui, "Apple Color Emoji", "Segoe UI Emoji", emoji';
+        ctx.fillText(p.char, p.x, p.y); ctx.globalAlpha = 1;
+      }
+    }
+    function drawFloaters(now){
+      ctx.textAlign = 'center';
+      for (let i=floaters.length-1;i>=0;i--){
+        const f = floaters[i], age = now - f.born;
+        if (age > f.life){ floaters.splice(i,1); continue; }
+        const t = age/f.life;
+        ctx.globalAlpha = 1 - t; ctx.fillStyle = f.color; ctx.font = 'bold 18px system-ui, sans-serif';
+        ctx.fillText(f.text, f.x, f.y - t*30); ctx.globalAlpha = 1;
+      }
+      ctx.textAlign = 'start';
+    }
+    function drawAIHint(){
+      const data = getAIData(); if (!data || !data.top.length) return;
+      ctx.save();
+      for (let i = Math.min(AI_TOP_N, data.top.length) - 1; i >= 0; i--){
+        const mv = data.top[i];
+        const p = { type: piece.type, rot: mv.rot, x: mv.x, y: -2 };
+        if (!valid(p)) continue;
+        while (valid({ ...p, y: p.y + 1 })) p.y++;
+        const primary = (i === 0);
+        ctx.globalAlpha = primary ? 0.95 : 0.30;
+        ctx.strokeStyle = primary ? '#22d3ee' : '#94a3b8';
+        ctx.lineWidth = primary ? 2 : 1.5;
+        ctx.setLineDash(primary ? [5,3] : [3,3]);
+        eachBlock(p,(x,y)=>{ if (y>=0) ctx.strokeRect(x*CELL+2, y*CELL+2, CELL-4, CELL-4); });
+        ctx.setLineDash([]);
+        ctx.fillStyle = primary ? '#22d3ee' : '#94a3b8';
+        ctx.font = 'bold 11px system-ui, sans-serif';
+        ctx.fillText(String(i+1), p.x*CELL+4, Math.max(10, p.y*CELL-2));
+      }
+      ctx.globalAlpha = 1;
+      ctx.restore();
+    }
+    function drawMini(c, cv, type){
+      c.clearRect(0,0,cv.width,cv.height); if (!type) return;
+      const s = 22, shape = SHAPES[type][0];
+      let minX=99,maxX=-99; shape.forEach(([dx])=>{ minX=Math.min(minX,dx); maxX=Math.max(maxX,dx); });
+      const w=(maxX-minX+1)*s, ox=(cv.width-w)/2 - minX*s, oy=s;
+      shape.forEach(([dx,dy])=>{ const px=ox+dx*s, py=oy+dy*s;
+        c.fillStyle = colorOf(type); c.fillRect(px,py,s,s);
+        c.fillStyle='rgba(255,255,255,.18)'; c.fillRect(px,py,s,3);
+        c.fillStyle='rgba(0,0,0,.25)'; c.fillRect(px,py+s-3,s,3); });
+    }
+    function drawNext(){
+      nextCtx.clearRect(0,0,nextCv.width,nextCv.height);
+      const s = 22, slotH = 3*s;
+      for (let k=0;k<3;k++){
+        const type = queue[k]; if (!type) continue;
+        const shape = SHAPES[type][0];
+        let minX=99,maxX=-99; shape.forEach(([dx])=>{ minX=Math.min(minX,dx); maxX=Math.max(maxX,dx); });
+        const w=(maxX-minX+1)*s, ox=(nextCv.width-w)/2 - minX*s, oy=k*slotH + s*0.6;
+        shape.forEach(([dx,dy])=>{ const px=ox+dx*s, py=oy+dy*s;
+          nextCtx.fillStyle = colorOf(type); nextCtx.fillRect(px,py,s,s);
+          nextCtx.fillStyle='rgba(255,255,255,.18)'; nextCtx.fillRect(px,py,s,3);
+          nextCtx.fillStyle='rgba(0,0,0,.25)'; nextCtx.fillRect(px,py+s-3,s,3); });
+      }
+    }
+    function overlay(title, sub){
+      ctx.save(); ctx.fillStyle = 'rgba(3,8,18,.80)'; ctx.fillRect(0,0,canvas.width,canvas.height);
+      ctx.textAlign='center'; ctx.textBaseline='middle';
+      ctx.fillStyle = '#f8fafc'; ctx.font='bold 26px system-ui, sans-serif';
+      title.split('\n').forEach((t,i)=>ctx.fillText(t, canvas.width/2, canvas.height/2 - 28 + i*30));
+      if (sub){ ctx.fillStyle='#94a3b8'; ctx.font='14px system-ui, sans-serif';
+        sub.split('\n').forEach((t,i)=>ctx.fillText(t, canvas.width/2, canvas.height/2 + 30 + i*20)); }
+      ctx.restore();
+    }
+    function render(now){
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      drawHeatBackground(now); drawPortals();
+      for (let y=0;y<ROWS;y++) for (let x=0;x<COLS;x++){ const v=board[y][x]; if (v) drawCell(ctx,x,y,COLORS[v-1]); }
+      if (piece && running && !gameOver){
+        let gy = piece.y; while (true){ const p={...piece,y:gy+1}; if (valid(p)) gy++; else break; }
+        ctx.globalAlpha = .22; eachBlock({...piece,y:gy},(x,y)=>{ if (y>=0) drawCell(ctx,x,y,colorOf(piece.type)); }); ctx.globalAlpha = 1;
+        if ((aiHint || aiDemo) && !paused) drawAIHint();
+        eachBlock(piece,(x,y)=>{ if (y>=0) drawCell(ctx,x,y,colorOf(piece.type)); });
+      }
+      drawGrid();
+      ctx.font = '18px system-ui, "Segoe UI Emoji", emoji'; ctx.fillStyle='#fff'; ctx.fillText('🌍', 6, 22);
+      ctx.font = 'bold 13px system-ui, sans-serif'; ctx.fillStyle = climateTemp>=2.5?'#fb7185':'#e2e8f0';
+      ctx.fillText(climateTemp.toFixed(1)+'°C', 30, 20);
+      if (aiDemo){ ctx.fillStyle='#22d3ee'; ctx.font='bold 11px system-ui, sans-serif'; ctx.fillText('🤖 OFFLINE AI DEMO', 6, canvas.height-8); }
+      if (now < flashUntil){ ctx.save(); ctx.globalAlpha=.5; ctx.fillStyle='rgba(251,113,86,.45)'; ctx.fillRect(0,0,canvas.width,canvas.height); ctx.restore(); }
+      drawParticles(now); drawFloaters(now);
+      if (now < bannerUntil && bannerText){
+        ctx.save(); ctx.textAlign='center';
+        ctx.fillStyle='rgba(0,0,0,.45)'; ctx.fillRect(0, canvas.height/2-26, canvas.width, 52);
+        ctx.fillStyle='#fef08a'; ctx.font='bold 22px system-ui, sans-serif';
+        ctx.fillText(bannerText, canvas.width/2, canvas.height/2+8); ctx.restore();
+      }
+      drawMini(holdCtx, holdCv, holdType); drawNext();
+      if (!running && !gameOver) overlay('WRAPTRIS\nClimate Edition', 'Press ▶ Play\nClear lines · cut carbon · beat 3.0°C\n🤖 Offline AI inside');
+      else if (paused) overlay('PAUSED', 'Press ⏸ or P to resume');
+      else if (gameOver) overlay(overByClimate ? '🔥 TIPPING POINT\nREACHED' : 'GAME OVER',
+                                 'Score ' + score + '  ·  Best ' + hiscore + '\nClick ▶ Play to try again');
+    }
+
+    // ---------- Loop ----------
+    let last = 0, acc = 0;
+    function frame(now){
+      const dt = now - last; last = now;
+      if (running && !paused && !gameOver){
+        updateClimate(now); acc += dt;
+        const iv = dropInterval(); let guard = 0;
+        while (acc >= iv && guard < 6){ acc -= iv; if (!piece) spawn(); if (!gameOver) softDrop(false); guard++; }
+        if (aiDemo && active()){
+          demoAcc += dt;
+          if (demoAcc >= AI_STEP_MS){ demoAcc = 0; demoStep(); }
+        }
+      }
+      render(now); updateTimer(now); requestAnimationFrame(frame);
+    }
+
+    // ---------- Game control ----------
+    function loadHiscore(){
+      try { hiscore = parseInt(localStorage.getItem(LS_HISCORE)||'0',10) || 0; } catch(e){ hiscore = 0; }
+      try { muted = localStorage.getItem(LS_MUTE) === '1'; } catch(e){ muted = false; }
+      const mb = $('wt-mute'); if (mb) mb.textContent = muted ? '🔇 Muted' : '🔊 Sound';
+    }
+    function saveHiscore(){ try { if (score > hiscore){ hiscore = score; localStorage.setItem(LS_HISCORE, String(hiscore)); } } catch(e){} }
+    function newGame(){
+      board = Array.from({length:ROWS}, ()=>Array(COLS).fill(0));
+      bag = refillBag(); queue = []; fillQueue();
+      holdType = null; canHold = true;
+      score = 0; lines = 0; level = 1; combo = 0; b2b = false;
+      stageGoal = GOAL_PER_STAGE; stageBase = 0;
+      climateTemp = C_START; climateEpoch = performance.now(); climateDelayMs = 0; flashUntil = 0;
+      fastDropActive = false; particles.length = 0; floaters.length = 0;
+      aiCache = { id: -1, data: null }; demoAcc = 0; demoPid = -1; demoTries = 0;
+      matchHit = 0; matchTotal = 0; updateMatchUI();
+      gameOver = false; overByClimate = false; paused = false; running = true;
+      spawn(); updateHUD(); $('wt-pause').textContent = '⏸ Pause';
+    }
+    function endGame(byClimate){
+      gameOver = true; running = false; overByClimate = !!byClimate;
+      fastDropActive = false; saveHiscore(); updateHUD();
+      sOver();
+    }
+    function togglePause(){
+      if (!running || gameOver) return;
+      paused = !paused;
+      if (paused){ pauseStart = performance.now(); fastDropActive = false; }
+      else if (pauseStart){ climateEpoch += performance.now() - pauseStart; pauseStart = 0; }
+      $('wt-pause').textContent = paused ? '▶ Resume' : '⏸ Pause';
+    }
+    function toggleMute(){
+      muted = !muted;
+      try { localStorage.setItem(LS_MUTE, muted ? '1':'0'); } catch(e){}
+      $('wt-mute').textContent = muted ? '🔇 Muted' : '🔊 Sound';
+      if (!muted) ensureAudio();
+    }
+
+    // ---------- Input: mouse ----------
+    function clientXToCol(clientX){
+      const r = canvas.getBoundingClientRect();
+      const px = (clientX - r.left) * (canvas.width / r.width);
+      return Math.max(0, Math.min(COLS-1, Math.floor(px / CELL)));
+    }
+    let pointerInside = false;
+    canvas.addEventListener('mousemove', (e)=>{ if (manual()) moveToColumn(clientXToCol(e.clientX)); });
+    canvas.addEventListener('mouseenter', ()=>{ pointerInside = true; });
+    canvas.addEventListener('mouseleave', ()=>{ pointerInside = false; });
+    canvas.addEventListener('mousedown', (e)=>{
+      e.preventDefault(); ensureAudio();
+      if (!manual()) return;
+      if (e.button === 0) rotate(1);
+      else if (e.button === 2) fastDropActive = true;
+    });
+    canvas.addEventListener('contextmenu', (e)=> e.preventDefault());
+    window.addEventListener('mouseup', ()=>{ fastDropActive = false; });
+    window.addEventListener('blur', ()=>{ fastDropActive = false; });
+    canvas.addEventListener('wheel', (e)=>{ if (manual()){ e.preventDefault(); if (e.deltaY < 0) doHold(); else softDrop(true); } }, { passive:false });
+
+    // ---------- Input: touch ----------
+    let tStartX=0, tStartY=0, tStartT=0, tCol=0, tMoved=false, tActive=false;
+    canvas.addEventListener('touchstart', (e)=>{
+      ensureAudio(); if (!manual()) return;
+      const t = e.touches[0]; tStartX=t.clientX; tStartY=t.clientY; tStartT=performance.now();
+      tCol=piece.x; tMoved=false; tActive=true;
+    }, { passive:true });
+    canvas.addEventListener('touchmove', (e)=>{
+      if (!tActive || !manual()) return;
+      const t = e.touches[0], r = canvas.getBoundingClientRect(), scale = canvas.width / r.width;
+      const dxCells = Math.round(((t.clientX - tStartX) * scale) / CELL);
+      if (dxCells !== 0){ moveToColumn(tCol + dxCells); tMoved = true; }
+      if (e.cancelable) e.preventDefault();
+    }, { passive:false });
+    canvas.addEventListener('touchend', (e)=>{
+      if (!tActive){ return; }
+      tActive = false;
+      if (!manual()) return;
+      const dt = performance.now() - tStartT, dy = e.changedTouches[0].clientY - tStartY;
+      if (!tMoved){ if (dy > 60) hardDrop(); else if (dt < 250) rotate(1); }
+    }, { passive:true });
+    canvas.addEventListener('touchcancel', ()=>{ tActive = false; }, { passive:true });
+
+    // ---------- Input: keyboard ----------
+    window.addEventListener('keydown', (e)=>{
+      if (!pointerInside && document.activeElement !== canvas) return;
+      if (!running || gameOver) return;
+      const k = e.key;
+      if (['ArrowLeft','ArrowRight','ArrowUp','ArrowDown',' '].includes(k)) e.preventDefault();
+      if (paused){ if (k==='p'||k==='P') togglePause(); return; }
+      if (k==='p'||k==='P'){ togglePause(); return; }
+      if (!manual()) return;
+      if (k==='ArrowLeft') nudge(-1);
+      else if (k==='ArrowRight') nudge(1);
+      else if (k==='ArrowUp') rotate(1);
+      else if (k==='ArrowDown') softDrop(true);
+      else if (k===' ') hardDrop();
+      else if (k==='c'||k==='C') doHold();
+    });
+    window.addEventListener('keyup', (e)=>{ if (e.key==='ArrowDown') fastDropActive = false; });
+
+    // ---------- Input: on-screen control pad ----------
+    function tap(id, fn){
+      const el = $(id); if (!el) return;
+      el.addEventListener('pointerdown', (e)=>{ e.preventDefault(); ensureAudio(); fn(); });
+    }
+    tap('wt-left',   ()=>{ if (manual()) nudge(-1); });
+    tap('wt-right',  ()=>{ if (manual()) nudge(1); });
+    tap('wt-rotate', ()=>{ if (manual()) rotate(1); });
+    tap('wt-hard',   ()=>{ if (manual()) hardDrop(); });
+    tap('wt-holdbtn',()=>{ if (!aiDemo) doHold(); });
+    const softBtn = $('wt-soft');
+    const softOn  = (e)=>{ e.preventDefault(); ensureAudio(); if (manual()) fastDropActive = true; };
+    const softOff = ()=>{ fastDropActive = false; };
+    if (softBtn){
+      softBtn.addEventListener('pointerdown', softOn);
+      softBtn.addEventListener('pointerup', softOff);
+      softBtn.addEventListener('pointerleave', softOff);
+      softBtn.addEventListener('pointercancel', softOff);
+    }
+
+    // ---------- Buttons ----------
+    $('wt-play').addEventListener('click', ()=>{ ensureAudio(); newGame(); canvas.focus(); });
+    $('wt-pause').addEventListener('click', ()=> togglePause());
+    $('wt-mute').addEventListener('click', ()=> toggleMute());
+    $('wt-ai').addEventListener('click', ()=>{ aiHint = !aiHint; if (aiHint) sAI(); setToggleUI(); });
+    $('wt-demo').addEventListener('click', ()=>{
+      aiDemo = !aiDemo; demoAcc = 0; demoPid = -1; demoTries = 0; fastDropActive = false;
+      if (aiDemo){ sAI(); if (!running || gameOver) newGame(); }
+      setToggleUI();
+    });
+
+    // ---------- Self tests (console only) ----------
+    (function tests(){
+      try {
+        board = Array.from({length:ROWS}, ()=>Array(COLS).fill(0));
+        let mn=99,mx=-99; eachBlock({type:'I',rot:0,x:-1,y:0},(x)=>{ mn=Math.min(mn,x); mx=Math.max(mx,x); });
+        console.assert(mn>=0 && mx<COLS, 'wrap in bounds');
+        level=1; score=0; lines=0; combo=0; b2b=false; stageGoal=GOAL_PER_STAGE; stageBase=0;
+        climateTemp=C_START; const a=dropInterval();
+        climateTemp=C_END; const b=dropInterval(); console.assert(b<=a,'hotter not slower');
+        climateTemp=C_START; level=1; const c=dropInterval(); level=2; const d=dropInterval(); console.assert(d<=c,'higher level faster'); level=1;
+        const e1=dropInterval(); fastDropActive=true; const e2=dropInterval(); fastDropActive=false; console.assert(e2<e1,'fast drop faster');
+        console.assert(clientXToCol(-9999)===0,'col clamps');
+        const m0 = boardMetrics(board);
+        console.assert(m0.aggH===0 && m0.holes===0 && m0.bump===0, 'empty metrics zero');
+        for (const t of TYPES){ const mv = computeTopMoves(board, t, 3); console.assert(mv.top.length>=1, 'moves for '+t); }
+        const tp = computeTopMoves(board, 'T', 3);
+        console.assert(tp.top.length <= 3 && tp.evaluated >= tp.top.length, 'top3 size/evaluated');
+        for (let i=1;i<tp.top.length;i++) console.assert(tp.top[i-1].val >= tp.top[i].val, 'top3 sorted');
+        if (tp.top.length >= 2) console.assert(tp.top[0].val - tp.top[1].val >= 0, 'margin >= 0');
+        const bd = Array.from({length:ROWS}, ()=>Array(COLS).fill(0));
+        for (let x=0;x<COLS;x++) if (x!==4) bd[ROWS-1][x] = 1;
+        const mvI = computeTopMoves(bd, 'I', 3).top[0];
+        console.assert(mvI && mvI.cleared >= 1, 'AI finds the line clear');
+        const lk = landingKey(board, 'O', 0, 3);
+        const p2 = { type:'O', rot:0, x:3, y:-2 }; while (validOn(board, {...p2, y:p2.y+1})) p2.y++;
+        console.assert(lk === cellsKey(p2), 'placement keys agree');
+        // V1.4: SEO layer sanity — JSON-LD parses and contains offline-AI entities
+        const ldEl = document.getElementById('wraptris-jsonld');
+        if (ldEl){
+          const parsed = JSON.parse(ldEl.textContent);
+          console.assert(Array.isArray(parsed) && parsed.length >= 7, 'JSON-LD blocks present');
+          const types = parsed.map(o => o['@type']);
+          ['VideoGame','Organization','WebSite','BreadcrumbList','DefinedTerm','Article','FAQPage']
+            .forEach(t => console.assert(types.includes(t), 'JSON-LD has ' + t));
+          const faq = parsed.find(o => o['@type']==='FAQPage');
+          console.assert(faq && faq.mainEntity.length >= 5, 'FAQPage has entries');
+        }
+        let bd2=Array.from({length:ROWS},()=>Array(COLS).fill(0)); bd2[19]=Array(COLS).fill(1);
+        board=bd2;
+        const r=clearLines(); console.assert(r.cleared===1 && board.length===ROWS,'clear keeps height');
+      } catch(err){ console.error('Wraptris self-test:', err); }
+    })();
+
+    // ---------- Kick off ----------
+    loadHiscore();
+    newGame(); running = false; gameOver = false;
+    updateHUD(); setToggleUI();
+    requestAnimationFrame((t)=>{ last = t; requestAnimationFrame(frame); });
+  };
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot, { once:true });
+  else boot();
+})();
+
+</script>
+<!-- ===================== Wraptris V1.4 끝 (블록 B) ===================== -->

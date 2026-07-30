@@ -29,14 +29,7 @@ Line numbers are valid only for the exact build below. Any byte-level change inv
 |---|---|
 | File | `VitalGuard_AI_complete_V47_3.html` |
 | SHA-256 | `b81c067f5523bc68728ae84f2fc93ce05077705ae4cb7e882f1c859885f47615` |
-| Size | 713,562 bytes |
 | Lines | 13,294 |
-| Structure | one HTML document; 2 inline `<script>` elements, 1 inline `<style>` element, no external references |
-
-```bash
-sha256sum VitalGuard_AI_complete_V47_3.html
-wc -l -c VitalGuard_AI_complete_V47_3.html
-```
 
 ---
 
